@@ -13,10 +13,10 @@ namespace TPRitualAttachableOutcomes
     {
         public List<int> triggerPositivityIndex =  new List<int>();
         public int cooldownDays = 20;
-        public string hediffToAdd;
+        public List<string> hediffToAdd;
         public float hediffSeverity = 0f;
         public string bodyPart;
-        public string hediffToRemove;
+        public List<string> hediffToRemove;
         public string thought;
         public string inspiration;
         public List<string> appliesTo;

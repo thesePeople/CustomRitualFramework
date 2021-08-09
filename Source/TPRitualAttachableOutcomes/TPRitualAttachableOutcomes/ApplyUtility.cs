@@ -47,11 +47,11 @@ namespace TPRitualAttachableOutcomes
             bool thisAppliesToRandom = nodeToProcess.appliesToRandom;
             bool thisInvertApply = nodeToProcess.invertApply;
 
-            string thisHediff = nodeToProcess.hediffToAdd ?? "";
+            List<string> thisHediff = nodeToProcess.hediffToAdd ?? new List<string>();
             string thisAbilityToAdd = nodeToProcess.abilityToAdd ?? "";
             float thisHediffSeverity = nodeToProcess.hediffSeverity;
             string thisBodyPart = nodeToProcess.bodyPart ?? "";
-            string thisHediffToRemove = nodeToProcess.hediffToRemove ?? "";
+            List<string> thisHediffToRemove = nodeToProcess.hediffToRemove ?? new List<string>();
 
             string thisThought = nodeToProcess.thought ?? "";
             string thisInspiration = nodeToProcess.inspiration ?? "";
@@ -145,34 +145,36 @@ namespace TPRitualAttachableOutcomes
                 // I feel like this whole thing would be a lot shorter if I remembered LINQ better
 
                // Log.Message("thisHediff is " + thisHediff + ". If you see a blank space then something's wrong");
-                if (!String.IsNullOrEmpty(thisHediff))
+                if (thisHediff.Count > 0)
                 {
-                    
-                   //  Log.Message("Applying " + thisHediff + " to pawn...");
-                    Hediff hediffToAdd = HediffMaker.MakeHediff(DefDatabase<HediffDef>.GetNamed(thisHediff), pawn, null);
+                    foreach (string h in thisHediff)
+                    {
+                        //  Log.Message("Applying " + thisHediff + " to pawn...");
+                        Hediff hediffToAdd = HediffMaker.MakeHediff(DefDatabase<HediffDef>.GetNamed(h), pawn, null);
 
-                    BodyPartRecord bpr = new BodyPartRecord();
-                    if (!String.IsNullOrEmpty(thisBodyPart))
-                    {
-                        bpr = pawn.RaceProps.body.GetPartsWithDef(DefDatabase<BodyPartDef>.GetNamed(thisBodyPart)).First();
-                        pawn.health.AddHediff(hediffToAdd, bpr, null, null);
-                    }
-                    else    
-                    {
-                        pawn.health.AddHediff(hediffToAdd);
-                    }
-                    
-                    if (thisHediffSeverity > 0)
-                    {
-                        List<Hediff> tmpHediffs = new List<Hediff>();
-                        tmpHediffs.AddRange(pawn.health.hediffSet.hediffs);
-                        for (int i = 0; i < tmpHediffs.Count; i++)
+                        BodyPartRecord bpr = new BodyPartRecord();
+                        if (!String.IsNullOrEmpty(thisBodyPart))
                         {
-                            Hediff tmpHediff = tmpHediffs[i];
+                            bpr = pawn.RaceProps.body.GetPartsWithDef(DefDatabase<BodyPartDef>.GetNamed(thisBodyPart)).First();
+                            pawn.health.AddHediff(hediffToAdd, bpr, null, null);
+                        }
+                        else
+                        {
+                            pawn.health.AddHediff(hediffToAdd);
+                        }
 
-                            if (tmpHediff.def.defName == thisHediff)
+                        if (thisHediffSeverity > 0)
+                        {
+                            List<Hediff> tmpHediffs = new List<Hediff>();
+                            tmpHediffs.AddRange(pawn.health.hediffSet.hediffs);
+                            for (int i = 0; i < tmpHediffs.Count; i++)
                             {
-                                tmpHediff.Severity += thisHediffSeverity;
+                                Hediff tmpHediff = tmpHediffs[i];
+
+                                if (tmpHediff.def.defName == h)
+                                {
+                                    tmpHediff.Severity += thisHediffSeverity;
+                                }
                             }
                         }
                     }
@@ -184,17 +186,20 @@ namespace TPRitualAttachableOutcomes
                     pawn.abilities.GainAbility(DefDatabase<AbilityDef>.GetNamed(thisAbilityToAdd));
                 }
 
-                if (!String.IsNullOrEmpty(thisHediffToRemove))
+                if (thisHediffToRemove.Count > 0)
                 {
-                    List<Hediff> tmpHediffs = new List<Hediff>();
-                    tmpHediffs.AddRange(pawn.health.hediffSet.hediffs);
-                    for(int i = 0; i < tmpHediffs.Count; i++)
+                    foreach (string h in thisHediffToRemove)
                     {
-                        Hediff tmpHediff = tmpHediffs[i];
-
-                        if(tmpHediff.def.defName == thisHediffToRemove)
+                        List<Hediff> tmpHediffs = new List<Hediff>();
+                        tmpHediffs.AddRange(pawn.health.hediffSet.hediffs);
+                        for (int i = 0; i < tmpHediffs.Count; i++)
                         {
-                            pawn.health.RemoveHediff(tmpHediff);
+                            Hediff tmpHediff = tmpHediffs[i];
+
+                            if (tmpHediff.def.defName == h)
+                            {
+                                pawn.health.RemoveHediff(tmpHediff);
+                            }
                         }
                     }
                     
