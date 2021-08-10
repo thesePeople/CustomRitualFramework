@@ -58,10 +58,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplyUtility.cs" />
+    <Compile Include="CompProperties_StartRitual_OnlyObligation.cs" />
+    <Compile Include="CompAbilityEffect_StartRitual_OnlyObligation.cs" />
+    <Compile Include="RitualObligationTrigger_EventProperties.cs" />
     <Compile Include="RitualRoleColonistPrisonerOrSlave.cs" />
     <Compile Include="RitualRolePrisonerOrSlave_NonDuel.cs" />
     <Compile Include="Precept_Ritual_Custom.cs" />
-    <Compile Include="RitualObligationTrigger_Custom.cs" />
+    <Compile Include="RitualObligationTrigger_Event.cs" />
     <Compile Include="RitualBehaviorWorker_Speech_Custom.cs" />
     <Compile Include="RitualOutcomeEffectWorker_FromQuality_Custom.cs" />
     <Compile Include="HarmonyPatcher.cs" />

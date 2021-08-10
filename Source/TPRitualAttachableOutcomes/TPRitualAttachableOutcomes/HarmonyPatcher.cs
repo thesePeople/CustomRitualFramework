@@ -214,6 +214,66 @@ namespace TPRitualAttachableOutcomes
         }
     }
 
+    [HarmonyPatch(typeof(IncidentWorker))]
+    [HarmonyPatch("TryExecute")]
+    public class Patch_IncidentWorker_TryExecute
+    {
+        public static void Postfix(IncidentParms parms, IncidentWorker __instance, ref bool __result)
+        {
+            if (__result)
+            {
+
+                foreach (Ideo ideo in Find.FactionManager.OfPlayer.ideos.AllIdeos)
+                {
+                    foreach (Precept p in ideo.PreceptsListForReading)
+                    {
+
+                        if (p is Precept_Ritual ritual)
+                        {
+                            foreach (RitualObligationTrigger rot in ritual.obligationTriggers)
+                            {
+                                if (rot is RitualObligationTrigger_Event rotEvent)
+                                {
+                                    rotEvent.Notify_Event(__instance.def);
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+
+    [HarmonyPatch(typeof(RitualOutcomeEffectWorker))]
+    [HarmonyPatch("MakeMemory")]
+    public class Patch_RitualOutcomeEffectWorker_MakeMemory
+    {
+        public static void Prefix(Pawn p, LordJob_Ritual ritual, ThoughtDef overrideDef = null)
+        {
+            int ii = 0;
+            bool found = false;
+            foreach(RitualObligation r in ritual.Ritual.activeObligations)
+            {
+                foreach(RitualObligationTriggerProperties t in ritual.Ritual.sourcePattern.ritualObligationTriggers)
+                {
+                    if(t is RitualObligationTrigger_EventProperties rotEvent)
+                    {
+                        // I'm just going to go ahead and assume that if this ritual had an event trigger and the ritual occurred, we can remove at least one of the corresponding obligations
+                        ritual.Ritual.activeObligations.RemoveAt(ii);
+                        found = true;
+                        break;
+                    }
+                }
+                if (found)
+                {
+                    break;
+                }
+                ii++;
+            }
+        }
+    }
+
     /*[HarmonyPatch(typeof(Precept_Ritual), "get_RepeatPenaltyDurationDays")]
     internal class Patch_RepeatPenaltyDurationDays
     {

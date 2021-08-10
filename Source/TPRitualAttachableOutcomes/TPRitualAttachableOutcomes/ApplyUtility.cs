@@ -149,7 +149,7 @@ namespace TPRitualAttachableOutcomes
                 {
                     foreach (string h in thisHediff)
                     {
-                        //  Log.Message("Applying " + thisHediff + " to pawn...");
+                        Log.Message("Applying " + h + " to pawn...");
                         Hediff hediffToAdd = HediffMaker.MakeHediff(DefDatabase<HediffDef>.GetNamed(h), pawn, null);
 
                         BodyPartRecord bpr = new BodyPartRecord();
