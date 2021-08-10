@@ -38,6 +38,10 @@ Got an idea for something to add? Great! Once more, feel free to make a pull req
 
 	Although the framework allows users to define rituals that add hediffs, expanding hediffs is (currently) out of scope for the project. Likewise, even other Precept mechanics are likely to be out of scope, even with new specialist roles. However, we don't want to seal away the possibility of touching on these items if there's something that requires changes to those that can b added to custom rituals.
 	
+## Want to help out but don't know what to do?
+
+Check out the [Roadmap project](https://github.com/thesePeople/CustomRitualFramework/projects/1) where we list ideas we have but aren't currently working on. If you see something you'd like to work on, please create an issue for it and start cracking!
+	
 ## Rituals may have Obligations, but we don't: 
 
 If you contribute something, in any way, don't feel obligated to continue contributing or supporting something you've contributed. This is a hobby project, not a career. Likewise, don't feel like you need to work on issues or anything in the 'roadmap' if you would rather implement, say, new RitualObligationTriggers or RitualStages. 
