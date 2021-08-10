@@ -225,25 +225,12 @@
 						<appliesTo>
 							<li>curee</li>
 						</appliesTo>
-						<hediffToRemove>Flu</hediffToRemove>
-					</li>
-					<li>
-						<appliesTo>
-							<li>curee</li>
-						</appliesTo>
-						<hediffToRemove>Plague</hediffToRemove>
-					</li>
-					<li>
-						<appliesTo>
-							<li>curee</li>
-						</appliesTo>
-						<hediffToRemove>Animal_plague</hediffToRemove>
-					</li>
-					<li>
-						<appliesTo>
-							<li>curee</li>
-						</appliesTo>
-						<hediffToRemove>Animal_flu</hediffToRemove>
+						<hediffToRemove>
+							<li>Flu</li>
+							<li>Plague</li>
+							<li>Animal_flu</li>
+							<li>Animal_plague</li>
+						</hediffToRemove>
 					</li>
 				</node>
 			</li>

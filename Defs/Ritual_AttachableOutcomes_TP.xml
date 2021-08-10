@@ -5,7 +5,9 @@
     <defName>BountifulHarvest</defName>
 	 <modExtensions>
             <li Class="TPRitualAttachableOutcomes.RitualAttachableOutcomeEffectDef_TP_Custom">
-                <hediffToAdd>HarvestBonus</hediffToAdd>
+                <hediffToAdd>
+					<li>HarvestBonus</li>
+				</hediffToAdd>
             </li>
         </modExtensions>
     <workerClass>TPRitualAttachableOutcomes.TPRitualAttachableOutcomeEffectWorker_Custom</workerClass>
@@ -29,7 +31,9 @@
 					<!-- the above two flags set then mean that each pawn in the ritual gets one of these buffs, at random -->
 					<!-- you can specify a weight in them too -->
 					<li>
-						<hediffToAdd>HarvestBonus</hediffToAdd>
+						<hediffToAdd>
+							<li>HarvestBonus</li>
+						</hediffToAdd>
 					</li>
 					<li>
 						<thought>GambleThrill</thought>
@@ -69,13 +73,13 @@
 				<!--<abilityToAdd>Painblock</abilityToAdd> -->
 				
 				<!-- syntax for hediff removal, so you can make cure disease rituals. Note that this will remove all hediffs of this def -->
-				<!-- <hediffToRemove>CryptosleepSickness</hediffToRemove> -->
+				<!-- <hediffToRemove><li>CryptosleepSickness</li></hediffToRemove> -->
 				
 				<!-- You can now specify a bodyPart and add to a hediff's severity. The severity offset will occur for the first instance found of the hediff to add, so use caution with hediffs that can have multiple instances
 				In the future this may be reworked to tie the bodyPart in with both adding and removing hediffs, to only target the set there for either. 
 				But I don't foresee this being used all that much in the first place, so y'know. 
 				<li>
-						<hediffToAdd>Alzheimers</hediffToAdd>
+						<hediffToAdd><li>Alzheimers</li></hediffToAdd>
 						<bodyPart>Torso</bodyPart>
 						<hediffSeverity>0.6</hediffSeverity>
 					</li> -->
@@ -98,7 +102,9 @@
 										<!-- if the outer node runs (which it will if you supply nothing for the triggerPositivityIndex) then this will be checked -->
 										<!-- triggerPositivityIndex is a list of positivityIndices that this will run on. By default -2 is worst, -1 is bad, 1 is good, and 2 is great, but invidiual rituals can supply others -->
 										<!-- this allows the framework to be extensible to custom rituals -->
-										<hediffToAdd>CatatonicBreakdown</hediffToAdd>
+										<hediffToAdd>
+											<li>CatatonicBreakdown</li>
+									</hediffToAdd>
 										<!-- this specifies a list of ritual roles to apply it to. Note that it's the role of the ritual, so if the ritual allows substitutions for a role they will be targeted -->
 										<appliesTo>
 											<li>leader</li>
@@ -118,7 +124,9 @@
 									</li>
 									<li>
 										<weight>0.5</weight>
-										<hediffToAdd>FoodPoisoning</hediffToAdd>
+										<hediffToAdd>
+											<li>FoodPoisoning</li>
+									</hediffToAdd>
 										<!-- invertApply applies this node's effects (a hediff in this case, but it could be a removed hediff, an ability, an inspiration, or a thought) to everyone EXCEPT the roles listed. You can use two separate nodes with different targeting to apply different hediffs to leaders/spectators for example. The list of what you can do and combine is non-exhaustive here -->
 										<invertApply>true</invertApply>
 										<appliesTo>
@@ -153,7 +161,9 @@
 									<li>-2</li>
 									<li>-1</li>
 								</triggerPositivityIndex>
-								<hediffToAdd>FoodPoisoning</hediffToAdd>
+								<hediffToAdd>
+									<li>FoodPoisoning</li>
+							</hediffToAdd>
 								<invertApply>true</invertApply>
 								<appliesTo>
 									<li>leader</li>
