@@ -9,6 +9,7 @@ using Verse;
 using UnityEngine;
 
 
+
 namespace TPRitualAttachableOutcomes
 {
     [StaticConstructorOnStartup]
@@ -277,6 +278,76 @@ namespace TPRitualAttachableOutcomes
                 }
                 ii++;
             }
+        }
+    }
+
+    // Command_Ritual
+    // DrawIcon
+    [HarmonyPatch(typeof(Command_Ritual))]
+    [HarmonyPatch("DrawIcon")]
+    public class Patch_Command_Ritual_DrawIcon
+    {
+        private static void DrawIcon(Rect rect, Material buttonMat, GizmoRenderParms parms, Command_Ritual instance)
+        {
+            Texture2D badTex = instance.icon;
+            if (badTex == null)
+            {
+                badTex = BaseContent.BadTex;
+            }
+            rect.position += new Vector2(instance.iconOffset.x * rect.size.x, instance.iconOffset.y * rect.size.y);
+            if (!instance.disabled || parms.lowLight)
+            {
+                GUI.color = instance.IconDrawColor;
+            }
+            else
+            {
+                GUI.color = instance.IconDrawColor.SaturationChanged(0f);
+            }
+            if (parms.lowLight)
+            {
+                GUI.color = GUI.color.ToTransparent(0.6f);
+            }
+            Widgets.DrawTextureFitted(rect, badTex, instance.iconDrawScale * 0.85f, instance.iconProportions, instance.iconTexCoords, instance.iconAngle, buttonMat);
+            GUI.color = Color.white;
+        }
+        public static bool Prefix(Command_Ritual __instance, Rect rect, Material buttonMat, GizmoRenderParms parms, Precept_Ritual ___ritual, Texture2D ___CooldownBarTex, IntVec2 ___PenaltyIconSize)
+        {
+            int coolDownDays = 20;
+            Precept_Ritual_Custom customPreceptRitual = ___ritual.def.GetModExtension<Precept_Ritual_Custom>();
+
+            //Log.Message("getting the real cooldown for " + __instance.def.defName);
+
+            if (customPreceptRitual != null)
+            {
+                //Log.Message("customCooldown: " + customPreceptRitual.coolDownDays + " for ritual " + __instance.def.label);
+                if (customPreceptRitual.coolDownDays != coolDownDays)
+                {
+                    coolDownDays = customPreceptRitual.coolDownDays;
+                }
+                else // so far the only reason to override this is for a non-default cooldown, so if it is the default cooldown just go back to the original
+                {
+                    return true;
+                }
+            }
+
+            // some day this may be cleaned up but more likely 20 years from now after I've been killed in a freak skydiving accident, some young modder will come across it and say 'wtf'
+            Texture2D ___PenaltyArrowTex = ContentFinder<Texture2D>.Get("UI/Icons/Rituals/QualityPenalty");
+            float cooldownTicks = 60000f * coolDownDays;
+
+            Patch_Command_Ritual_DrawIcon.DrawIcon(rect, buttonMat, parms, __instance);
+            if (___ritual.RepeatPenaltyActive)
+            {
+                float value = Mathf.InverseLerp(cooldownTicks, 0f, ___ritual.TicksSinceLastPerformed);
+                Widgets.FillableBar(rect.ContractedBy(1f), Mathf.Clamp01(value), ___CooldownBarTex, null, doBorder: false);
+                Verse.Text.Font = GameFont.Tiny;
+                Verse.Text.Anchor = UnityEngine.TextAnchor.UpperCenter;
+                float num = (float)(cooldownTicks - ___ritual.TicksSinceLastPerformed) / 60000f;
+                Widgets.Label(label: "PeriodDays".Translate((!(num >= 1f)) ? ((float)(int)(num * 10f) / 10f) : ((float)Mathf.RoundToInt(num))), rect: rect);
+                Text.Anchor = TextAnchor.UpperLeft;
+                GUI.DrawTexture(new Rect(rect.xMax - (float)___PenaltyIconSize.x, rect.yMin + 4f, ___PenaltyIconSize.x, ___PenaltyIconSize.z), ___PenaltyArrowTex);
+            }
+
+            return false;
         }
     }
 
