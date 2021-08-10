@@ -2,6 +2,7 @@
 
 This repository is for a framework for creating custom rituals and attachable effects. The rituals, outcome effects, and hediffs defined within are meant as examples. If you wish to create new rituals, all you need to do is download this mod from here and put it in your Rimworld/Mods folder. (Or alternatively, subscribe on Steam: https://steamcommunity.com/sharedfiles/filedetails/?id=2561617361 ). After that, you can create your own Mod that references the classes in this one. Make sure to load your mod after Custom Ritual Framework, and if you wish to publish it on Steam, or just want a little more ease in keeping your modlist organized, be sure to add the following to your About.xml's ModMetaData:
 
+```
 <modDependencies>
 	<li>
 		<packageId>thesepeople.RitualAttachableOutcomes</packageId>
@@ -11,6 +12,7 @@ This repository is for a framework for creating custom rituals and attachable ef
 <loadAfter>
 	<li>thesepeople.RitualAttachableOutcomes</li>
 </loadAfter>
+```
 
 # Contributing to the Framework
 
@@ -24,7 +26,7 @@ With literally tens of thousands of mods and hundreds of thousands of potential 
 
 If you can fix anything from the issue list, feel free to make a pull request and work on it. We have no real formal review process yet, so please just be considerate. :)
 
-##Implementing New Features
+## Implementing New Features
 
 Got an idea for something to add? Great! Once more, feel free to make a pull request. There are two design philosophies that the framework tries to follow. 
 
@@ -35,6 +37,10 @@ Got an idea for something to add? Great! Once more, feel free to make a pull req
 2) Stay in the scope of custom rituals.
 
 	Although the framework allows users to define rituals that add hediffs, expanding hediffs is (currently) out of scope for the project. Likewise, even other Precept mechanics are likely to be out of scope, even with new specialist roles. However, we don't want to seal away the possibility of touching on these items if there's something that requires changes to those that can b added to custom rituals.
+	
+## Want to help out but don't know what to do?
+
+Check out the [Roadmap project](https://github.com/thesePeople/CustomRitualFramework/projects/1) where we list ideas we have but aren't currently working on. If you see something you'd like to work on, please create an issue for it and start cracking!
 	
 ## Rituals may have Obligations, but we don't: 
 
