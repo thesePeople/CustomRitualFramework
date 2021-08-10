@@ -1,0 +1,5 @@
+C:\Users\Mike\source\repos\CustomRitualFramework\Source\TPRitualAttachableOutcomes\TPRitualAttachableOutcomes\obj\Debug\TPRitualAttachableOutcomes.csproj.AssemblyReference.cache
+C:\Users\Mike\source\repos\CustomRitualFramework\Source\TPRitualAttachableOutcomes\TPRitualAttachableOutcomes\obj\Debug\TPRitualAttachableOutcomes.csproj.CoreCompileInputs.cache
+C:\Users\Mike\source\repos\CustomRitualFramework\Assemblies\TPRitualAttachableOutcomes.dll
+C:\Users\Mike\source\repos\CustomRitualFramework\Source\TPRitualAttachableOutcomes\TPRitualAttachableOutcomes\obj\Debug\TPRitualAttachableOutcomes.csproj.CopyComplete
+C:\Users\Mike\source\repos\CustomRitualFramework\Source\TPRitualAttachableOutcomes\TPRitualAttachableOutcomes\obj\Debug\TPRitualAttachableOutcomes.dll
