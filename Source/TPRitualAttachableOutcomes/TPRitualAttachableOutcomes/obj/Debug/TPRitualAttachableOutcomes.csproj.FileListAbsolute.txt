@@ -3,3 +3,8 @@ C:\Users\Mike\source\repos\CustomRitualFramework\Source\TPRitualAttachableOutcom
 C:\Users\Mike\source\repos\CustomRitualFramework\Assemblies\TPRitualAttachableOutcomes.dll
 C:\Users\Mike\source\repos\CustomRitualFramework\Source\TPRitualAttachableOutcomes\TPRitualAttachableOutcomes\obj\Debug\TPRitualAttachableOutcomes.csproj.CopyComplete
 C:\Users\Mike\source\repos\CustomRitualFramework\Source\TPRitualAttachableOutcomes\TPRitualAttachableOutcomes\obj\Debug\TPRitualAttachableOutcomes.dll
+D:\SteamLibrary\steamapps\common\RimWorld\Mods\CustomRitualFramework\Assemblies\TPRitualAttachableOutcomes.dll
+D:\SteamLibrary\steamapps\common\RimWorld\Mods\CustomRitualFramework\Source\TPRitualAttachableOutcomes\TPRitualAttachableOutcomes\obj\Debug\TPRitualAttachableOutcomes.csproj.AssemblyReference.cache
+D:\SteamLibrary\steamapps\common\RimWorld\Mods\CustomRitualFramework\Source\TPRitualAttachableOutcomes\TPRitualAttachableOutcomes\obj\Debug\TPRitualAttachableOutcomes.csproj.CoreCompileInputs.cache
+D:\SteamLibrary\steamapps\common\RimWorld\Mods\CustomRitualFramework\Source\TPRitualAttachableOutcomes\TPRitualAttachableOutcomes\obj\Debug\TPRitualAttachableOutcomes.csproj.CopyComplete
+D:\SteamLibrary\steamapps\common\RimWorld\Mods\CustomRitualFramework\Source\TPRitualAttachableOutcomes\TPRitualAttachableOutcomes\obj\Debug\TPRitualAttachableOutcomes.dll

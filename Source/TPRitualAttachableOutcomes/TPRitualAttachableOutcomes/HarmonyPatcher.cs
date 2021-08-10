@@ -253,6 +253,12 @@ namespace TPRitualAttachableOutcomes
         {
             int ii = 0;
             bool found = false;
+            if(ritual == null || ritual.Ritual == null
+                || ritual.Ritual.activeObligations == null || ritual.Ritual.sourcePattern == null
+                || ritual.Ritual.activeObligations.Count == 0)
+            {
+                return;
+            }
             foreach(RitualObligation r in ritual.Ritual.activeObligations)
             {
                 foreach(RitualObligationTriggerProperties t in ritual.Ritual.sourcePattern.ritualObligationTriggers)
