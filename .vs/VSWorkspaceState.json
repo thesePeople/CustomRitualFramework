@@ -1,9 +1,11 @@
 {
   "ExpandedNodes": [
     "",
-    "\\About",
     "\\Assemblies",
     "\\Defs",
+    "\\Languages",
+    "\\Languages\\English",
+    "\\Languages\\English\\Keyed",
     "\\Source",
     "\\Source\\TPRitualAttachableOutcomes",
     "\\Source\\TPRitualAttachableOutcomes\\TPRitualAttachableOutcomes"

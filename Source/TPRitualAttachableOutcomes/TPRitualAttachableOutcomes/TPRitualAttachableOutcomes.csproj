@@ -66,6 +66,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplyUtility.cs" />
+    <Compile Include="RitualObligationTargetWorker_AnyRitualSpotOrAltar_Extra.cs" />
+    <Compile Include="RitualTargetFilter_IdeoBuilding_Extra.cs" />
+    <Compile Include="TargetFilter_ModExtension.cs" />
     <Compile Include="CompProperties_StartRitual_OnlyObligation.cs" />
     <Compile Include="CompAbilityEffect_StartRitual_OnlyObligation.cs" />
     <Compile Include="RitualObligationTrigger_EventProperties.cs" />

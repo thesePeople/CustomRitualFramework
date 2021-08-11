@@ -83,6 +83,30 @@
   Despite its definition this doesn't have to be a ritual on a specific date, but if it is this is the data that is used. Also, you are free to create your own bases, or just not use the base class. Just make sure to provide all the fields the base does!
   -->
 
+    <!-- <RitualTargetFilterDef>
+    <defName>IdeoBuildingCustom</defName>
+    <workerClass>TPRitualAttachableOutcomes.RitualTargetFilter_IdeoBuilding_Extra</workerClass>
+	<modExtensions>
+		<li Class="TPRitualAttachableOutcomes.TargetFilter_ModExtension">
+			<extraCandidates>
+				<li>AncientWarspiderRemains</li>
+			</extraCandidates>
+		</li>
+	</modExtensions>
+  </RitualTargetFilterDef>
+  
+  <RitualObligationTargetFilterDef>
+    <defName>IdeoBuildingCustomO</defName>
+        <workerClass>TPRitualAttachableOutcomes.RitualObligationTargetWorker_AnyRitualSpotOrAltar_Extra</workerClass>
+	<modExtensions>
+		<li Class="TPRitualAttachableOutcomes.TargetFilter_ModExtension">
+			<extraCandidates>
+				<li>AncientWarspiderRemains</li>
+			</extraCandidates>
+		</li>
+	</modExtensions>
+  </RitualObligationTargetFilterDef> -->
+  .
   	<RitualPatternDef>
 	
 		
@@ -100,12 +124,13 @@
 		<ritualExpectedPostfix>{0} {1} want to hold the celebration as soon as possible.</ritualExpectedPostfix>
 		<iconPathOverride>UI/Icons/Rituals/RitualFestival</iconPathOverride>
 		<canStartAnytime>true</canStartAnytime>
+		<ritualTargetFilter>IdeoBuildingOrRitualSpot</ritualTargetFilter>
 		<ritualObligationTriggers>
 			<li Class="RitualObligationTrigger_DateProperties">
 				<mustBePlayerIdeo>true</mustBePlayerIdeo>
 			</li>
 		</ritualObligationTriggers>
-		<ritualObligationTargetFilter>GatheringSpotOrAltar</ritualObligationTargetFilter>
+		<ritualObligationTargetFilter>AnyIdeoBuildingOrRitualSpot</ritualObligationTargetFilter>
 		<tags>
 			<li>IdeoService</li>
 		</tags>

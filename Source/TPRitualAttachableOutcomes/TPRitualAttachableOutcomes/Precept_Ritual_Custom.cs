@@ -11,5 +11,8 @@ namespace TPRitualAttachableOutcomes
     class Precept_Ritual_Custom : DefModExtension
     {
         public int coolDownDays = 20;
+        public string building = "";
+        public bool useRoom = true;
+        public int maxDistance = 18;
     }
 }

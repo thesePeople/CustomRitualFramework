@@ -2,5 +2,6 @@
 <LanguageData>
 	
 	<MessageRitualRoleMustBeColonistPrisonerOrSlave>{0} must be a colonist, prisoner, slave.</MessageRitualRoleMustBeColonistPrisonerOrSlave>
-
+	<RequiredBuildingsNotFound>Required building(s) not found.</RequiredBuildingsNotFound>
+	<NoActiveObligations>This ritual requires an obligation.</NoActiveObligations>
 </LanguageData>

@@ -351,6 +351,97 @@ namespace TPRitualAttachableOutcomes
         }
     }
 
+    //RitualBehaviorWorker
+    //CanStartRitualNow
+    /*[HarmonyPatch(typeof(RitualBehaviorWorker))]
+    [HarmonyPatch("TryExecuteOn")]
+    public class Patch_RitualBehaviorWorker_TryExecuteOn
+    {
+        public static bool Prefix(TargetInfo target, Pawn organizer, Precept_Ritual ritual, RitualObligation obligation, RitualRoleAssignments assignments, bool playerForced = false)
+        {
+            if(ritual == null || ritual.def == null || ritual.def.GetModExtension<Precept_Ritual_Custom>() == null)
+            {
+                return true;
+            }
+            Log.Message("The ritual has modExtensions");
+
+            Precept_Ritual_Custom customPreceptRitual = ritual.def.GetModExtension<Precept_Ritual_Custom>();
+            
+            if(customPreceptRitual == null)
+            {
+                Log.Message("maybe I spoke too soon about that modExtension");
+                return true;
+            }
+
+            if(customPreceptRitual != null && String.IsNullOrEmpty(customPreceptRitual.building))
+            {
+                Log.Message("No building supplied");
+                return true;
+            }
+            if(target == null || target.Cell == null)
+            {
+                Log.Message("Target is, for some reason, invalid now? It was valid before...");
+                return true;
+            }
+
+            if(target.Map == null)
+            {
+                Log.Message("Now things are getting out of hand");
+                return true;
+            }
+
+            if (customPreceptRitual.useRoom && GatheringsUtility.UseWholeRoomAsGatheringArea(target.Cell, target.Map))
+            {
+                foreach (IntVec3 cell in target.Cell.GetRoom(target.Map).Cells)
+                {
+                    if (cell != null && Check(cell))
+                    {
+                        return true;
+                    }
+                }
+            }
+            else
+            {
+                //Log.Message("Checking general area");
+                foreach (IntVec3 item in CellRect.CenteredOn(target.Cell, customPreceptRitual.maxDistance))
+                {  
+                    if (item != null && Check(item))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+            bool Check(IntVec3 cell)
+            {
+                try
+                {
+                    //Log.Message("checking first thing");
+                    if(cell == null || DefDatabase<ThingDef>.GetNamed(customPreceptRitual.building) == null)
+                    {
+                        //Log.Message("something is very wrong");
+                        // I have no idea how this could be
+                        return false;
+                    }
+                    Thing thing = cell.GetFirstThing(target.Map, DefDatabase<ThingDef>.GetNamed(customPreceptRitual.building));
+                    if (thing != null && thing.def != null && thing.def.defName != null) // I don't think defName ever can be null but I'm reallly at a loss right now
+                    {
+                        Log.Message("Thing is " + thing.def.defName);
+                    }
+                    if (thing != null && GatheringsUtility.InGatheringArea(cell, target.Cell, target.Map))
+                    {
+                        return true;
+                    }
+                    
+                } catch (Exception e)
+                {
+                    Log.Message("Exception: " + e.Message);
+                }
+                return false;
+            }
+        }
+    }*/
+
     /*[HarmonyPatch(typeof(Precept_Ritual), "get_RepeatPenaltyDurationDays")]
     internal class Patch_RepeatPenaltyDurationDays
     {
