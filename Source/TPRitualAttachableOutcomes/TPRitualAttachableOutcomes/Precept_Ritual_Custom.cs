@@ -14,5 +14,13 @@ namespace TPRitualAttachableOutcomes
         public string building = "";
         public bool useRoom = true;
         public int maxDistance = 18;
+
+        public void ExposeData()
+        {
+            Scribe_Values.Look(ref coolDownDays, "coolDownDays");
+            Scribe_Values.Look(ref building, "building");
+            Scribe_Values.Look(ref useRoom, "useRoom");
+            Scribe_Values.Look(ref maxDistance, "maxDistance");
+        }
     }
 }

@@ -30,7 +30,7 @@ namespace TPRitualAttachableOutcomes
                     List <Thing> extraCandidates = new List<Thing>();
                     foreach (string t in modExtension.extraCandidates)
                     {
-                        Log.Message("Looking for " + t); 
+                      //  Log.Message("Looking for " + t); 
                         extraCandidates.AddRange(from s in initiator.Map.listerThings.ThingsOfDef(DefDatabase<ThingDef>.GetNamed(t))
                                      where pawn.CanReach(s, PathEndMode.Touch, pawn.NormalMaxDanger())
                                      select s);

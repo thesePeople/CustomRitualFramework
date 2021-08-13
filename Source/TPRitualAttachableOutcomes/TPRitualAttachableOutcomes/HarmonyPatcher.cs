@@ -223,19 +223,25 @@ namespace TPRitualAttachableOutcomes
         {
             if (__result)
             {
-              //  Log.Message("Incident named " + __instance.def.defName + " successfully fired");
+                //  Log.Message("Incident named " + __instance.def.defName + " successfully fired");
+                int num3 = 0;
                 foreach (Ideo ideo in Find.FactionManager.OfPlayer.ideos.AllIdeos)
                 {
+                    num3++;
+                    int num2 = 0;
                     foreach (Precept p in ideo.PreceptsListForReading)
                     {
-
+                        num2++;
                         if (p is Precept_Ritual ritual)
                         {
-                            foreach (RitualObligationTrigger rot in ritual.obligationTriggers)
+                            
+                            foreach (RitualObligationTrigger rots in ritual.obligationTriggers)
                             {
-                                if (rot is RitualObligationTrigger_Event rotEvent)
+                                int num = 0;
+                                if (rots is RitualObligationTrigger_Event rotEvent)
                                 {
-                                   // Log.Message("Incident being passed to trigger");
+                                    Log.Message("Incident being passed to trigger " + num + " of ritual " + ritual.def.LabelCap + ": " + ritual.Description + " ( ritual number " + num2 + " and " + num3 +" times we've seen this Ideology, named " + ideo.name + " which should be 1)");
+                                    num++;
                                     rotEvent.Notify_Event(__instance.def);
                                 }
                             }

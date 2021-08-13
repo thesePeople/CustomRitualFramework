@@ -38,6 +38,37 @@ namespace TPRitualAttachableOutcomes
         public string incident = "";
         public IncidentParmsCustom incidentParms = new IncidentParmsCustom();
         public List<RitualAttachableOutcomeEffectDef_TP_Custom_Node> node;
+
+        public void ExposeData()
+        {
+            Scribe_Collections.Look(ref triggerPositivityIndex, "triggerPositivityIndex");
+            Scribe_Values.Look(ref  cooldownDays, "cooldownDays");
+            Scribe_Collections.Look(ref hediffToAdd, "hediffToAdd");
+            Scribe_Values.Look(ref hediffSeverity, "hediffSeverity");
+            Scribe_Values.Look(ref bodyPart, "bodyPart");
+            Scribe_Collections.Look(ref hediffToRemove, "hediffToRemove");
+            Scribe_Values.Look(ref thought, "thought");
+            Scribe_Values.Look(ref inspiration, "inspiration");
+            Scribe_Collections.Look(ref appliesTo, "appliesTo");
+            Scribe_Values.Look(ref appliesToRandom, "appliesToRandom");
+            Scribe_Values.Look(ref invertApply, "invertApply");
+            Scribe_Values.Look(ref forEachPawn, "forEachPawn");
+            Scribe_Values.Look(ref onlyPositiveOutcomes, "onlyPositiveOutcomes");
+            Scribe_Values.Look(ref item, "item");
+            Scribe_Values.Look(ref baseAmount, "baseAmount");
+            Scribe_Values.Look(ref amountPerPawn, "amountPerPawn");
+            Scribe_Values.Look(ref spawnNearRitual, "spawnNearRitual");
+            Scribe_Values.Look(ref weather, "weather");
+            Scribe_Values.Look(ref abilityToAdd, "abilityToAdd");
+            Scribe_Values.Look(ref letterLabel, "letterLabel");
+            Scribe_Values.Look(ref letterText, "letterText");
+            Scribe_Values.Look(ref letterType, "letterType");
+            Scribe_Values.Look(ref randomFromNode, "randomFromNode");
+            Scribe_Values.Look(ref weight, "weight");
+            Scribe_Values.Look(ref incident, "incident");
+            Scribe_Values.Look(ref incidentParms, "incidentParms");
+            Scribe_Collections.Look(ref node, "node");
+        }
     }
 
     [StaticConstructorOnStartup]

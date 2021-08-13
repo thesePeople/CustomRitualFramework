@@ -16,5 +16,11 @@ namespace TPRitualAttachableOutcomes
         {
             triggerClass = typeof(RitualObligationTrigger_Event);
         }
+
+        public void ExposeData()
+        {
+            Scribe_Values.Look(ref eventDefName, "eventDefName");
+            Scribe_Values.Look(ref removeAfterTicks, "removeAfterTicks");
+        }
     }
 }
