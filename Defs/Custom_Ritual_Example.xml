@@ -31,8 +31,8 @@
 	<!-- admittedly I'm not sure what this does, but I think it has to do with the chance that it appears in the randomly generated rituals -->
 	<preceptInstanceCountCurve>
 		<points>
-			<li>(0.5, 1)</li>
-			<li>(1.0, 2)</li>
+			<li>(0.6, 0)</li>
+			<li>(1.0, 1)</li>
       </points>
 	</preceptInstanceCountCurve>
 	
@@ -44,7 +44,7 @@
     <preceptClass>Precept_Ritual</preceptClass>
     <ritualPatternBase>IdeoService</ritualPatternBase>
     <allowDuplicates>true</allowDuplicates>
-    <countsTowardsPreceptLimit>false</countsTowardsPreceptLimit>
+    <countsTowardsPreceptLimit>true</countsTowardsPreceptLimit>
     <ignoreLimitsInEditMode>true</ignoreLimitsInEditMode>
     <receivesExpectationsQualityOffset>true</receivesExpectationsQualityOffset>
 	

@@ -7,8 +7,8 @@
     
 	<preceptInstanceCountCurve>
 		<points>
-			<li>(0.5, 1)</li>
-			<li>(1.0, 2)</li>
+			<li>(0.6, 0)</li>
+			<li>(1.0, 1)</li>
       </points>
 	  </preceptInstanceCountCurve>
 	  
@@ -19,7 +19,7 @@
     <preceptClass>Precept_Ritual</preceptClass>
     <ritualPatternBase>CureDisease</ritualPatternBase>
     <allowDuplicates>true</allowDuplicates>
-    <countsTowardsPreceptLimit>false</countsTowardsPreceptLimit>
+    <countsTowardsPreceptLimit>true</countsTowardsPreceptLimit>
     <ignoreLimitsInEditMode>true</ignoreLimitsInEditMode>
     <receivesExpectationsQualityOffset>true</receivesExpectationsQualityOffset>
   
