@@ -35,6 +35,8 @@ namespace TPRitualAttachableOutcomes
         public string letterType = "positive";
         public bool randomFromNode = false;
         public float weight = 1f;
+        public string incident = "";
+        public IncidentParmsCustom incidentParms = new IncidentParmsCustom();
         public List<RitualAttachableOutcomeEffectDef_TP_Custom_Node> node;
     }
 

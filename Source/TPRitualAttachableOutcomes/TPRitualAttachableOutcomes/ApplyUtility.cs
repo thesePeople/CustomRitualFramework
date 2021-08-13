@@ -63,6 +63,8 @@ namespace TPRitualAttachableOutcomes
 
             string thisWeather = nodeToProcess.weather ?? "";
 
+            string thisIncident = nodeToProcess.incident ?? "";
+
             string thisLetterLabel = nodeToProcess.letterLabel ?? "";
             string thisLetterText = nodeToProcess.letterText ?? "";
             string thisLetterType = nodeToProcess.letterType ?? "";
@@ -255,6 +257,12 @@ namespace TPRitualAttachableOutcomes
             }
 
             // force other event?
+            if(!String.IsNullOrEmpty(thisIncident))
+            {
+                IncidentParmsCustom incidentParms = nodeToProcess.incidentParms;
+                incidentParms.target = Find.CurrentMap;
+                DefDatabase<IncidentDef>.GetNamed(thisIncident).Worker.TryExecute(ConvertCustomIncidentParms(incidentParms));
+            }
 
             // send a letter
             LetterDef letterType = LetterDefOf.PositiveEvent;
@@ -320,5 +328,45 @@ namespace TPRitualAttachableOutcomes
                 }
             }
         }
+        private static IncidentParms ConvertCustomIncidentParms(IncidentParmsCustom incidentParms)
+        {
+            IncidentParms newIncidentParms = (IncidentParms)incidentParms;
+
+            // some defaults
+            newIncidentParms.spawnRotation = Rot4.Random;
+            newIncidentParms.target = Find.CurrentMap;
+            //this.points = (float)((int)(Find.CurrentMap.strengthWatcher.StrengthRating * 50f));
+
+            //Log.Message("scalePoints is " + incidentParms.scalePoints);
+            if (incidentParms.scalePoints)
+            {
+                // this.points = (float)((int)(Find.CurrentMap.strengthWatcher.StrengthRating * 50f)); 
+                float newPoints = StorytellerUtility.DefaultThreatPointsNow(Find.CurrentMap);
+
+              //  Log.Message("setting points to " + newPoints);
+                newIncidentParms.points = newPoints;
+            }
+            //Log.Message("myRaidStrategy is " + incidentParms.myRaidStrategy);
+            if (!String.IsNullOrEmpty(incidentParms.myRaidStrategy))
+            {
+                newIncidentParms.raidStrategy = DefDatabase<RaidStrategyDef>.GetNamed(incidentParms.myRaidStrategy);
+            }
+
+            if (!String.IsNullOrEmpty(incidentParms.myRaidArrivalMode))
+            {
+                newIncidentParms.raidArrivalMode = DefDatabase<PawnsArrivalModeDef>.GetNamed(incidentParms.myRaidArrivalMode);
+
+                // it looks like spawnCenter is set by the PawnsArrivalModeWorker. If they try to override the spawnCenter should we do something?
+            }
+
+            if (!String.IsNullOrEmpty(incidentParms.myFaction))
+            {
+                newIncidentParms.faction = Find.FactionManager.FirstFactionOfDef(DefDatabase<FactionDef>.GetNamed(incidentParms.myFaction));
+            }
+
+            return newIncidentParms;
+        }
     }
+
+   
 }

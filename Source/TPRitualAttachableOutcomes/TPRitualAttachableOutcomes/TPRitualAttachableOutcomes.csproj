@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplyUtility.cs" />
+    <Compile Include="IncidentParmsCustom.cs" />
     <Compile Include="RitualObligationTargetWorker_AnyRitualSpotOrAltar_Extra.cs" />
     <Compile Include="RitualTargetFilter_IdeoBuilding_Extra.cs" />
     <Compile Include="TargetFilter_ModExtension.cs" />

@@ -37,9 +37,11 @@ namespace TPRitualAttachableOutcomes
         }
         public void Notify_Event(IncidentDef incident)
         {
+			Log.Message("this event defName " + this.eventDefName + ", incident defName " + incident.defName);
 			// create an obligation if the event matches, but only if the ritual doesn't have any current obligations
 			if (this.eventDefName == incident.defName && (ritual.activeObligations == null || ritual.activeObligations.Count == 0) )
 			{
+				Log.Message("adding obligation");
 				ro = new RitualObligation(ritual);
 				ritual.AddObligation(ro); //maybe something about only triggering it on a map that the ideo has pawns on. And only player pawns ofc
 			}

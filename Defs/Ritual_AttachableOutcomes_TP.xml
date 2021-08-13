@@ -5,9 +5,16 @@
     <defName>BountifulHarvest</defName>
 	 <modExtensions>
             <li Class="TPRitualAttachableOutcomes.RitualAttachableOutcomeEffectDef_TP_Custom">
-                <hediffToAdd>
+                <!--<hediffToAdd>
 					<li>HarvestBonus</li>
-				</hediffToAdd>
+				</hediffToAdd>-->
+				<incident>RaidEnemy</incident>
+				<incidentParms Class="TPRitualAttachableOutcomes.IncidentParmsCustom">
+					<scalePoints>true</scalePoints>
+					<myRaidStrategy>ImmediateAttack</myRaidStrategy>
+					<myRaidArrivalMode>EdgeWalkInGroups</myRaidArrivalMode>
+					<myFaction>TribeSavage</myFaction>
+				</incidentParms>
             </li>
         </modExtensions>
     <workerClass>TPRitualAttachableOutcomes.TPRitualAttachableOutcomeEffectWorker_Custom</workerClass>

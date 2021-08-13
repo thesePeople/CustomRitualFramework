@@ -223,7 +223,7 @@ namespace TPRitualAttachableOutcomes
         {
             if (__result)
             {
-
+              //  Log.Message("Incident named " + __instance.def.defName + " successfully fired");
                 foreach (Ideo ideo in Find.FactionManager.OfPlayer.ideos.AllIdeos)
                 {
                     foreach (Precept p in ideo.PreceptsListForReading)
@@ -235,6 +235,7 @@ namespace TPRitualAttachableOutcomes
                             {
                                 if (rot is RitualObligationTrigger_Event rotEvent)
                                 {
+                                   // Log.Message("Incident being passed to trigger");
                                     rotEvent.Notify_Event(__instance.def);
                                 }
                             }
