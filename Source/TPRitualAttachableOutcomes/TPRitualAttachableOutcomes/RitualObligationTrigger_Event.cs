@@ -30,9 +30,16 @@ namespace TPRitualAttachableOutcomes
             {
 				removeAfterTicks--;
             }
-            else if(ro != null)
+            else if(ro != null && ritual != null && ritual.activeObligations != null)
             {
-				ritual.activeObligations.Remove(ro);
+				try
+				{
+					ritual.activeObligations.Remove(ro);
+				}
+				catch (Exception e)
+                {
+					Log.Message("Obligation unable to be removed, likely because it already doesn't exist");
+                }
             }
         }
         public void Notify_Event(IncidentDef incident)

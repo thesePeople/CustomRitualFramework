@@ -106,7 +106,9 @@
 		</li>
 	</modExtensions>
   </RitualObligationTargetFilterDef> -->
-  .
+  
+
+  
   	<RitualPatternDef>
 	
 		
@@ -138,11 +140,28 @@
 		
 	</RitualPatternDef>
 	
+	<DutyDef>
+		<defName>PlayMusic</defName>
+		<socialModeMax>Off</socialModeMax>
+		<thinkNode Class="ThinkNode_Priority">
+		  <subNodes>
+			<li Class="TPRitualAttachableOutcomes.JobGiver_MusicianPlayInstrument">
+				<thingDefNames>
+					<li>Harp</li>
+					<li>Harpsichord</li>
+					<li>Piano</li>
+				</thingDefNames>	
+				<maxDistance>8</maxDistance>
+			</li>
+		  </subNodes>
+		</thinkNode>
+	</DutyDef>
+	
 <!-- RitualBehavior - this is where you define what the pawns do during the ritual.-->
 
 	 <RitualBehaviorDef>
 		<defName>IdeoServiceBehavior</defName>
-		<durationTicks>3000</durationTicks>
+		<durationTicks>6000</durationTicks>
 		<spectatorsLabel>Participants</spectatorsLabel>
 		<spectatorGerund>participate</spectatorGerund>
 		
@@ -158,10 +177,52 @@
 				<maxCount>1</maxCount>
 				<countsAsParticipant>False</countsAsParticipant>
 			</li>
+			
+			<!-- anyone can be the musician. May later make a quality based on if a musician was present and their Artistic skill -->
+			<li Class="RitualRoleColonist">
+				<label>musician</label>
+				<id>musician</id>
+				<required>False</required>
+				<substitutable>true</substitutable>
+				<maxCount>1</maxCount>
+				<countsAsParticipant>True</countsAsParticipant>
+			</li>
+			
 			<!-- if we wanted to define more roles involved we would add another li tag like the above -->
 		</roles>
 		
 		<stages>
+			
+			<!-- wait for arrival -->
+			
+			
+			<!-- opening hymns, optional if musical instrument is available -->
+			<li>
+				<defaultDuty>Spectate</defaultDuty>
+				<essential>False</essential>
+				<endTriggers>
+					  <li Class="StageEndTrigger_DurationPercentage">
+						<percentage>0.2</percentage>
+					  </li>
+					  <li Class="TPRitualAttachableOutcomes.StageEndTrigger_ThingNotPresent">
+						<thingDefNames>
+							<li>Harp</li>
+							<li>Harpsichord</li>
+							<li>Piano</li>
+						</thingDefNames>
+						<maxDistance>8</maxDistance>
+					  </li>
+				</endTriggers>
+				
+				<roleBehaviors>
+					<li>
+						<roleId>musician</roleId>
+						<dutyDef>PlayMusic</dutyDef>
+					</li>
+				</roleBehaviors>
+				
+			</li>
+			
 			<!-- speaker speaks -->
 			<!-- each of these outermost li tags is one stage of the ritual -->
 			<li>
@@ -171,7 +232,7 @@
 				<!-- different things can end the stage, but the most common is time based.  The duration percentages are the duration of the total time each step should take, so they should add to 1 --> 
 				<endTriggers>
 				  <li Class="StageEndTrigger_DurationPercentage">
-					<percentage>0.6</percentage>
+					<percentage>0.5</percentage>
 				  </li>
 				</endTriggers>
 				<!-- this just sends a message to the top bar thing -->
@@ -199,7 +260,7 @@
 			<defaultDuty>Spectate</defaultDuty>
 			<endTriggers>
 			  <li Class="StageEndTrigger_DurationPercentage">
-				<percentage>0.3</percentage>
+				<percentage>0.2</percentage>
 			  </li>
 			</endTriggers>
 		  </li>

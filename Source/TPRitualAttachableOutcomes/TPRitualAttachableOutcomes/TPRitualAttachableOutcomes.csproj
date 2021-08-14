@@ -66,6 +66,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplyUtility.cs" />
+    <Compile Include="JobGiver_MusicianPlayInstrument.cs" />
+    <Compile Include="StageEndTrigger_ThingNotPresent.cs" />
     <Compile Include="IncidentParmsCustom.cs" />
     <Compile Include="RitualObligationTargetWorker_AnyRitualSpotOrAltar_Extra.cs" />
     <Compile Include="RitualTargetFilter_IdeoBuilding_Extra.cs" />
