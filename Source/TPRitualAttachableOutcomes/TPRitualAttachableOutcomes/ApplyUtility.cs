@@ -332,6 +332,18 @@ namespace TPRitualAttachableOutcomes
         {
             IncidentParms newIncidentParms = (IncidentParms)incidentParms;
 
+            if(incidentParms.useStoryteller)
+            {
+                IncidentCategoryDef icd = IncidentCategoryDefOf.ThreatSmall;
+                if(!String.IsNullOrEmpty(incidentParms.threatLevel))
+                {
+                    icd = DefDatabase<IncidentCategoryDef>.GetNamed(incidentParms.threatLevel);
+                }
+                newIncidentParms = StorytellerUtility.DefaultParmsNow(icd, Find.CurrentMap);
+                newIncidentParms.forced = true;
+                return newIncidentParms;
+            }
+
             // some defaults
             newIncidentParms.spawnRotation = Rot4.Random;
             newIncidentParms.target = Find.CurrentMap;
@@ -363,6 +375,20 @@ namespace TPRitualAttachableOutcomes
             {
                 newIncidentParms.faction = Find.FactionManager.FirstFactionOfDef(DefDatabase<FactionDef>.GetNamed(incidentParms.myFaction));
             }
+
+            if (!String.IsNullOrEmpty(incidentParms.myPawnKind))
+            {
+                newIncidentParms.pawnKind = DefDatabase<PawnKindDef>.GetNamed(incidentParms.myPawnKind);
+            }
+
+            if (!String.IsNullOrEmpty(incidentParms.myTraderKind))
+            {
+                newIncidentParms.traderKind = DefDatabase<TraderKindDef>.GetNamed(incidentParms.myTraderKind);
+            }
+
+
+
+            newIncidentParms.forced = true;
 
             return newIncidentParms;
         }

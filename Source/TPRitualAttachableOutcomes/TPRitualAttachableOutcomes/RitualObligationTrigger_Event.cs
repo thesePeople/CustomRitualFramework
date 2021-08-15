@@ -30,7 +30,7 @@ namespace TPRitualAttachableOutcomes
             {
 				removeAfterTicks--;
             }
-            else if(ro != null && ritual != null && ritual.activeObligations != null)
+            else if(removeAfterTicks == 0 && ro != null && ritual != null && ritual.activeObligations != null)
             {
 				try
 				{

@@ -41,6 +41,7 @@ namespace TPRitualAttachableOutcomes
         public List<string> myGifts = new List<string>();
 
         public bool useStoryteller = true;
+        public string threatLevel = "";
         public bool scalePoints;
 
         public new void ExposeData()
@@ -67,6 +68,7 @@ namespace TPRitualAttachableOutcomes
             Scribe_Values.Look(ref myAttackTargets, "myAttackTargets");
             Scribe_Values.Look(ref myGifts, "myGifts");
             Scribe_Values.Look(ref useStoryteller, "useStoryteller");
+            Scribe_Values.Look(ref threatLevel, "threatLevel");
             Scribe_Values.Look(ref scalePoints, "scalePoints");
 
             base.ExposeData();
