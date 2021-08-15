@@ -73,10 +73,11 @@ namespace TPRitualAttachableOutcomes
             bool thisForEachPawn = nodeToProcess.forEachPawn;
 
             bool thisAddInnerPawn = nodeToProcess.addInnerPawn;
+            bool thisResurrect = nodeToProcess.resurrect;
 
             List<RitualAttachableOutcomeEffectDef_TP_Custom_Node> subNodes = nodeToProcess.node;
 
-           // Log.Message("Finished loading in the outcome effect data");
+            Log.Message("Finished loading in the outcome effect data");
 
 
             bool thisTargetLetter = false;
@@ -140,19 +141,25 @@ namespace TPRitualAttachableOutcomes
                 }
             }
 
+            Pawn innerPawn = null;
             // add the innerPawn for the ritual's target if it's a grave or corpse or something
             if(thisAddInnerPawn)
             {
+                Log.Message("attempting to add innerPawn");
                 if (jobRitual.selectedTarget != null && jobRitual.selectedTarget.HasThing)
                 {
                     Thing thingWithInnerPawn = jobRitual.selectedTarget.Thing;
                     if(thingWithInnerPawn is Corpse)
                     {
-                        pawnsToApplyTo.Add(((Corpse)thingWithInnerPawn).InnerPawn);
+                        Log.Message("Adding dead pawn from Corpse");
+                        innerPawn = ((Corpse)thingWithInnerPawn).InnerPawn;
                     }
-                    else if(thingWithInnerPawn is Building_Grave)
+                    else if(thingWithInnerPawn is Building_Casket)
                     {
-                        pawnsToApplyTo.Add(((Building_Grave)thingWithInnerPawn).Corpse.InnerPawn);
+                        Log.Message("Adding a dead pawn");
+                        innerPawn = ((Corpse)((Building_Casket)thingWithInnerPawn).ContainedThing).InnerPawn;
+                        ((Building_Casket)thingWithInnerPawn).Open();
+                        
                     }
                 }
             }
@@ -235,11 +242,12 @@ namespace TPRitualAttachableOutcomes
                 {
                     pawn.mindState.inspirationHandler.TryStartInspiration(DefDatabase<InspirationDef>.GetNamed(thisInspiration));
                 }
+            }
 
-                if(nodeToProcess.resurrect)
-                {
-                    ResurrectionUtility.Resurrect(pawn);
-                }
+            if (thisResurrect && innerPawn != null)
+            {
+                Log.Message("Attempting to resurrect pawn");
+                ResurrectionUtility.Resurrect(innerPawn);
             }
 
             // if they want to spawn items
