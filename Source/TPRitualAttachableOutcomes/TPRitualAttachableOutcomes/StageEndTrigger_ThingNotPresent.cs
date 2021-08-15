@@ -26,7 +26,7 @@ namespace TPRitualAttachableOutcomes
                         {
                             // thing with specified def was found 
                             //Log.Message("thing found");
-                            // check for accessibility and fail the stage if it's not there maybe
+                            // check for accessibility maybe?
                             return false;
                         }
                     }

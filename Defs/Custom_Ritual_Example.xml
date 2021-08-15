@@ -204,8 +204,8 @@
 					  <li Class="StageEndTrigger_DurationPercentage">
 						<percentage>0.2</percentage>
 					  </li>
-					  <li Class="TPRitualAttachableOutcomes.StageEndTrigger_ThingNotPresent">
-						<thingDefNames>
+					 <li Class="TPRitualAttachableOutcomes.StageEndTrigger_ThingNotPresent">
+					 	<thingDefNames>
 							<li>Harp</li>
 							<li>Harpsichord</li>
 							<li>Piano</li>
@@ -213,7 +213,17 @@
 						<maxDistance>8</maxDistance>
 					  </li>
 				</endTriggers>
-				
+				<!--<failTriggers>
+					<li Class="TPRitualAttachableOutcomes.StageFailTrigger_ThingNotPresentInArea">
+						<thingDefNames>
+							<li>Harp</li>
+							<li>Harpsichord</li>
+							<li>Piano</li>
+						</thingDefNames>
+						<maxDistance>8</maxDistance>
+						<desc>No instrument found</desc>
+					  </li>
+				</failTriggers>-->
 				<roleBehaviors>
 					<li>
 						<roleId>musician</roleId>
