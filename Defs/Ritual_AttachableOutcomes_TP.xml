@@ -8,6 +8,9 @@
                 <hediffToAdd>
 					<li>HarvestBonus</li>
 				</hediffToAdd>
+				<onlyPositiveOutcomes>false</onlyPositiveOutcomes>
+				<!-- an example for if we wanted this outcome to cause a raid, perhaps people after your tasty crops -->
+				
 				<!--<incident>RaidEnemy</incident>
 				<incidentParms Class="TPRitualAttachableOutcomes.IncidentParmsCustom">
 					<scalePoints>true</scalePoints>

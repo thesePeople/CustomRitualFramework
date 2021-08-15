@@ -358,6 +358,106 @@ namespace TPRitualAttachableOutcomes
         }
     }
 
+    //Dialog_BeginRitual
+   /* [HarmonyPatch(typeof(Dialog_BeginRitual), MethodType.Constructor)]
+    public class Patch_Dialog_BeginRitual
+    {
+        public void Prefix(Dialog_BeginRitual __instance, string header, string ritualLabel, Precept_Ritual ritual, TargetInfo target, Map map, Dialog_BeginRitual.ActionCallback action, Pawn organizer, RitualObligation obligation, Func<Pawn, bool, bool, bool> filter = null, string confirmText = null, List<Pawn> requiredPawns = null, Dictionary<string, Pawn> forcedForRole = null, string ritualName = null, RitualOutcomeEffectDef outcome = null, List<string> extraInfoText = null, Pawn selectedPawn = null, )
+        {
+            if (!ModLister.CheckRoyaltyOrIdeology("Ritual"))
+			{
+				return;
+			}
+			this.ritual = ritual;
+			this.target = target;
+			this.obligation = obligation;
+			this.extraInfos = extraInfoText;
+			this.selectedPawn = selectedPawn;
+			this.assignments = new RitualRoleAssignments(ritual);
+			List<Pawn> list = new List<Pawn>(map.mapPawns.FreeColonistsAndPrisonersSpawned);
+			for (int i = list.Count - 1; i >= 0; i--)
+			{
+				Pawn pawn = list[i];
+				if (filter != null && !filter(pawn, true, true))
+				{
+					list.RemoveAt(i);
+				}
+				else
+				{
+					bool flag2;
+					bool flag = RitualRoleAssignments.PawnNotAssignableReason(pawn, null, ritual, this.assignments, out flag2) == null || flag2;
+					if (!flag && ritual != null)
+					{
+						foreach (RitualRole ritualRole in ritual.behavior.def.roles)
+						{
+							if ((RitualRoleAssignments.PawnNotAssignableReason(pawn, ritualRole, ritual, this.assignments, out flag2) == null || flag2) && (filter == null || filter(pawn, !(ritualRole is RitualRoleForced), ritualRole.allowOtherIdeos)) && (ritualRole.maxCount > 1 || forcedForRole == null || !forcedForRole.ContainsKey(ritualRole.id)))
+							{
+								flag = true;
+								break;
+							}
+						}
+					}
+					if (!flag)
+					{
+						list.RemoveAt(i);
+					}
+				}
+			}
+			if (requiredPawns != null)
+			{
+				foreach (Pawn item in requiredPawns)
+				{
+					if (!list.Contains(item))
+					{
+						list.Add(item);
+					}
+				}
+			}
+			if (forcedForRole != null)
+			{
+				foreach (KeyValuePair<string, Pawn> keyValuePair in forcedForRole)
+				{
+					list.AddDistinct(keyValuePair.Value);
+				}
+			}
+			if (ritual != null)
+			{
+				using (List<RitualRole>.Enumerator enumerator = ritual.behavior.def.roles.GetEnumerator())
+				{
+					Func<Pawn, bool> <>9__0;
+					while (enumerator.MoveNext())
+					{
+						if (enumerator.Current.Animal)
+						{
+							List<Pawn> list2 = list;
+							IEnumerable<Pawn> spawnedColonyAnimals = map.mapPawns.SpawnedColonyAnimals;
+							Func<Pawn, bool> predicate;
+							if ((predicate = <>9__0) == null)
+							{
+								predicate = (<>9__0 = ((Pawn p) => filter == null || filter(p, true, true)));
+							}
+							list2.AddRange(spawnedColonyAnimals.Where(predicate));
+							break;
+						}
+					}
+				}
+			}
+			this.assignments.Setup(list, forcedForRole, requiredPawns, selectedPawn);
+			this.ritualExplanation = ((ritual != null) ? ritual.ritualExplanation : null);
+			this.action = action;
+			this.filter = filter;
+			this.map = map;
+			this.ritualLabel = ritualLabel;
+			this.headerText = header;
+			this.confirmText = confirmText;
+			this.organizer = organizer;
+			this.closeOnClickedOutside = true;
+			this.absorbInputAroundWindow = true;
+			this.forcePause = true;
+			this.outcome = ((ritual != null && ritual.outcomeEffect != null) ? ritual.outcomeEffect.def : outcome);
+        }
+    } */
+
     //RitualBehaviorWorker
     //CanStartRitualNow
     /*[HarmonyPatch(typeof(RitualBehaviorWorker))]

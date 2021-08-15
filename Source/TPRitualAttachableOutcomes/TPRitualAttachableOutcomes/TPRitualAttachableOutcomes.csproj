@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplyUtility.cs" />
+    <Compile Include="Class1.cs" />
     <Compile Include="StageFailTrigger_ThingNotPresentInArea.cs" />
     <Compile Include="JobGiver_MusicianPlayInstrument.cs" />
     <Compile Include="StageEndTrigger_ThingNotPresent.cs" />

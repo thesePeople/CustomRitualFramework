@@ -12,7 +12,7 @@ namespace TPRitualAttachableOutcomes
     {
         public static void ApplyNode(RitualAttachableOutcomeEffectDef_TP_Custom nodeToProcess, Dictionary<Pawn, int> totalPresence, LordJob_Ritual jobRitual, OutcomeChance outcome, ref LookTargets letterLookTargets, List<Pawn> pawnsToApplyTo = null)
         {
-            // wowee jeez I feel like this needs a refactor
+           // wowee jeez I feel like this needs a refactor
 
           //  Log.Message("somehow I'm suspicious about the totalPresence");
            // Log.Message("totalPresence count is " + totalPresence.Count);
@@ -71,6 +71,8 @@ namespace TPRitualAttachableOutcomes
 
             bool thisRandomfromNode = nodeToProcess.randomFromNode;
             bool thisForEachPawn = nodeToProcess.forEachPawn;
+
+            bool thisAddInnerPawn = nodeToProcess.addInnerPawn;
 
             List<RitualAttachableOutcomeEffectDef_TP_Custom_Node> subNodes = nodeToProcess.node;
 
@@ -135,6 +137,23 @@ namespace TPRitualAttachableOutcomes
                     pawnsToApplyTo = tmpList;
 
                     // TODO refactor this ;)
+                }
+            }
+
+            // add the innerPawn for the ritual's target if it's a grave or corpse or something
+            if(thisAddInnerPawn)
+            {
+                if (jobRitual.selectedTarget != null && jobRitual.selectedTarget.HasThing)
+                {
+                    Thing thingWithInnerPawn = jobRitual.selectedTarget.Thing;
+                    if(thingWithInnerPawn is Corpse)
+                    {
+                        pawnsToApplyTo.Add(((Corpse)thingWithInnerPawn).InnerPawn);
+                    }
+                    else if(thingWithInnerPawn is Building_Grave)
+                    {
+                        pawnsToApplyTo.Add(((Building_Grave)thingWithInnerPawn).Corpse.InnerPawn);
+                    }
                 }
             }
 
@@ -215,6 +234,11 @@ namespace TPRitualAttachableOutcomes
                 if (!String.IsNullOrEmpty(thisInspiration))
                 {
                     pawn.mindState.inspirationHandler.TryStartInspiration(DefDatabase<InspirationDef>.GetNamed(thisInspiration));
+                }
+
+                if(nodeToProcess.resurrect)
+                {
+                    ResurrectionUtility.Resurrect(pawn);
                 }
             }
 
