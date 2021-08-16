@@ -113,7 +113,9 @@
 	<modExtensions>
 		    <li Class="TPRitualAttachableOutcomes.RitualAttachableOutcomeEffectDef_TP_Custom">
 				<addInnerPawn>true</addInnerPawn>
+				<applyToInnerPawn>true</applyToInnerPawn>
 				<resurrect>true</resurrect>
+				<hediffToAdd><li>HarvestBonus</li></hediffToAdd>
 			</li>
 	</modExtensions>
 	

@@ -65,28 +65,31 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplyUtility.cs" />
-    <Compile Include="Class1.cs" />
-    <Compile Include="StageFailTrigger_ThingNotPresentInArea.cs" />
-    <Compile Include="JobGiver_MusicianPlayInstrument.cs" />
-    <Compile Include="StageEndTrigger_ThingNotPresent.cs" />
-    <Compile Include="IncidentParmsCustom.cs" />
-    <Compile Include="RitualObligationTargetWorker_AnyRitualSpotOrAltar_Extra.cs" />
-    <Compile Include="RitualTargetFilter_IdeoBuilding_Extra.cs" />
-    <Compile Include="TargetFilter_ModExtension.cs" />
-    <Compile Include="CompProperties_StartRitual_OnlyObligation.cs" />
-    <Compile Include="CompAbilityEffect_StartRitual_OnlyObligation.cs" />
-    <Compile Include="RitualObligationTrigger_EventProperties.cs" />
-    <Compile Include="RitualRoleColonistPrisonerOrSlave.cs" />
-    <Compile Include="RitualRolePrisonerOrSlave_NonDuel.cs" />
-    <Compile Include="Precept_Ritual_Custom.cs" />
-    <Compile Include="RitualObligationTrigger_Event.cs" />
-    <Compile Include="RitualBehaviorWorker_Speech_Custom.cs" />
-    <Compile Include="RitualOutcomeEffectWorker_FromQuality_Custom.cs" />
+    <Compile Include="RitualOutcomes\ApplyUtility.cs" />
+    <Compile Include="RitualStages\StageEndTrigger_ThingDeliveredOrNotValid.cs" />
+    <Compile Include="RitualStages\RitualStage_TargetThing.cs" />
+    <Compile Include="RitualStages\RitualStage_Effect.cs" />
+    <Compile Include="RitualStages\StageFailTrigger_ThingNotPresentInArea.cs" />
+    <Compile Include="RitualStages\JobGiver_MusicianPlayInstrument.cs" />
+    <Compile Include="RitualStages\StageEndTrigger_ThingNotPresent.cs" />
+    <Compile Include="RitualOutcomes\IncidentParmsCustom.cs" />
+    <Compile Include="RitualObligations\RitualObligationTargetWorker_AnyRitualSpotOrAltar_Extra.cs" />
+    <Compile Include="RitualTargetFilters\RitualTargetFilter_IdeoBuilding_Extra.cs" />
+    <Compile Include="ModExtensions\TargetFilter_ModExtension.cs" />
+    <Compile Include="RitualAbilities\CompProperties_StartRitual_OnlyObligation.cs" />
+    <Compile Include="RitualAbilities\CompAbilityEffect_StartRitual_OnlyObligation.cs" />
+    <Compile Include="RitualObligations\RitualObligationTrigger_EventProperties.cs" />
+    <Compile Include="RitualRoles\RitualRoleColonistPrisonerOrSlave.cs" />
+    <Compile Include="RitualRoles\RitualRolePrisonerOrSlave_NonDuel.cs" />
+    <Compile Include="ModExtensions\Precept_Ritual_Custom.cs" />
+    <Compile Include="RitualObligations\RitualObligationTrigger_Event.cs" />
+    <Compile Include="ModExtensions\RitualBehaviorWorker_Speech_Custom.cs" />
+    <Compile Include="RitualOutcomes\RitualOutcomeEffectWorker_FromQuality_Custom.cs" />
     <Compile Include="HarmonyPatcher.cs" />
-    <Compile Include="RitualAttachableOutcomeEffectDef_TP_Custom.cs" />
-    <Compile Include="TPRitualAttachableOutcomeEffectWorker_Custom.cs" />
+    <Compile Include="ModExtensions\RitualAttachableOutcomeEffectDef_TP_Custom.cs" />
+    <Compile Include="RitualOutcomes\TPRitualAttachableOutcomeEffectWorker_Custom.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

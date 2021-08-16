@@ -224,7 +224,7 @@
 						<desc>No instrument found</desc>
 					  </li>
 				</failTriggers>-->
-				<roleBehaviors>
+				 <roleBehaviors>
 					<li>
 						<roleId>musician</roleId>
 						<dutyDef>PlayMusic</dutyDef>
@@ -242,7 +242,7 @@
 				<!-- different things can end the stage, but the most common is time based.  The duration percentages are the duration of the total time each step should take, so they should add to 1 --> 
 				<endTriggers>
 				  <li Class="StageEndTrigger_DurationPercentage">
-					<percentage>0.5</percentage>
+					<percentage>0.7</percentage>
 				  </li>
 				</endTriggers>
 				<!-- this just sends a message to the top bar thing -->
