@@ -12,6 +12,7 @@ namespace TPRitualAttachableOutcomes
 {
     class StageEndTrigger_ThingNotPresent : StageEndTrigger
     {
+        // this is an "or" list. For "and" use multiple triggers
         public List<string> thingDefNames;
         public int maxDistance;
         public override Trigger MakeTrigger(LordJob_Ritual ritual, TargetInfo spot, IEnumerable<TargetInfo> foci, RitualStage stage)

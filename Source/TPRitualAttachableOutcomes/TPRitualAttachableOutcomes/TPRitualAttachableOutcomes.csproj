@@ -66,7 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="RitualOutcomes\ApplyUtility.cs" />
-    <Compile Include="RitualStages\StageEndTrigger_ThingDeliveredOrNotValid.cs" />
+    <Compile Include="RitualStages\StageEndTrigger_ThingDeliveredOrTimeout.cs" />
     <Compile Include="RitualStages\RitualStage_TargetThing.cs" />
     <Compile Include="RitualStages\RitualStage_Effect.cs" />
     <Compile Include="RitualStages\StageFailTrigger_ThingNotPresentInArea.cs" />

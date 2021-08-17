@@ -56,6 +56,8 @@ namespace TPRitualAttachableOutcomes
             string thisThought = nodeToProcess.thought ?? "";
             string thisInspiration = nodeToProcess.inspiration ?? "";
 
+            float thisSuppression = nodeToProcess.suppression;
+
             string thisItem = nodeToProcess.item ?? "";
             int thisBaseAmount = nodeToProcess.baseAmount.RandomInRange;
             int thisAmountPerPawn = nodeToProcess.amountPerPawn.RandomInRange;
@@ -255,6 +257,15 @@ namespace TPRitualAttachableOutcomes
                 if (!String.IsNullOrEmpty(thisInspiration))
                 {
                     pawn.mindState.inspirationHandler.TryStartInspiration(DefDatabase<InspirationDef>.GetNamed(thisInspiration));
+                }
+
+                if(thisSuppression != 0 && pawn.IsSlaveOfColony)
+                {
+                    Need_Suppression need_Suppression = pawn.needs.TryGetNeed<Need_Suppression>();
+                    if (need_Suppression != null)
+                    {
+                        need_Suppression.CurLevel += thisSuppression;
+                    }
                 }
             }
 

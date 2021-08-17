@@ -358,213 +358,335 @@ namespace TPRitualAttachableOutcomes
         }
     }
 
+    /*
     //Dialog_BeginRitual
-   /* [HarmonyPatch(typeof(Dialog_BeginRitual), MethodType.Constructor)]
-    public class Patch_Dialog_BeginRitual
+   [HarmonyPatch(typeof(Dialog_BeginRitual), MethodType.Constructor)]
+   [HarmonyPatch(new Type[] { typeof(string),
+       typeof(string),
+       typeof(Precept_Ritual),
+       typeof(TargetInfo),
+       typeof(Map),
+       typeof(Dialog_BeginRitual.ActionCallback),
+       typeof(Pawn),
+       typeof(RitualObligation),
+       typeof(Func<Pawn, bool, bool, bool>),
+       typeof(string),
+       typeof(List<Pawn>),
+       typeof(Dictionary<string, Pawn>),
+       typeof(string),
+       typeof(RitualOutcomeEffectDef),
+       typeof(List<string>),
+       typeof(Pawn)})]
+    public static class Patch_Dialog_BeginRitual
     {
-        public void Prefix(Dialog_BeginRitual __instance, string header, string ritualLabel, Precept_Ritual ritual, TargetInfo target, Map map, Dialog_BeginRitual.ActionCallback action, Pawn organizer, RitualObligation obligation, Func<Pawn, bool, bool, bool> filter = null, string confirmText = null, List<Pawn> requiredPawns = null, Dictionary<string, Pawn> forcedForRole = null, string ritualName = null, RitualOutcomeEffectDef outcome = null, List<string> extraInfoText = null, Pawn selectedPawn = null, )
+        public static void Prefix(
+            ref Precept_Ritual ___ritual,
+             ref TargetInfo ___target,
+             ref RitualObligation ___obligation,
+             ref List<string> ___extraInfos,
+             ref Pawn ___selectedPawn,
+             ref RitualRoleAssignments ___assignments,
+             ref string ___ritualExplanation,
+             ref Dialog_BeginRitual.ActionCallback ___action,
+             ref Func<Pawn, bool, bool, bool> ___filter,
+             ref Map ___map,
+             ref string ___ritualLabel,
+             ref string ___headerText,
+             ref string ___confirmText,
+             ref Pawn ___organizer,
+             ref bool ___closeOnClickedOutside,
+             ref bool ___absorbInputAroundWindow,
+             ref bool ___forcePause,
+             ref RitualOutcomeEffectDef ___outcome,
+            string header,
+            string ritualLabel,
+            Precept_Ritual ritual,
+            TargetInfo target,
+            Map map,
+            Dialog_BeginRitual.ActionCallback action,
+            Pawn organizer,
+            RitualObligation obligation,
+            Func<Pawn, bool, bool, bool> filter = null,
+            string confirmText = null,
+            List<Pawn> requiredPawns = null,
+            Dictionary<string, Pawn> forcedForRole = null,
+            string ritualName = null,
+            RitualOutcomeEffectDef outcome = null,
+            List<string> extraInfoText = null,
+            Pawn selectedPawn = null
+            )
         {
-            if (!ModLister.CheckRoyaltyOrIdeology("Ritual"))
-			{
-				return;
-			}
-			this.ritual = ritual;
-			this.target = target;
-			this.obligation = obligation;
-			this.extraInfos = extraInfoText;
-			this.selectedPawn = selectedPawn;
-			this.assignments = new RitualRoleAssignments(ritual);
-			List<Pawn> list = new List<Pawn>(map.mapPawns.FreeColonistsAndPrisonersSpawned);
-			for (int i = list.Count - 1; i >= 0; i--)
-			{
-				Pawn pawn = list[i];
-				if (filter != null && !filter(pawn, true, true))
-				{
-					list.RemoveAt(i);
-				}
-				else
-				{
-					bool flag2;
-					bool flag = RitualRoleAssignments.PawnNotAssignableReason(pawn, null, ritual, this.assignments, out flag2) == null || flag2;
-					if (!flag && ritual != null)
-					{
-						foreach (RitualRole ritualRole in ritual.behavior.def.roles)
-						{
-							if ((RitualRoleAssignments.PawnNotAssignableReason(pawn, ritualRole, ritual, this.assignments, out flag2) == null || flag2) && (filter == null || filter(pawn, !(ritualRole is RitualRoleForced), ritualRole.allowOtherIdeos)) && (ritualRole.maxCount > 1 || forcedForRole == null || !forcedForRole.ContainsKey(ritualRole.id)))
-							{
-								flag = true;
-								break;
-							}
-						}
-					}
-					if (!flag)
-					{
-						list.RemoveAt(i);
-					}
-				}
-			}
-			if (requiredPawns != null)
-			{
-				foreach (Pawn item in requiredPawns)
-				{
-					if (!list.Contains(item))
-					{
-						list.Add(item);
-					}
-				}
-			}
-			if (forcedForRole != null)
-			{
-				foreach (KeyValuePair<string, Pawn> keyValuePair in forcedForRole)
-				{
-					list.AddDistinct(keyValuePair.Value);
-				}
-			}
-			if (ritual != null)
-			{
-				using (List<RitualRole>.Enumerator enumerator = ritual.behavior.def.roles.GetEnumerator())
-				{
-					Func<Pawn, bool> <>9__0;
-					while (enumerator.MoveNext())
-					{
-						if (enumerator.Current.Animal)
-						{
-							List<Pawn> list2 = list;
-							IEnumerable<Pawn> spawnedColonyAnimals = map.mapPawns.SpawnedColonyAnimals;
-							Func<Pawn, bool> predicate;
-							if ((predicate = <>9__0) == null)
-							{
-								predicate = (<>9__0 = ((Pawn p) => filter == null || filter(p, true, true)));
-							}
-							list2.AddRange(spawnedColonyAnimals.Where(predicate));
-							break;
-						}
-					}
-				}
-			}
-			this.assignments.Setup(list, forcedForRole, requiredPawns, selectedPawn);
-			this.ritualExplanation = ((ritual != null) ? ritual.ritualExplanation : null);
-			this.action = action;
-			this.filter = filter;
-			this.map = map;
-			this.ritualLabel = ritualLabel;
-			this.headerText = header;
-			this.confirmText = confirmText;
-			this.organizer = organizer;
-			this.closeOnClickedOutside = true;
-			this.absorbInputAroundWindow = true;
-			this.forcePause = true;
-			this.outcome = ((ritual != null && ritual.outcomeEffect != null) ? ritual.outcomeEffect.def : outcome);
-        }
-    } */
+    */
+            /*ref Precept_Ritual ___ritual, 
+             ref TargetInfo ___target,
+             ref RitualObligation ___obligation,
+             ref List<string> ___extraInfos,
+             ref Pawn ___selectedPawn,
+             ref RitualRoleAssignments ___assignments,
+             ref string ___ritualExplanation,
+             ref Dialog_BeginRitual.ActionCallback ___action,
+             ref Func<Pawn, bool, bool, bool> ___filter,
+             ref Map ___map,
+             ref string ___ritualLabel,
+             ref string ___headerText,
+             ref string ___confirmText,
+             ref Pawn ___organizer,
+             ref bool ___closeOnClickedOutside, 
+             ref bool ___absorbInputAroundWindow,
+             ref bool ___forcePause,
+             ref RitualOutcomeEffectDef ___outcome,*/
 
-    //RitualBehaviorWorker
-    //CanStartRitualNow
-    /*[HarmonyPatch(typeof(RitualBehaviorWorker))]
-    [HarmonyPatch("TryExecuteOn")]
-    public class Patch_RitualBehaviorWorker_TryExecuteOn
-    {
-        public static bool Prefix(TargetInfo target, Pawn organizer, Precept_Ritual ritual, RitualObligation obligation, RitualRoleAssignments assignments, bool playerForced = false)
-        {
-            if(ritual == null || ritual.def == null || ritual.def.GetModExtension<Precept_Ritual_Custom>() == null)
-            {
-                return true;
-            }
-            Log.Message("The ritual has modExtensions");
+             /*if (!ModLister.CheckRoyaltyOrIdeology("Ritual"))
+             {
+                 return;
+             }
 
-            Precept_Ritual_Custom customPreceptRitual = ritual.def.GetModExtension<Precept_Ritual_Custom>();
+             bool customRoleForOverrideFound = false;
+             foreach(RitualRole r in ritual.behavior.def.roles)
+             {
+                 if(r is RitualRoleColonistDead)
+                 {
+                     customRoleForOverrideFound = true;
+                     break;
+                 }
+             }
+
+             if(!customRoleForOverrideFound)
+             {
+                 return;
+             }
             
-            if(customPreceptRitual == null)
-            {
-                Log.Message("maybe I spoke too soon about that modExtension");
-                return true;
-            }
+            ___ritual = ritual;
+             ___target = target;
+             ___obligation = obligation;
+             ___extraInfos = extraInfoText;
+             ___selectedPawn = selectedPawn;
+             ___assignments = new RitualRoleAssignments(ritual);
 
-            if(customPreceptRitual != null && String.IsNullOrEmpty(customPreceptRitual.building))
-            {
-                Log.Message("No building supplied");
-                return true;
-            }
-            if(target == null || target.Cell == null)
-            {
-                Log.Message("Target is, for some reason, invalid now? It was valid before...");
-                return true;
-            }
+            // since this is so far oddly specific to dead pawns, let's just make a list of dead pawns on the map
 
-            if(target.Map == null)
-            {
-                Log.Message("Now things are getting out of hand");
-                return true;
-            }
+            List<Pawn> list = new List<Pawn>(map.mapPawns.FreeColonistsAndPrisonersSpawned);
 
-            if (customPreceptRitual.useRoom && GatheringsUtility.UseWholeRoomAsGatheringArea(target.Cell, target.Map))
-            {
-                foreach (IntVec3 cell in target.Cell.GetRoom(target.Map).Cells)
-                {
-                    if (cell != null && Check(cell))
+            // we just have to hope this isn't woefully worse than anything I could write in LINQ
+
+            List<Thing> thingList = Find.CurrentMap.listerThings.AllThings;
+             foreach(Thing t in thingList)
+             {
+                */ /*if(t is Corpse corpse)
+                 {
+                     list.Add(corpse.InnerPawn);
+                 }*/
+
+                /* if(t is Building_Casket)
+                 {
+                    Log.Message("we found a casket. Looking for inner pawn. " + t.def.defName);
+                    Thing thingWithInnerPawn = t;
+                    if((thingWithInnerPawn as Building_Casket) != null)
                     {
-                        return true;
-                    }
-                }
-            }
-            else
-            {
-                //Log.Message("Checking general area");
-                foreach (IntVec3 item in CellRect.CenteredOn(target.Cell, customPreceptRitual.maxDistance))
-                {  
-                    if (item != null && Check(item))
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
-            bool Check(IntVec3 cell)
-            {
-                try
-                {
-                    //Log.Message("checking first thing");
-                    if(cell == null || DefDatabase<ThingDef>.GetNamed(customPreceptRitual.building) == null)
-                    {
-                        //Log.Message("something is very wrong");
-                        // I have no idea how this could be
-                        return false;
-                    }
-                    Thing thing = cell.GetFirstThing(target.Map, DefDatabase<ThingDef>.GetNamed(customPreceptRitual.building));
-                    if (thing != null && thing.def != null && thing.def.defName != null) // I don't think defName ever can be null but I'm reallly at a loss right now
-                    {
-                        Log.Message("Thing is " + thing.def.defName);
-                    }
-                    if (thing != null && GatheringsUtility.InGatheringArea(cell, target.Cell, target.Map))
-                    {
-                        return true;
+                        Building_Casket casket = (Building_Casket)thingWithInnerPawn;
+                        Thing contained = casket.ContainedThing;
+                        if ((contained as Corpse) != null)
+                        {
+                            Corpse corpse = (Corpse)contained;
+                            Pawn innerPawn = corpse.InnerPawn;
+                            Log.Message("actually adding innerpawn");
+                            list.Add(innerPawn);
+                        }
+
                     }
                     
-                } catch (Exception e)
-                {
-                    Log.Message("Exception: " + e.Message);
-                }
-                return false;
-            }
-        }
-    }*/
+                 }
+             }
 
-    /*[HarmonyPatch(typeof(Precept_Ritual), "get_RepeatPenaltyDurationDays")]
-    internal class Patch_RepeatPenaltyDurationDays
-    {
-        private static bool Prefix(Precept_Ritual __instance, ref int __result)
-        {
-            int coolDownDays = 20;
-            Precept_Ritual_Custom customPreceptRitual = __instance.def.GetModExtension<Precept_Ritual_Custom>();
-            if (customPreceptRitual != null)
-            {
-                if (customPreceptRitual.coolDownDays != 20)
+            Log.Message("if we see this message we know that using the InnerPawn of a dead pawn is kind rough");
+
+             for (int i = list.Count - 1; i >= 0; i--)
+             {
+                 Pawn pawn = list[i];
+                if(pawn.Dead)
                 {
-                    coolDownDays = customPreceptRitual.coolDownDays;
+                    // if this works it'd be such a huge hack and would need a lot more effort below to actually figure out all the filtering
+                    // and I think I kinda hate how much effort just trying to do this one thing is becoming
+                    // but I'm at least curious to see what will happen
+                    break;
                 }
-            }
-            __result = coolDownDays;
-            return false;
+                 if (filter != null && !filter(pawn, true, true))
+                 {
+                     list.RemoveAt(i);
+                 }
+                 else
+                 {
+                     bool flag2;
+                     bool flag = RitualRoleAssignments.PawnNotAssignableReason(pawn, null, ritual, ___assignments, out flag2) == null || flag2;
+                     if (!flag && ritual != null)
+                     {
+                         foreach (RitualRole ritualRole in ritual.behavior.def.roles)
+                         {
+                             if ((RitualRoleAssignments.PawnNotAssignableReason(pawn, ritualRole, ritual, ___assignments, out flag2) == null || flag2) && (filter == null || filter(pawn, !(ritualRole is RitualRoleForced), ritualRole.allowOtherIdeos)) && (ritualRole.maxCount > 1 || forcedForRole == null || !forcedForRole.ContainsKey(ritualRole.id)))
+                             {
+                                 flag = true;
+                                 break;
+                             }
+                         }
+                     }
+                     if (!flag)
+                     {
+                         list.RemoveAt(i);
+                     }
+                 }
+             }
+             if (requiredPawns != null)
+             {
+                 foreach (Pawn item in requiredPawns)
+                 {
+                     if (!list.Contains(item))
+                     {
+                         list.Add(item);
+                     }
+                 }
+             }
+             if (forcedForRole != null)
+             {
+                 foreach (KeyValuePair<string, Pawn> keyValuePair in forcedForRole)
+                 {
+                     list.AddDistinct(keyValuePair.Value);
+                 }
+             }
+             if (ritual != null)
+             {
+                 foreach (RitualRole role2 in ritual.behavior.def.roles)
+                 {
+                     if (role2.Animal)
+                     {
+                         list.AddRange(map.mapPawns.SpawnedColonyAnimals.Where((Pawn p) => filter == null || filter(p, arg2: true, arg3: true)));
+                         break;
+                     }
+                 }
+             }
+
+             ___assignments.Setup(list, forcedForRole, requiredPawns, selectedPawn);
+             ___ritualExplanation = ((ritual != null) ? ritual.ritualExplanation : null);
+             ___action = action;
+             ___filter = filter;
+             ___map = map;
+             ___ritualLabel = ritualLabel;
+             ___headerText = header;
+             ___confirmText = confirmText;
+             ___organizer = organizer;
+             ___closeOnClickedOutside = true;
+             ___absorbInputAroundWindow = true;
+             ___forcePause = true;
+             ___outcome = ((ritual != null && ritual.outcomeEffect != null) ? ritual.outcomeEffect.def : outcome);
+         }
+     } */
+
+     //RitualBehaviorWorker
+     //CanStartRitualNow
+     /*[HarmonyPatch(typeof(RitualBehaviorWorker))]
+     [HarmonyPatch("TryExecuteOn")]
+     public class Patch_RitualBehaviorWorker_TryExecuteOn
+     {
+         public static bool Prefix(TargetInfo target, Pawn organizer, Precept_Ritual ritual, RitualObligation obligation, RitualRoleAssignments assignments, bool playerForced = false)
+         {
+             if(ritual == null || ritual.def == null || ritual.def.GetModExtension<Precept_Ritual_Custom>() == null)
+             {
+                 return true;
+             }
+             Log.Message("The ritual has modExtensions");
+
+             Precept_Ritual_Custom customPreceptRitual = ritual.def.GetModExtension<Precept_Ritual_Custom>();
+
+             if(customPreceptRitual == null)
+             {
+                 Log.Message("maybe I spoke too soon about that modExtension");
+                 return true;
+             }
+
+             if(customPreceptRitual != null && String.IsNullOrEmpty(customPreceptRitual.building))
+             {
+                 Log.Message("No building supplied");
+                 return true;
+             }
+             if(target == null || target.Cell == null)
+             {
+                 Log.Message("Target is, for some reason, invalid now? It was valid before...");
+                 return true;
+             }
+
+             if(target.Map == null)
+             {
+                 Log.Message("Now things are getting out of hand");
+                 return true;
+             }
+
+             if (customPreceptRitual.useRoom && GatheringsUtility.UseWholeRoomAsGatheringArea(target.Cell, target.Map))
+             {
+                 foreach (IntVec3 cell in target.Cell.GetRoom(target.Map).Cells)
+                 {
+                     if (cell != null && Check(cell))
+                     {
+                         return true;
+                     }
+                 }
+             }
+             else
+             {
+                 //Log.Message("Checking general area");
+                 foreach (IntVec3 item in CellRect.CenteredOn(target.Cell, customPreceptRitual.maxDistance))
+                 {  
+                     if (item != null && Check(item))
+                     {
+                         return true;
+                     }
+                 }
+             }
+             return false;
+             bool Check(IntVec3 cell)
+             {
+                 try
+                 {
+                     //Log.Message("checking first thing");
+                     if(cell == null || DefDatabase<ThingDef>.GetNamed(customPreceptRitual.building) == null)
+                     {
+                         //Log.Message("something is very wrong");
+                         // I have no idea how this could be
+                         return false;
+                     }
+                     Thing thing = cell.GetFirstThing(target.Map, DefDatabase<ThingDef>.GetNamed(customPreceptRitual.building));
+                     if (thing != null && thing.def != null && thing.def.defName != null) // I don't think defName ever can be null but I'm reallly at a loss right now
+                     {
+                         Log.Message("Thing is " + thing.def.defName);
+                     }
+                     if (thing != null && GatheringsUtility.InGatheringArea(cell, target.Cell, target.Map))
+                     {
+                         return true;
+                     }
+
+                 } catch (Exception e)
+                 {
+                     Log.Message("Exception: " + e.Message);
+                 }
+                 return false;
+             }
+         }
+     }*/
+
+            /*[HarmonyPatch(typeof(Precept_Ritual), "get_RepeatPenaltyDurationDays")]
+            internal class Patch_RepeatPenaltyDurationDays
+            {
+                private static bool Prefix(Precept_Ritual __instance, ref int __result)
+                {
+                    int coolDownDays = 20;
+                    Precept_Ritual_Custom customPreceptRitual = __instance.def.GetModExtension<Precept_Ritual_Custom>();
+                    if (customPreceptRitual != null)
+                    {
+                        if (customPreceptRitual.coolDownDays != 20)
+                        {
+                            coolDownDays = customPreceptRitual.coolDownDays;
+                        }
+                    }
+                    __result = coolDownDays;
+                    return false;
+                }
+            }*/
         }
-    }*/
-}

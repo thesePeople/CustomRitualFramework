@@ -10,6 +10,7 @@ namespace TPRitualAttachableOutcomes
 {
     class StageFailTrigger_ThingNotPresentInArea : StageFailTrigger
     {
+        // this is an "or" list. For "and" use multiple triggers.
 		public List<string> thingDefNames;
 		public int maxDistance;
 
