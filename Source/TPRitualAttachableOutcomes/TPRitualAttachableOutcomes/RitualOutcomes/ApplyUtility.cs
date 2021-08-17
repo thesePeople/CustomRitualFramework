@@ -57,6 +57,8 @@ namespace TPRitualAttachableOutcomes
             string thisInspiration = nodeToProcess.inspiration ?? "";
 
             float thisSuppression = nodeToProcess.suppression;
+            float thisWillReduction = nodeToProcess.willReduction;
+            float thisResistanceReduction = nodeToProcess.resistanceReduction;
 
             string thisItem = nodeToProcess.item ?? "";
             int thisBaseAmount = nodeToProcess.baseAmount.RandomInRange;
@@ -267,6 +269,23 @@ namespace TPRitualAttachableOutcomes
                         need_Suppression.CurLevel += thisSuppression;
                     }
                 }
+
+                if(thisWillReduction != 0 && pawn.IsPrisonerOfColony)
+                {
+                    if(pawn.guest != null)
+                    {
+                        pawn.guest.will -= thisWillReduction;
+                    }
+                }
+
+                if (thisResistanceReduction != 0 && pawn.IsPrisonerOfColony)
+                {
+                    if (pawn.guest != null)
+                    {
+                        pawn.guest.will -= thisResistanceReduction;
+                    }
+                }
+
             }
 
             

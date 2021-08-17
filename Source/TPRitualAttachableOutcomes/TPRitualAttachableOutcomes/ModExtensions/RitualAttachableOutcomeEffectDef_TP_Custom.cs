@@ -37,6 +37,8 @@ namespace TPRitualAttachableOutcomes
         public float weight = 1f;
         public string incident = "";
         public float suppression = 0f;
+        public float willReduction = 0f;
+        public float resistanceReduction = 0f;
         public IncidentParmsCustom incidentParms = new IncidentParmsCustom();
         public List<RitualAttachableOutcomeEffectDef_TP_Custom_Node> node;
         public bool addInnerPawn = false;
