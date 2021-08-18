@@ -8,11 +8,11 @@ using Verse;
 
 namespace TPRitualAttachableOutcomes
 {
-    class StageFailTrigger_ThingNotConsumed : StageFailTrigger
+    class StageFailTrigger_ThingNotConsumed : StageFailTrigger_Checkable
     {
-        // StageFailTrigger_ThingNotConsumed must be placed in a stage that has a preAction with RitualStageAction_ConsumeThings
+        // StageFailTrigger_ThingNotConsumed must be placed AFTER a stage that has a preAction with RitualStageAction_ConsumeThings
         // additionally, the stageId between the two must match
-        // (you can have two consume actions if you have two of these fail triggers and separate stageId names, but it's not recommended)
+        // (you can have two consume actions in one stage if you have two of these fail triggers and separate stageId names, but it's not recommended)
         
         // you cannot reuse stageIds in the same ritual, even amount different stages. This is how it actually finds the right stage and action, since actions don't hold their parent stage
         public string stageId = "";
@@ -45,9 +45,12 @@ namespace TPRitualAttachableOutcomes
 
                 if(targetAction.consumptionComplete)
                 {
+                    hasBeenChecked = true;
                     return !targetAction.enoughConsumed;
                 }
             }
+            failed = true;
+            hasBeenChecked = true;
             return true;
         }
 

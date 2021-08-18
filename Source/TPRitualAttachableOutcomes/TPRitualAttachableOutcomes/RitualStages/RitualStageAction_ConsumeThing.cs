@@ -76,7 +76,7 @@ namespace TPRitualAttachableOutcomes
             // regardless of if enough was consumed
             consumptionComplete = true;
 
-            // pass the notifications up
+            // pass the notifications up?
             
         }
 

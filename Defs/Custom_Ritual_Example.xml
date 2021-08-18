@@ -204,8 +204,7 @@
 					<stageId>consume</stageId>
 				</preAction>
 				<endTriggers>
-				 <li Class="StageEndTrigger_DurationPercentage">
-						<percentage>0.05</percentage>
+				 <li Class="TPRitualAttachableOutcomes.StageEndTrigger_ActionsComplete">
 				 </li>
 				</endTriggers>
 			</li>
@@ -213,8 +212,7 @@
 			<li>
 				<defaultDuty>Spectate</defaultDuty>
 				<endTriggers>
-				 <li Class="StageEndTrigger_DurationPercentage">
-						<percentage>0.05</percentage>
+				 <li Class="TPRitualAttachableOutcomes.StageEndTrigger_NoFailures">
 				 </li>
 				</endTriggers>
 				<failTriggers>

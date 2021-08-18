@@ -66,6 +66,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="RitualOutcomes\ApplyUtility.cs" />
+    <Compile Include="RitualStages\StageFailTrigger_Checkable.cs" />
+    <Compile Include="RitualStages\StageEndTrigger_NoFailures.cs" />
+    <Compile Include="RitualStages\StageEndTrigger_ActionsComplete.cs" />
     <Compile Include="RitualStages\StageFailTrigger_ThingNotConsumed.cs" />
     <Compile Include="RitualStages\RitualStageAction_ConsumeThing.cs" />
     <Compile Include="RitualStages\StageEndTrigger_ThingDeliveredOrTimeout.cs" />
