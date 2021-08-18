@@ -193,6 +193,38 @@
 		
 		<stages>
 			
+			<!-- CONSUME. CONSUME!! -->
+			
+			<li>
+				<defaultDuty>Spectate</defaultDuty>
+				<preAction Class="TPRitualAttachableOutcomes.RitualStageAction_ConsumeThing">
+					<thingDefName>MealSimple</thingDefName>
+					<amountToConsume>10</amountToConsume>
+					<lookDistance>8</lookDistance>
+					<stageId>consume</stageId>
+				</preAction>
+				<endTriggers>
+				 <li Class="StageEndTrigger_DurationPercentage">
+						<percentage>0.05</percentage>
+				 </li>
+				</endTriggers>
+			</li>
+			
+			<li>
+				<defaultDuty>Spectate</defaultDuty>
+				<endTriggers>
+				 <li Class="StageEndTrigger_DurationPercentage">
+						<percentage>0.05</percentage>
+				 </li>
+				</endTriggers>
+				<failTriggers>
+					<li Class="TPRitualAttachableOutcomes.StageFailTrigger_ThingNotConsumed">
+						<stageId>consume</stageId>
+						<desc>YOUR GOD HUNGERS</desc>
+					  </li>
+				</failTriggers>
+			</li>
+			
 			<!-- wait for arrival -->
 			
 			
@@ -202,7 +234,7 @@
 				<essential>False</essential>
 				<endTriggers>
 					  <li Class="StageEndTrigger_DurationPercentage">
-						<percentage>0.2</percentage>
+						<percentage>0.05</percentage>
 					  </li>
 					 <li Class="TPRitualAttachableOutcomes.StageEndTrigger_ThingNotPresent">
 					 	<thingDefNames>

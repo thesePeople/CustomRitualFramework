@@ -19,6 +19,7 @@ namespace TPRitualAttachableOutcomes
 
         public string thingDefName = "";
         public int amount = 1;
+        public int curAmount = 0;
         public int lookDistance = 8;
         public int ticksRemaining = 600;
 
@@ -38,27 +39,11 @@ namespace TPRitualAttachableOutcomes
                 }
 
                 // end if all the things have been delivered
-                // getting all the things on every tick is going to be pretty expensive, so we only check if the flag has been set by the duty handling deliveries
-                if (checkThings)
+                if(curAmount >= amount)
                 {
-                    List<Thing> thingsNearby = GenRadial.RadialDistinctThingsAround(spot.Cell, spot.Map, lookDistance, true).ToList();
-                    int checkAmount = 0;
-                    foreach(Thing t in thingsNearby)
-                    {
-                        // if this proves to be laggy we might re-implement the RadialDistinctThingsAround method and check while getting the things
-                        if(t.def.defName == thingDefName)
-                        {
-                            checkAmount += t.stackCount;
-                        }
-
-                        if(checkAmount >= amount)
-                        {
-                            return true;
-                        }
-                    }
-                    // at the end we flip the flag again because we just did a check
-                    checkThings = false;
+                    return true;
                 }
+
                 return false;
             });
         }
@@ -67,6 +52,7 @@ namespace TPRitualAttachableOutcomes
         {
             Scribe_Values.Look(ref thingDefName, "thingDefName");   
             Scribe_Values.Look(ref amount, "amount");
+            Scribe_Values.Look(ref curAmount, "curAmount");
             Scribe_Values.Look(ref lookDistance, "lookDistance");
             Scribe_Values.Look(ref ticksRemaining, "ticksRemaining");
             base.ExposeData();
