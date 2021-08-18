@@ -157,6 +157,18 @@
 		</thinkNode>
 	</DutyDef>
 	
+	<DutyDef>
+		<defName>HaulFoodToRitualSpot</defName>
+		<socialModeMax>Off</socialModeMax>
+		<thinkNode Class="ThinkNode_Priority">
+		  <subNodes>
+			<li Class="TPRitualAttachableOutcomes.JobGiver_HaulToRitualSpot">
+				<thingDefName>MealSimple</thingDefName>	
+			</li>
+		  </subNodes>
+		</thinkNode>
+	</DutyDef>
+	
 <!-- RitualBehavior - this is where you define what the pawns do during the ritual.-->
 
 	 <RitualBehaviorDef>
@@ -195,6 +207,17 @@
 			
 			<!-- CONSUME. CONSUME!! -->
 			
+		<!--	<li>
+				<defaultDuty>HaulFoodToRitualSpot</defaultDuty>
+				<endTriggers>
+				 <li Class="TPRitualAttachableOutcomes.StageEndTrigger_ThingDeliveredOrTimeout">
+					<thingDefName>MealSimple</thingDefName>
+					<amount>10</amount>
+				 </li>
+				</endTriggers>
+			</li>
+		-->
+		
 			<li>
 				<defaultDuty>Spectate</defaultDuty>
 				<preAction Class="TPRitualAttachableOutcomes.RitualStageAction_ConsumeThing">

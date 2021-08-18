@@ -39,6 +39,7 @@ namespace TPRitualAttachableOutcomes
         public float suppression = 0f;
         public float willReduction = 0f;
         public float resistanceReduction = 0f;
+        public float certainty = 0f;
         public IncidentParmsCustom incidentParms = new IncidentParmsCustom();
         public List<RitualAttachableOutcomeEffectDef_TP_Custom_Node> node;
         public bool addInnerPawn = false;
@@ -78,6 +79,7 @@ namespace TPRitualAttachableOutcomes
             Scribe_Values.Look(ref applyToInnerPawn, "applyToInnerPawn");
             Scribe_Values.Look(ref resurrect, "resurrect");
             Scribe_Values.Look(ref suppression, "suppression");
+            Scribe_Values.Look(ref certainty, "certainty");
         }
     }
 

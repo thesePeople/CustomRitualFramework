@@ -21,6 +21,10 @@ namespace TPRitualAttachableOutcomes
 
         public override bool Failed(LordJob_Ritual ritual, TargetInfo spot, TargetInfo focus)
         {
+            // since this isn't actually returning a trigger
+            failed = false;
+            hasBeenChecked = false;
+            targetAction = null;
             // get the matching ritualStageAction
             foreach(RitualStage rs in ritual.Ritual.behavior.def.stages)
             {
@@ -46,7 +50,13 @@ namespace TPRitualAttachableOutcomes
                 if(targetAction.consumptionComplete)
                 {
                     hasBeenChecked = true;
-                    return !targetAction.enoughConsumed;
+                    bool returnVal = !targetAction.enoughConsumed;
+                    
+                    // reset these for the next time this ritual runs
+                    targetAction.consumptionComplete = false;
+                    targetAction.enoughConsumed = false;
+                    
+                    return returnVal;
                 }
             }
             failed = true;

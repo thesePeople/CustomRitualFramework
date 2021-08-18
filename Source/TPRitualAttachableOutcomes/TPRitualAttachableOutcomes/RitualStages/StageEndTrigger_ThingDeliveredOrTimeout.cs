@@ -22,25 +22,51 @@ namespace TPRitualAttachableOutcomes
         public int curAmount = 0;
         public int lookDistance = 8;
         public int ticksRemaining = 600;
+        private int originalTicks = 600;
 
         // now the only real issue is going to be accessing this - we may need to make a new RitualStage class that holds this  
-        public bool checkThings = false;
+        public bool checkThings = true;
+
+        // sadly I think we're going to need another stageId so the job can figure out which trigger needs to look for the amount being delivered
+        // but this is still better than continuously checking the amount
+        public string stageId = "";
 
         public override Trigger MakeTrigger(LordJob_Ritual ritual, TargetInfo spot, IEnumerable<TargetInfo> foci, RitualStage stage)
         {
+            ticksRemaining = originalTicks;
             return new Trigger_TickCondition(delegate {
+                // check the things but only once
+                if (checkThings)
+                {
+                    int amountPresent = 0;
+                    List<Thing> thingsInArea = GenRadial.RadialDistinctThingsAround(ritual.selectedTarget.Cell, ritual.Map, lookDistance, true).ToList();
+                    List<Thing> thingsToConsume = new List<Thing>();
+                    foreach (Thing item in thingsInArea)
+                    {
+                        Log.Message("thing " + item.def.defName + " and we're looking for " + thingDefName);
+                        if (item.def.defName == thingDefName)
+                        {
+                            amountPresent += item.stackCount;
+                        }
+                    }
+                    curAmount = amountPresent;
+                    checkThings = false;
+                }
+
+                // end if all the things have been delivered
+                if (curAmount >= amount)
+                {
+                    ticksRemaining = originalTicks;
+                    return true;
+                }
+
                 ticksRemaining--;
                 
                 // end if they run out of time
                 // this may cause issues in later parts of the ritual if it's expecting these things, in most cases a failtrigger should be used
                 if(ticksRemaining <= 0)
                 {
-                    return true;
-                }
-
-                // end if all the things have been delivered
-                if(curAmount >= amount)
-                {
+                    ticksRemaining = originalTicks;
                     return true;
                 }
 
@@ -55,6 +81,7 @@ namespace TPRitualAttachableOutcomes
             Scribe_Values.Look(ref curAmount, "curAmount");
             Scribe_Values.Look(ref lookDistance, "lookDistance");
             Scribe_Values.Look(ref ticksRemaining, "ticksRemaining");
+            Scribe_Values.Look(ref originalTicks, "originalTicks");
             base.ExposeData();
         }
     }

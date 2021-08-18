@@ -12,6 +12,7 @@ namespace TPRitualAttachableOutcomes
     {
         public string thingDefName = "";
         public int amountToConsume = 0;
+        public int originalAmount = 0;
         public int lookDistance = 8;
 
         // the user has to supply a stageId string that end/fail triggers for the current stage will look for to look at the enoughConsumed
@@ -24,6 +25,10 @@ namespace TPRitualAttachableOutcomes
 
         public override void Apply(LordJob_Ritual ritual)
         {
+            enoughConsumed = false;
+            consumptionComplete = false;
+
+            originalAmount = amountToConsume;
             int amountPresent = 0;
             List<Thing> thingsInArea = GenRadial.RadialDistinctThingsAround(ritual.selectedTarget.Cell, ritual.Map, lookDistance, true).ToList();
             List<Thing> thingsToConsume = new List<Thing>();
@@ -70,6 +75,7 @@ namespace TPRitualAttachableOutcomes
                 if (amountToConsume == 0)
                 {
                     enoughConsumed = true;
+                    amountToConsume = originalAmount;
                 }
             }
 
@@ -88,6 +94,7 @@ namespace TPRitualAttachableOutcomes
         {
             Scribe_Values.Look(ref thingDefName, "thingDefName");
             Scribe_Values.Look(ref amountToConsume, "amountToConsume");
+            Scribe_Values.Look(ref originalAmount, "originalAmount");
             Scribe_Values.Look(ref lookDistance, "lookDistance");
             Scribe_Values.Look(ref stageId, "stageId");
             Scribe_Values.Look(ref enoughConsumed, "enoughConsumed");

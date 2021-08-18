@@ -59,6 +59,7 @@ namespace TPRitualAttachableOutcomes
             float thisSuppression = nodeToProcess.suppression;
             float thisWillReduction = nodeToProcess.willReduction;
             float thisResistanceReduction = nodeToProcess.resistanceReduction;
+            float thisCertainty = nodeToProcess.certainty;
 
             string thisItem = nodeToProcess.item ?? "";
             int thisBaseAmount = nodeToProcess.baseAmount.RandomInRange;
@@ -283,6 +284,18 @@ namespace TPRitualAttachableOutcomes
                     if (pawn.guest != null)
                     {
                         pawn.guest.will -= thisResistanceReduction;
+                    }
+                }
+
+                if (thisCertainty != 0)
+                {
+                    if (pawn.Ideo == jobRitual.Ritual.ideo)
+                    {
+                        pawn.ideo.OffsetCertainty(thisCertainty);
+                    } 
+                    else
+                    {
+                        pawn.ideo.OffsetCertainty(-1f * thisCertainty);
                     }
                 }
 

@@ -15,11 +15,11 @@ namespace TPRitualAttachableOutcomes
     {
 
 		public List<string> thingDefNames;
-		public int maxDistance;
+		public int maxDistance = 8;
 
 		protected override Job TryGiveJob(Pawn pawn)
 		{
-			// look for a thing of thingdefs supplied, for efficiency it'll pick the closest
+			// look for a thing of thingdefs supplied, for efficiency it'll pick the first one found
 			// we also look for this in the stage end trigger though, I feel like there has to be a way to prevent having to look for it twice
 
 			Thing building_MusicalInstrument = null;

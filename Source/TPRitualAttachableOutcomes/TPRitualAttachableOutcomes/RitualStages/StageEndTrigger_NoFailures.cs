@@ -13,6 +13,16 @@ namespace TPRitualAttachableOutcomes
     {
         public override Trigger MakeTrigger(LordJob_Ritual ritual, TargetInfo spot, IEnumerable<TargetInfo> foci, RitualStage stage)
         {
+            // before making the trigger, reset the failtriggers
+            foreach (StageFailTrigger failTrigger in stage.failTriggers)
+            {
+                if (failTrigger is StageFailTrigger_Checkable checkable)
+                {
+                    checkable.failed = false;
+                    checkable.hasBeenChecked = false;
+                }
+            }
+
             return new Trigger_Custom(delegate
             {
                 // we want to try to end but...
@@ -29,6 +39,18 @@ namespace TPRitualAttachableOutcomes
                     }
                 }
 
+                // reset the failtriggers here for the next run
+                if(returnVal)
+                {
+                    foreach (StageFailTrigger failTrigger in stage.failTriggers)
+                    {
+                        if (failTrigger is StageFailTrigger_Checkable checkable)
+                        {
+                            checkable.failed = false;
+                            checkable.hasBeenChecked = false;
+                        }
+                    }
+                }
                 return returnVal;
             });
         }
