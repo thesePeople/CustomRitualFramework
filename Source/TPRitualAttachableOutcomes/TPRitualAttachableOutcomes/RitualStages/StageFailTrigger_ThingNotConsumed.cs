@@ -47,7 +47,7 @@ namespace TPRitualAttachableOutcomes
                     }
                 }
 
-                if(targetAction.consumptionComplete)
+                if(targetAction != null && targetAction.consumptionComplete)
                 {
                     hasBeenChecked = true;
                     bool returnVal = !targetAction.enoughConsumed;

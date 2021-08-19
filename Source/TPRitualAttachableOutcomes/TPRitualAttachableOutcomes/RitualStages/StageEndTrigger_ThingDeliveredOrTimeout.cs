@@ -33,6 +33,7 @@ namespace TPRitualAttachableOutcomes
 
         public override Trigger MakeTrigger(LordJob_Ritual ritual, TargetInfo spot, IEnumerable<TargetInfo> foci, RitualStage stage)
         {
+            checkThings = true;
             ticksRemaining = originalTicks;
             return new Trigger_TickCondition(delegate {
                 // check the things but only once
@@ -43,7 +44,7 @@ namespace TPRitualAttachableOutcomes
                     List<Thing> thingsToConsume = new List<Thing>();
                     foreach (Thing item in thingsInArea)
                     {
-                        Log.Message("thing " + item.def.defName + " and we're looking for " + thingDefName);
+                        //Log.Message("thing " + item.def.defName + " and we're looking for " + thingDefName);
                         if (item.def.defName == thingDefName)
                         {
                             amountPresent += item.stackCount;
@@ -56,6 +57,7 @@ namespace TPRitualAttachableOutcomes
                 // end if all the things have been delivered
                 if (curAmount >= amount)
                 {
+                    //Log.Message("enough things delivered");
                     ticksRemaining = originalTicks;
                     return true;
                 }
@@ -66,6 +68,7 @@ namespace TPRitualAttachableOutcomes
                 // this may cause issues in later parts of the ritual if it's expecting these things, in most cases a failtrigger should be used
                 if(ticksRemaining <= 0)
                 {
+                    //Log.Message("ritual has timed out");
                     ticksRemaining = originalTicks;
                     return true;
                 }

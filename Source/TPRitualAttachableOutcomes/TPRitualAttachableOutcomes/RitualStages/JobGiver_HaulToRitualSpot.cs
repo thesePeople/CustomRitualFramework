@@ -18,7 +18,6 @@ namespace TPRitualAttachableOutcomes
         protected override Job TryGiveJob(Pawn pawn)
         {
             LordJob_Ritual lordJob_Ritual = pawn.GetLord().LordJob as LordJob_Ritual;
-            // find the StageEndTrigger_DeliveredOrTimeOut with matching stageId (maybe I should have a StageEndTrigger abstract class for stageIds?)
 
             Predicate<Thing> validator = delegate (Thing t)
             {
@@ -44,15 +43,20 @@ namespace TPRitualAttachableOutcomes
                     return false;
                 }
             };
-            List<Thing> thingsOfDefName = pawn.Map.listerThings.ThingsOfDef(DefDatabase<ThingDef>.GetNamed(thingDefName)).FindAll((Thing t) => !t.IsForbidden(pawn));
+            List<Thing> thingsOfDefName = pawn.Map.listerThings.ThingsOfDef(DefDatabase<ThingDef>.GetNamed(thingDefName)).FindAll((Thing t) => !t.IsForbidden(pawn) && pawn.CanReserveAndReach(t, PathEndMode.Touch, Danger.Deadly));
             Thing thing = GenClosest.ClosestThing_Global_Reachable(pawn.Position, pawn.Map, thingsOfDefName, PathEndMode.OnCell, TraverseParms.For(pawn), 9999f, validator);
-            Job job = JobMaker.MakeJob(JobDefOf.HaulToCell, thing, lordJob_Ritual.selectedTarget.Cell);
-            job.count = thing.def.stackLimit - thing.stackCount;
-            job.haulMode = HaulMode.ToCellStorage;
-
-            // we also need to signal the stageendtrigger and probably do something about the count and merging?
-            // and ideally make the Things dropped forbiddable. We may need a new JobDef and do some of this in individual Toils?
-            return job;
+            if (thing != null && pawn.CanReserveAndReach(thing, PathEndMode.Touch, Danger.Deadly, 1, -1, null, false))
+            {
+                //Log.Message("making job - but pretty sure this succeeds");
+                Job job = JobMaker.MakeJob(DefDatabase<JobDef>.GetNamed("HaulToRitualSpot"), thing, lordJob_Ritual.selectedTarget.Cell);
+                job.jobGiver = this;
+                job.count = thing.stackCount;
+                job.haulMode = HaulMode.ToCellStorage;
+                
+                return job;
+            }
+            // couldn't find thing, or couldn't reserve it, or couldn't reach it
+            return null;
         }
 
         public override ThinkNode DeepCopy(bool resolve = true)

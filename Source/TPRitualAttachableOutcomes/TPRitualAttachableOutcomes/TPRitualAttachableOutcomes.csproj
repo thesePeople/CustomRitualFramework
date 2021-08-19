@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="RitualOutcomes\ApplyUtility.cs" />
+    <Compile Include="RitualStages\JobDriver_HaulToRitualSpot.cs" />
     <Compile Include="RitualStages\JobGiver_HaulToRitualSpot.cs" />
     <Compile Include="RitualStages\StageFailTrigger_Checkable.cs" />
     <Compile Include="RitualStages\StageEndTrigger_NoFailures.cs" />

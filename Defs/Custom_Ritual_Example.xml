@@ -207,7 +207,7 @@
 			
 			<!-- CONSUME. CONSUME!! -->
 			
-		<!--	<li>
+			<li>
 				<defaultDuty>HaulFoodToRitualSpot</defaultDuty>
 				<endTriggers>
 				 <li Class="TPRitualAttachableOutcomes.StageEndTrigger_ThingDeliveredOrTimeout">
@@ -216,7 +216,7 @@
 				 </li>
 				</endTriggers>
 			</li>
-		-->
+		
 		
 			<li>
 				<defaultDuty>Spectate</defaultDuty>
