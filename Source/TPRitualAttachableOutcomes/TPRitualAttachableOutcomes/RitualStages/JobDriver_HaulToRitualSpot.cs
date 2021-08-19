@@ -198,5 +198,12 @@ namespace TPRitualAttachableOutcomes
 			yield return notifyStage;
 			
 		}
+
+		public override void ExposeData()
+        {
+			base.ExposeData();
+        }
 	}
+
+	
 }

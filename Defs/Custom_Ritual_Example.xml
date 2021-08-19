@@ -156,18 +156,7 @@
 		  </subNodes>
 		</thinkNode>
 	</DutyDef>
-	
-	<DutyDef>
-		<defName>HaulFoodToRitualSpot</defName>
-		<socialModeMax>Off</socialModeMax>
-		<thinkNode Class="ThinkNode_Priority">
-		  <subNodes>
-			<li Class="TPRitualAttachableOutcomes.JobGiver_HaulToRitualSpot">
-				<thingDefName>MealSimple</thingDefName>	
-			</li>
-		  </subNodes>
-		</thinkNode>
-	</DutyDef>
+
 	
 <!-- RitualBehavior - this is where you define what the pawns do during the ritual.-->
 
@@ -204,47 +193,6 @@
 		</roles>
 		
 		<stages>
-			
-			<!-- CONSUME. CONSUME!! -->
-			
-			<li>
-				<defaultDuty>HaulFoodToRitualSpot</defaultDuty>
-				<endTriggers>
-				 <li Class="TPRitualAttachableOutcomes.StageEndTrigger_ThingDeliveredOrTimeout">
-					<thingDefName>MealSimple</thingDefName>
-					<amount>10</amount>
-				 </li>
-				</endTriggers>
-			</li>
-		
-		
-			<li>
-				<defaultDuty>Spectate</defaultDuty>
-				<preAction Class="TPRitualAttachableOutcomes.RitualStageAction_ConsumeThing">
-					<thingDefName>MealSimple</thingDefName>
-					<amountToConsume>10</amountToConsume>
-					<lookDistance>8</lookDistance>
-					<stageId>consume</stageId>
-				</preAction>
-				<endTriggers>
-				 <li Class="TPRitualAttachableOutcomes.StageEndTrigger_ActionsComplete">
-				 </li>
-				</endTriggers>
-			</li>
-			
-			<li>
-				<defaultDuty>Spectate</defaultDuty>
-				<endTriggers>
-				 <li Class="TPRitualAttachableOutcomes.StageEndTrigger_NoFailures">
-				 </li>
-				</endTriggers>
-				<failTriggers>
-					<li Class="TPRitualAttachableOutcomes.StageFailTrigger_ThingNotConsumed">
-						<stageId>consume</stageId>
-						<desc>YOUR GOD HUNGERS</desc>
-					  </li>
-				</failTriggers>
-			</li>
 			
 			<!-- wait for arrival -->
 			
