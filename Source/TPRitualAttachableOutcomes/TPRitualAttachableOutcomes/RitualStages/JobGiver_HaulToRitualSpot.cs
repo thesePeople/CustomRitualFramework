@@ -15,6 +15,7 @@ namespace TPRitualAttachableOutcomes
     {
         public string thingDefName = "";
         public string stageId = "";
+        public int maxDistance = 8;
         protected override Job TryGiveJob(Pawn pawn)
         {
             LordJob_Ritual lordJob_Ritual = pawn.GetLord().LordJob as LordJob_Ritual;
@@ -36,7 +37,12 @@ namespace TPRitualAttachableOutcomes
                 IntVec3 foundCell = lordJob_Ritual.selectedTarget.Cell;
                 if (foundCell.IsValid)
                 {
-                    return true;
+                    // don't try to bring things that are already within the ritual area
+                    if (t.Position.DistanceTo(foundCell) <= maxDistance)
+                    {
+                        return false;
+                    }
+                        return true;
                 }
                 else
                 {

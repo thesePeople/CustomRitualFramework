@@ -151,8 +151,14 @@ namespace TPRitualAttachableOutcomes
 			Toil placeHauledThingInCell = Toils_Haul.PlaceHauledThingInCell(TargetIndex.B, gotoNextCell, false);
 			gotoNextCell.AddFinishAction( delegate
 			{
-				Pawn actor = gotoNextCell.actor;
-				actor.jobs.curDriver.JumpToToil(placeHauledThingInCell);
+				if (gotoNextCell.actor != null)
+				{
+					Pawn actor = gotoNextCell.actor;
+					if (actor.jobs != null && actor.jobs.curDriver != null && placeHauledThingInCell != null)
+					{
+						actor.jobs.curDriver.JumpToToil(placeHauledThingInCell);
+					}
+				}
 			});
 
 			gotoNextCell.defaultCompleteMode = ToilCompleteMode.PatherArrival;
@@ -197,6 +203,17 @@ namespace TPRitualAttachableOutcomes
 
 			yield return notifyStage;
 			
+			notifyStage.AddFinishAction(delegate
+			{
+				if (gotoNextCell.actor != null)
+				{
+					Pawn actor = gotoNextCell.actor;
+					if (actor.jobs != null && actor.jobs.curDriver != null && getToHaulTarget != null && TargetA != null)
+					{
+						actor.jobs.curDriver.JumpToToil(getToHaulTarget);
+					}
+				}
+			});
 		}
 
 		public override void ExposeData()
