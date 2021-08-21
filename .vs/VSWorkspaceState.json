@@ -1,15 +1,16 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Assemblies",
-    "\\Defs",
     "\\Languages",
     "\\Languages\\English",
     "\\Languages\\English\\Keyed",
     "\\Source",
     "\\Source\\TPRitualAttachableOutcomes",
-    "\\Source\\TPRitualAttachableOutcomes\\TPRitualAttachableOutcomes"
+    "\\Source\\TPRitualAttachableOutcomes\\TPRitualAttachableOutcomes",
+    "\\Source\\TPRitualAttachableOutcomes\\TPRitualAttachableOutcomes\\ModExtensions",
+    "\\Source\\TPRitualAttachableOutcomes\\TPRitualAttachableOutcomes\\RitualOutcomes",
+    "\\Source\\TPRitualAttachableOutcomes\\TPRitualAttachableOutcomes\\RitualStages"
   ],
-  "SelectedNode": "\\Source\\TPRitualAttachableOutcomes\\TPRitualAttachableOutcomes.sln",
+  "SelectedNode": "\\About",
   "PreviewInSolutionExplorer": false
 }

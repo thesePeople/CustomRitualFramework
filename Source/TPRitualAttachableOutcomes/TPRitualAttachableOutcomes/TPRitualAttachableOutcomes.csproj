@@ -65,6 +65,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="RitualObligations\RitualObligationTargetWorker_Custom.cs" />
     <Compile Include="RitualOutcomes\ApplyUtility.cs" />
     <Compile Include="RitualStages\JobDriver_HaulToRitualSpot.cs" />
     <Compile Include="RitualStages\JobGiver_HaulToRitualSpot.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="RitualStages\StageEndTrigger_ThingNotPresent.cs" />
     <Compile Include="RitualOutcomes\IncidentParmsCustom.cs" />
     <Compile Include="RitualObligations\RitualObligationTargetWorker_AnyRitualSpotOrAltar_Extra.cs" />
+    <Compile Include="RitualTargetFilters\RitualTargetFilter_Custom.cs" />
     <Compile Include="RitualTargetFilters\RitualTargetFilter_IdeoBuilding_Extra.cs" />
     <Compile Include="ModExtensions\TargetFilter_ModExtension.cs" />
     <Compile Include="RitualAbilities\CompProperties_StartRitual_OnlyObligation.cs" />
