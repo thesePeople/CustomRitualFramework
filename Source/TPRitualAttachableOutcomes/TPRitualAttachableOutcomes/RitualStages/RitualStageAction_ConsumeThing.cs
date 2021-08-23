@@ -27,7 +27,6 @@ namespace TPRitualAttachableOutcomes
         {
             enoughConsumed = false;
             consumptionComplete = false;
-
             originalAmount = amountToConsume;
             int amountPresent = 0;
             List<Thing> thingsInArea = GenRadial.RadialDistinctThingsAround(ritual.selectedTarget.Cell, ritual.Map, lookDistance, true).ToList();

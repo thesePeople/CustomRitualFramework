@@ -65,6 +65,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="RitualObligations\RitualObligationTargetWorker_Custom - Copy.cs" />
     <Compile Include="RitualObligations\RitualObligationTargetWorker_Custom.cs" />
     <Compile Include="RitualOutcomes\ApplyUtility.cs" />
     <Compile Include="RitualStages\JobDriver_HaulToRitualSpot.cs" />

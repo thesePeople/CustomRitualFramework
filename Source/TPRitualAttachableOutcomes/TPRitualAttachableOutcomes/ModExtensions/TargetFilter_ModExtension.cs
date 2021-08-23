@@ -11,6 +11,7 @@ namespace TPRitualAttachableOutcomes
     class TargetFilter_ModExtension : DefModExtension
     {
         public List<string> extraCandidates = new List<string>();
+        public string missingDesc = "";
 
         public void ExposeData()
         {

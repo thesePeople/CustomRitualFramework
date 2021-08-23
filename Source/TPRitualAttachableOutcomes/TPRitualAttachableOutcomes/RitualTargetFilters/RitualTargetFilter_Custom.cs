@@ -26,7 +26,16 @@ namespace TPRitualAttachableOutcomes
 			rejectionReason = "";
 			if (!targetInfo.IsValid)
 			{
-				rejectionReason = "RequiredBuildingsNotFound".Translate();
+				TargetFilter_ModExtension modExtension = def.GetModExtension<TargetFilter_ModExtension>();
+				string missingDesc = modExtension.missingDesc;
+				if (!String.IsNullOrEmpty(missingDesc))
+				{
+					rejectionReason = missingDesc;
+				}
+				else
+				{
+					rejectionReason = "RequiredBuildingsNotFound".Translate();
+				}
 				return false;
 			}
 			return true;

@@ -413,7 +413,7 @@ namespace TPRitualAttachableOutcomes
                 }
             }
         }
-        private static IncidentParms ConvertCustomIncidentParms(IncidentParmsCustom incidentParms)
+        private static IncidentParms ConvertCustomIncidentParms (IncidentParmsCustom incidentParms)
         {
             IncidentParms newIncidentParms = (IncidentParms)incidentParms;
 
