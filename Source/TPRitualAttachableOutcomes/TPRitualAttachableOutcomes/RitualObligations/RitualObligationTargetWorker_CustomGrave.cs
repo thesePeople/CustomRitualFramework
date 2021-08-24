@@ -30,10 +30,17 @@ namespace TPRitualAttachableOutcomes
 				TargetFilter_ModExtension modExtension = def.GetModExtension<TargetFilter_ModExtension>();
 				foreach (string s in modExtension.extraCandidates)
 				{
-					List<Thing> newSpots = (List<Thing>)map.listerThings.ThingsInGroup(ThingRequestGroup.Grave).Where((Thing t) => ((Building_Grave)t).Corpse != null);
+					List<Thing> newSpots = map.listerThings.ThingsOfDef(DefDatabase<ThingDef>.GetNamed(s));
 					for (int j = 0; j < newSpots.Count; j++)
 					{
-						yield return newSpots[j];
+						if (newSpots[j] is Building_Grave && ((Building_Grave)newSpots[j]).Corpse != null)
+						{
+							yield return newSpots[j];
+						}
+						else if (!(newSpots[j] is Building_Grave))
+                        {
+							yield return newSpots[j];
+						}
 					}
 				}
 			}
@@ -50,7 +57,7 @@ namespace TPRitualAttachableOutcomes
 				TargetFilter_ModExtension modExtension = def.GetModExtension<TargetFilter_ModExtension>();
 				foreach (string s in modExtension.extraCandidates)
 				{
-					if (target.Thing.def.defName == s)
+					if (target.Thing.def.defName == s && target.Map.reservationManager.ReservationsReadOnly.Count == 0)
 					{
 						return true;
 					}

@@ -67,7 +67,9 @@
   <ItemGroup>
     <Compile Include="RitualObligations\RitualObligationTargetWorker_Custom.cs" />
     <Compile Include="RitualObligations\RitualObligationTargetWorker_CustomGrave.cs" />
+    <Compile Include="RitualObligations\RitualObligationTargetWorker_GraveWithCorpse.cs" />
     <Compile Include="RitualOutcomes\ApplyUtility.cs" />
+    <Compile Include="RitualRoles\RitualRoleNonSlaveColonist.cs" />
     <Compile Include="RitualStages\JobDriver_HaulToRitualSpot.cs" />
     <Compile Include="RitualStages\JobGiver_HaulToRitualSpot.cs" />
     <Compile Include="RitualStages\StageFailTrigger_Checkable.cs" />
