@@ -39,7 +39,7 @@ namespace TPRitualAttachableOutcomes
                     }
                 }
 
-                // reset the failtriggers here for the next run
+                // check and reset the failtriggers here for the next run
                 if(returnVal)
                 {
                     foreach (StageFailTrigger failTrigger in stage.failTriggers)

@@ -14,11 +14,13 @@ namespace TPRitualAttachableOutcomes
     {
         public bool failed = false;
         public bool hasBeenChecked = false;
+        public string stageId = "";
 
         public override void ExposeData()
         {
             Scribe_Values.Look(ref failed, "failed");
             Scribe_Values.Look(ref hasBeenChecked, "hasBeenChecked");
+            Scribe_Values.Look(ref stageId, "stageId");
             base.ExposeData();
         }
     }

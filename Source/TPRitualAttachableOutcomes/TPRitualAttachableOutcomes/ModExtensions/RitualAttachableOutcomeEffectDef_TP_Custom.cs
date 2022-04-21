@@ -30,6 +30,10 @@ namespace TPRitualAttachableOutcomes
         public bool spawnNearRitual = false;
         public string weather;
         public string abilityToAdd;
+        public string trait;
+        public float traitDegree = 0;
+        public bool traitForced = false;
+        public bool removeTrait = false;
         public string letterLabel;
         public string letterText;
         public string letterType = "positive";
@@ -67,6 +71,9 @@ namespace TPRitualAttachableOutcomes
             Scribe_Values.Look(ref spawnNearRitual, "spawnNearRitual");
             Scribe_Values.Look(ref weather, "weather");
             Scribe_Values.Look(ref abilityToAdd, "abilityToAdd");
+            Scribe_Values.Look(ref trait, "trait");
+            Scribe_Values.Look(ref traitDegree, "traitDegree");
+            Scribe_Values.Look(ref traitForced, "traitForced");
             Scribe_Values.Look(ref letterLabel, "letterLabel");
             Scribe_Values.Look(ref letterText, "letterText");
             Scribe_Values.Look(ref letterType, "letterType");

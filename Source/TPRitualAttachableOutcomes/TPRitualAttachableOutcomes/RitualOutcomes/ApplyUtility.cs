@@ -49,6 +49,10 @@ namespace TPRitualAttachableOutcomes
 
             List<string> thisHediff = nodeToProcess.hediffToAdd ?? new List<string>();
             string thisAbilityToAdd = nodeToProcess.abilityToAdd ?? "";
+            string thisTraitToAdd = nodeToProcess.trait ?? "";
+            bool removeTrait = nodeToProcess.removeTrait;
+            float thisTraitDegree = nodeToProcess.traitDegree;
+            bool thisTraitForced = nodeToProcess.traitForced;
             float thisHediffSeverity = nodeToProcess.hediffSeverity;
             string thisBodyPart = nodeToProcess.bodyPart ?? "";
             List<string> thisHediffToRemove = nodeToProcess.hediffToRemove ?? new List<string>();
@@ -231,6 +235,28 @@ namespace TPRitualAttachableOutcomes
                 {
                     // Log.Message("Applying " + thisAbilityToAdd + " to pawn...");
                     pawn.abilities.GainAbility(DefDatabase<AbilityDef>.GetNamed(thisAbilityToAdd));
+                }
+
+                if (!String.IsNullOrEmpty(thisTraitToAdd))
+                {
+                    if (!removeTrait)
+                    {
+                        // Log.Message("Applying " + thisTraitToAdd + " to pawn...");
+                        Trait traitToAdd = new Trait(DefDatabase<TraitDef>.GetNamed(thisTraitToAdd), (int)thisTraitDegree, thisTraitForced);
+                        pawn.story.traits.allTraits.Add(traitToAdd);
+                    }
+                    else
+                    {
+                        int t_index = 0;
+                        foreach (Trait t in pawn.story.traits.allTraits)
+                        {
+                            if(t.Label.EqualsIgnoreCase(thisTraitToAdd))
+                            {
+                                pawn.story.traits.allTraits.RemoveAt(t_index);
+                            }
+                            t_index++;
+                        }
+                    }
                 }
 
                 if (thisHediffToRemove.Count > 0)

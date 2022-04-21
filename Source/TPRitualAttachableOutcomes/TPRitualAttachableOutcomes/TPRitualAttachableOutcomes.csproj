@@ -70,6 +70,8 @@
     <Compile Include="RitualObligations\RitualObligationTargetWorker_GraveWithCorpse.cs" />
     <Compile Include="RitualOutcomes\ApplyUtility.cs" />
     <Compile Include="RitualRoles\RitualRoleNonSlaveColonist.cs" />
+    <Compile Include="RitualStages\JobDriver_IngestThing.cs" />
+    <Compile Include="RitualStages\JobGiver_IngestThing.cs" />
     <Compile Include="RitualStages\JobDriver_HaulToRitualSpot.cs" />
     <Compile Include="RitualStages\JobGiver_HaulToRitualSpot.cs" />
     <Compile Include="RitualStages\StageFailTrigger_Checkable.cs" />

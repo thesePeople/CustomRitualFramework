@@ -222,4 +222,20 @@
     <effectDesc>calls the rain</effectDesc>
   </RitualAttachableOutcomeEffectDef>
   
+  <RitualAttachableOutcomeEffectDef>
+    <defName>AddTrait</defName>
+	 <modExtensions>
+            <li Class="TPRitualAttachableOutcomes.RitualAttachableOutcomeEffectDef_TP_Custom">
+                <trait>Ascetic</trait>
+				<!-- for traits that come in degrees, specify here. Defaults to 0 if not specified -->
+				<traitDegree></traitDegree>
+				<!-- this defaults to false if unsupplied -->
+				<traitForced>false</traitForced>
+		    </li>
+        </modExtensions>
+    <workerClass>TPRitualAttachableOutcomes.TPRitualAttachableOutcomeEffectWorker_Custom</workerClass>
+    <label>add trait</label>
+    <effectDesc>adds a trait (Ascetic for this example) to pawns involved in the ritual</effectDesc>
+  </RitualAttachableOutcomeEffectDef>
+  
 </Defs>
