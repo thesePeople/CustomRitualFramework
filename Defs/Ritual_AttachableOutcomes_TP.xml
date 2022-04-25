@@ -238,4 +238,17 @@
     <effectDesc>adds a trait (Ascetic for this example) to pawns involved in the ritual</effectDesc>
   </RitualAttachableOutcomeEffectDef>
   
+  <RitualAttachableOutcomeEffectDef>
+    <defName>AddPsylink</defName>
+	 <modExtensions>
+            <li Class="TPRitualAttachableOutcomes.RitualAttachableOutcomeEffectDef_TP_Custom">
+               <!-- adds the psylink level to pawns matching the appliesTo -->
+			   <psylinkLevel>1</psylinkLevel>
+		    </li>
+        </modExtensions>
+    <workerClass>TPRitualAttachableOutcomes.TPRitualAttachableOutcomeEffectWorker_Custom</workerClass>
+    <label>add psylink</label>
+    <effectDesc>adds a psylink level to pawns involved in the ritual</effectDesc>
+  </RitualAttachableOutcomeEffectDef>
+  
 </Defs>

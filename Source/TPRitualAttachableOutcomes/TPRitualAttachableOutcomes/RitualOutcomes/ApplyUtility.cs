@@ -53,6 +53,7 @@ namespace TPRitualAttachableOutcomes
             bool removeTrait = nodeToProcess.removeTrait;
             float thisTraitDegree = nodeToProcess.traitDegree;
             bool thisTraitForced = nodeToProcess.traitForced;
+            int thisPsylinkLevel = nodeToProcess.psylinkLevel;
             float thisHediffSeverity = nodeToProcess.hediffSeverity;
             string thisBodyPart = nodeToProcess.bodyPart ?? "";
             List<string> thisHediffToRemove = nodeToProcess.hediffToRemove ?? new List<string>();
@@ -235,6 +236,11 @@ namespace TPRitualAttachableOutcomes
                 {
                     // Log.Message("Applying " + thisAbilityToAdd + " to pawn...");
                     pawn.abilities.GainAbility(DefDatabase<AbilityDef>.GetNamed(thisAbilityToAdd));
+                }
+
+                if (thisPsylinkLevel != 0)
+                {
+                    pawn.ChangePsylinkLevel(thisPsylinkLevel, true);
                 }
 
                 if (!String.IsNullOrEmpty(thisTraitToAdd))
