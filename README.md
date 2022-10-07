@@ -10,3 +10,5 @@ Most of the Attachable Outcomes and both of the new Rituals are used to showcase
 I'm considering renaming the entire mod to Custom Ritual Framework, or CRF, but I may keep the namespace the old legacy thing so as not to mess up too much if you've been using this to define your own rituals. I'm also considering uploading a new version under the new name, but I'm not sure of the best approach. Let me know what you think!
 
 Steam workshop: https://steamcommunity.com/sharedfiles/filedetails/?id=2561617361
+
+Portions of the materials used to create this mod are trademarks and/or copyrighted works of Ludeon Studios Inc. All rights reserved by Ludeon. This mod is not official and is not endorsed by Ludeon.
