@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <HediffDef>
+    <defName>HarvestBonus</defName>
+    <label>harvest bonus</label>
+    <description>A bonus to harvest and animal gathering yields.</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <comps>
+      <li Class="HediffCompProperties_Disappears">
+	     <disappearsAfterTicks>45000~120000</disappearsAfterTicks>
+        <showRemainingTime>True</showRemainingTime>
+      </li>
+      <li Class="HediffCompProperties_DisappearsOnDeath"/>
+    </comps>
+    <isBad>false</isBad>
+    <stages>
+      <li>
+        <statOffsets>
+          <PlantHarvestYield>0.5</PlantHarvestYield>
+		  <AnimalGatherYield>0.5</AnimalGatherYield>
+        </statOffsets>
+      </li>
+    </stages>
+	<defaultLabelColor>(0.52, 1, 0.95)</defaultLabelColor>
+  </HediffDef>
+
+</Defs>

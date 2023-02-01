@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <RitualAttachableOutcomeEffectDef>
+    <defName>BountifulHarvest</defName>
+	 <modExtensions>
+            <li Class="TPRitualAttachableOutcomes.RitualAttachableOutcomeEffectDef_TP_Custom">
+                <hediffToAdd>
+					<li>HarvestBonus</li>
+				</hediffToAdd>
+				<onlyPositiveOutcomes>false</onlyPositiveOutcomes>
+				<!-- an example for if we wanted this outcome to cause a raid, perhaps people after your tasty crops -->
+				
+				<!--<incident>RaidEnemy</incident>
+				<incidentParms Class="TPRitualAttachableOutcomes.IncidentParmsCustom">
+					<scalePoints>true</scalePoints>
+					<myRaidStrategy>ImmediateAttack</myRaidStrategy>
+					<myRaidArrivalMode>EdgeWalkInGroups</myRaidArrivalMode>
+					<myFaction>TribeSavage</myFaction>
+				</incidentParms>-->
+            </li>
+        </modExtensions>
+    <workerClass>TPRitualAttachableOutcomes.TPRitualAttachableOutcomeEffectWorker_Custom</workerClass>
+    <label>bountiful harvest</label>
+    <effectDesc>ensures a bountiful harvest for your colonists who participate in the ritual</effectDesc>
+  </RitualAttachableOutcomeEffectDef>
+
+  <RitualAttachableOutcomeEffectDef>
+    <defName>RandomBuffPerPawn</defName>
+	 <modExtensions>
+			<li Class="TPRitualAttachableOutcomes.RitualAttachableOutcomeEffectDef_TP_Custom">
+                
+				<!-- setting forEachPawn to true will apply each subnode in the list once per pawn. For most uses this is the same as running it with an appliesTo list equal to the parent-level's appliesTo -->
+				<!-- but if you specify an item spawn it will spawn those items once for each pawn -->
+				<!-- in theory if you change the weather it will also transition it once for each pawn but really only the last one will have any real effect -->
+				<forEachPawn>true</forEachPawn>
+				
+				<!-- however, if you combine this with randomFrom Node, then for each pawn, one random node is applied. This lets you specify a variety of different effects and if it's something that is added to a pawn, only they will get it -->
+				<randomFromNode>true</randomFromNode>
+				<node Class="TPRitualAttachableOutcomes.RitualAttachableOutcomeEffectDef_TP_Custom_Node">
+					<!-- the above two flags set then mean that each pawn in the ritual gets one of these buffs, at random -->
+					<!-- you can specify a weight in them too -->
+					<li>
+						<hediffToAdd>
+							<li>HarvestBonus</li>
+						</hediffToAdd>
+					</li>
+					<li>
+						<thought>GambleThrill</thought>
+					</li>
+					<!-- once again commenting this out so as not to break non-royalty saves -->
+					<!--
+					<li>
+						<abilityToAdd>Painblock</abilityToAdd>
+					</li> -->
+					<li>
+						<inspiration>Frenzy_Go</inspiration>
+					</li>
+				</node>
+            
+			</li>
+        </modExtensions>
+    <workerClass>TPRitualAttachableOutcomes.TPRitualAttachableOutcomeEffectWorker_Custom</workerClass>
+    <label>random buff per pawn</label>
+    <effectDesc>each colonist who participates in the ritual gets something random</effectDesc>
+  </RitualAttachableOutcomeEffectDef>
+  	
+  
+  <!-- this outcome is mostly used to test and showcase features -->
+    <RitualAttachableOutcomeEffectDef>
+    <defName>GamblersPrayer</defName>
+	 <modExtensions>
+		    <li Class="TPRitualAttachableOutcomes.RitualAttachableOutcomeEffectDef_TP_Custom">
+                <!-- this is kind of a hack - as it turns out just overriding the onlyPositiveOutcomes causes an error when you try to create the ritual. We now specify it here and a prefix function on the outcome apply changes it dynamically. That prefix function only changes the onlyPositiveOutcomes flag for the moment, but you can switch it to false and use triggerPositivityIndex to further define outcomes pretty easily -->
+				<onlyPositiveOutcomes>false</onlyPositiveOutcomes>
+				<!-- anything you put on this level will apply to all outcomes -->
+				<thought>GambleThrill</thought>
+				
+				<!-- giving everyone an inspiration despite the outcome may be too powerful so I wouldn't actually put this here, but this is the syntax. The idea is that you'd have it with a targeting applyTo and maybe even be in a randomFromNode list with a small weight -->
+				<!-- <inspiration>Frenzy_Go</inspiration> -->
+				
+				<!-- commenthing this out to prevent breaking non-Royalty games, but leaving it to show the syntax for adding an ability -->
+				<!--<abilityToAdd>Painblock</abilityToAdd> -->
+				
+				<!-- syntax for hediff removal, so you can make cure disease rituals. Note that this will remove all hediffs of this def -->
+				<!-- <hediffToRemove><li>CryptosleepSickness</li></hediffToRemove> -->
+				
+				<!-- You can now specify a bodyPart and add to a hediff's severity. The severity offset will occur for the first instance found of the hediff to add, so use caution with hediffs that can have multiple instances
+				In the future this may be reworked to tie the bodyPart in with both adding and removing hediffs, to only target the set there for either. 
+				But I don't foresee this being used all that much in the first place, so y'know. 
+				<li>
+						<hediffToAdd><li>Alzheimers</li></hediffToAdd>
+						<bodyPart>Torso</bodyPart>
+						<hediffSeverity>0.6</hediffSeverity>
+					</li> -->
+				
+				<!-- a decent way to make a generic healing ritual would be to create a hediff that gives them increased healing speed. -->
+				
+				<!-- major rework to outcome chances allowing you to specify outcomes on bad and worst outcomes, but requires some major changes to more complex effects -->
+				<!-- first of all, you'll probably want to start with an outer node so that each can be iterated through -->
+				<node Class="TPRitualAttachableOutcomes.RitualAttachableOutcomeEffectDef_TP_Custom_Node">
+					<li>
+						<node Class="TPRitualAttachableOutcomes.TPRitualAttachableOutcomeEffectWorker_Custom_Node">
+							<li> <!-- this is the node for "good" outcomes -->
+								<triggerPositivityIndex>
+									<li>1</li>
+								</triggerPositivityIndex>
+								<randomFromNode>true</randomFromNode>
+								<node Class="TPRitualAttachableOutcomes.TPRitualAttachableOutcomeEffectWorker_Custom_Node">
+									<li>
+										<weight>0.4</weight>
+										<!-- if the outer node runs (which it will if you supply nothing for the triggerPositivityIndex) then this will be checked -->
+										<!-- triggerPositivityIndex is a list of positivityIndices that this will run on. By default -2 is worst, -1 is bad, 1 is good, and 2 is great, but invidiual rituals can supply others -->
+										<!-- this allows the framework to be extensible to custom rituals -->
+										<hediffToAdd>
+											<li>CatatonicBreakdown</li>
+									</hediffToAdd>
+										<!-- this specifies a list of ritual roles to apply it to. Note that it's the role of the ritual, so if the ritual allows substitutions for a role they will be targeted -->
+										<appliesTo>
+											<li>leader</li>
+										</appliesTo>
+										<!-- these are nestable! So many creative possibilities -->
+										<node Class="TPRitualAttachableOutcomes.TPRitualAttachableOutcomeEffectWorker_Custom_Node">
+											<li>
+												<!-- due to the rule that a node will be run on the outcome regardless of the positvity index, subnodes don't need them -->
+												<!-- but be careful. Since this is a subnode that already has a positivity index of 1 supplying anything else will cause this node to never be processed -->
+												<item>Silver</item>
+												<baseAmount>50</baseAmount>
+												<amountPerPawn>10</amountPerPawn>
+												<letterLabel>Winner, sort of!</letterLabel>
+												<letterText>The gods demand a sacrifice, but grant you your wish</letterText>
+											</li>
+										</node>
+									</li>
+									<li>
+										<weight>0.5</weight>
+										<hediffToAdd>
+											<li>FoodPoisoning</li>
+									</hediffToAdd>
+										<!-- invertApply applies this node's effects (a hediff in this case, but it could be a removed hediff, an ability, an inspiration, or a thought) to everyone EXCEPT the roles listed. You can use two separate nodes with different targeting to apply different hediffs to leaders/spectators for example. The list of what you can do and combine is non-exhaustive here -->
+										<invertApply>true</invertApply>
+										<appliesTo>
+											<li>leader</li>
+										</appliesTo>
+									</li>
+									<li>
+										<weight>0.1</weight>
+										<item>Silver</item>
+										<!-- these do not accept a range unfortunately - but maybe for a future update -->
+										<!-- if you specify item you MUST specify these two, but either can be 0 -->
+										<baseAmount>50</baseAmount>
+										<amountPerPawn>10</amountPerPawn>
+										<!-- the letters only occur for the item spawn right now but I may extend that in a future update --> 
+										<letterLabel>Winner!</letterLabel>
+										<letterText>You gambled and won, this time.</letterText>
+									</li>
+								</node>
+							</li>
+							<li> <!-- this is the node for "great" outcomes -->
+								<triggerPositivityIndex>
+									<li>2</li>
+								</triggerPositivityIndex>
+								<item>Silver</item>
+								<baseAmount>100</baseAmount>
+								<amountPerPawn>20</amountPerPawn>
+								<letterLabel>Big Winner!</letterLabel>
+								<letterText>You gambled and won, this time.</letterText>
+							</li>
+							<li> <!-- this is the node for "bad" and "worst" outcomes -->
+								<triggerPositivityIndex>
+									<li>-2</li>
+									<li>-1</li>
+								</triggerPositivityIndex>
+								<hediffToAdd>
+									<li>FoodPoisoning</li>
+							</hediffToAdd>
+								<invertApply>true</invertApply>
+								<appliesTo>
+									<li>leader</li>
+								</appliesTo>
+								<!-- appliesToRandom = true will choose one pawn randomly from the list of valid targets -->
+								<!-- <appliesToRandom>true</appliesToRandom> -->
+							</li>
+						</node>
+					</li>
+				</node>
+			</li>
+     </modExtensions>
+    <workerClass>TPRitualAttachableOutcomes.TPRitualAttachableOutcomeEffectWorker_Custom</workerClass>
+    <label>gambler's prayer</label>
+    <effectDesc>gamble with the gods</effectDesc>
+  </RitualAttachableOutcomeEffectDef>
+  
+
+  <RitualAttachableOutcomeEffectDef>
+    <defName>MannaFromHeaven</defName>
+	 <modExtensions>
+            <li Class="TPRitualAttachableOutcomes.RitualAttachableOutcomeEffectDef_TP_Custom">
+                <!-- since we don't override the "only positive outcomes" flag for this effect we can ignore positivity indices altogether -->
+				<item>MealNutrientPaste</item>
+				<baseAmount>10</baseAmount>
+				<amountPerPawn>3</amountPerPawn>
+				<spawnNearRitual>true</spawnNearRitual>
+				<letterLabel>Items Spawned</letterLabel>
+				<letterText>Items from your ritual have spawned</letterText>
+			</li>
+        </modExtensions>
+    <workerClass>TPRitualAttachableOutcomes.TPRitualAttachableOutcomeEffectWorker_Custom</workerClass>
+    <label>manna from heaven</label>
+    <effectDesc>calls food from the skies</effectDesc>
+  </RitualAttachableOutcomeEffectDef>
+  
+  <RitualAttachableOutcomeEffectDef>
+    <defName>CallRain</defName>
+	 <modExtensions>
+            <li Class="TPRitualAttachableOutcomes.RitualAttachableOutcomeEffectDef_TP_Custom">
+                <weather>Rain</weather>
+		    </li>
+        </modExtensions>
+    <workerClass>TPRitualAttachableOutcomes.TPRitualAttachableOutcomeEffectWorker_Custom</workerClass>
+    <label>call rain</label>
+    <effectDesc>calls the rain</effectDesc>
+  </RitualAttachableOutcomeEffectDef>
+  
+  <RitualAttachableOutcomeEffectDef>
+    <defName>AddTrait</defName>
+	 <modExtensions>
+            <li Class="TPRitualAttachableOutcomes.RitualAttachableOutcomeEffectDef_TP_Custom">
+                <trait>Ascetic</trait>
+				<!-- for traits that come in degrees, specify here. Defaults to 0 if not specified -->
+				<traitDegree></traitDegree>
+				<!-- this defaults to false if unsupplied -->
+				<traitForced>false</traitForced>
+		    </li>
+        </modExtensions>
+    <workerClass>TPRitualAttachableOutcomes.TPRitualAttachableOutcomeEffectWorker_Custom</workerClass>
+    <label>add trait</label>
+    <effectDesc>adds a trait (Ascetic for this example) to pawns involved in the ritual</effectDesc>
+  </RitualAttachableOutcomeEffectDef>
+  
+  <RitualAttachableOutcomeEffectDef>
+    <defName>AddPsylink</defName>
+	 <modExtensions>
+            <li Class="TPRitualAttachableOutcomes.RitualAttachableOutcomeEffectDef_TP_Custom">
+               <!-- adds the psylink level to pawns matching the appliesTo -->
+			   <psylinkLevel>1</psylinkLevel>
+		    </li>
+        </modExtensions>
+    <workerClass>TPRitualAttachableOutcomes.TPRitualAttachableOutcomeEffectWorker_Custom</workerClass>
+    <label>add psylink</label>
+    <effectDesc>adds a psylink level to pawns involved in the ritual</effectDesc>
+  </RitualAttachableOutcomeEffectDef>
+  
+</Defs>
