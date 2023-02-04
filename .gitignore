@@ -2,8 +2,7 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/Assemblies/UnityEngine.IMGUIModule.dll
-/Assemblies/UnityEngine.TextRenderingModule.dll
-/1.4/Assemblies/0Harmony.dll
-/1.3/Assemblies/0Harmony.dll
-/1.3/Source/TPRitualAttachableOutcomes
+.vs
+/Source/*/.vs
+/Source/*/*/bin
+/Source/*/*/obj
