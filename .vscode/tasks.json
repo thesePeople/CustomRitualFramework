@@ -10,5 +10,14 @@
             },
             "command": ".vscode/build.sh",
         },
+        {
+            "label": "launch game",
+            "type": "process",
+            "group": {
+                "kind": "none",
+                "isDefault": false
+            },
+            "command": "../../RimWorldLinux"
+        }
     ]
 }
