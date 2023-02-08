@@ -86,7 +86,11 @@ namespace TPRitualAttachableOutcomes
             bool thisApplyToInnerPawn = nodeToProcess.applyToInnerPawn;
             bool thisResurrect = nodeToProcess.resurrect;
 
-            List<RitualAttachableOutcomeEffectDef_TP_Custom_Node> subNodes = nodeToProcess.node;
+            List<string> thisRelationshipsToAdd = nodeToProcess.relationshipsToAdd ?? new List<string>();
+            List<string> thisRelationshipsToRemove = nodeToProcess.relationshipsToRemove ?? new List<string>();
+            List<string> thisRelationshipOperationTargets = nodeToProcess.relationshipOperationTargets ?? new List<string>();
+            
+            List < RitualAttachableOutcomeEffectDef_TP_Custom_Node> subNodes = nodeToProcess.node;
 
             Log.Message("Finished loading in the outcome effect data");
 
@@ -188,15 +192,106 @@ namespace TPRitualAttachableOutcomes
 
             
 
-           // Log.Message("Iterating through pawns to apply to");
+            // Log.Message("Iterating through pawns to apply to");
             foreach (Pawn pawn in pawnsToApplyTo)
             {
-               // Log.Message("Pawn " + pawn.Name + " is actually in the list");
+                if (thisRelationshipsToAdd.Count > 0)
+                {
+                    foreach (string r in thisRelationshipsToAdd)
+                    {
+                        if (!String.IsNullOrEmpty(r))
+                        {
+                            if (thisRelationshipOperationTargets.Count > 0)
+                            {
+                                foreach (string t in thisRelationshipOperationTargets)
+                                {
+                                    if (!String.IsNullOrEmpty(t))
+                                    {
+                                        try
+                                        {
+                                            Log.Message("CRF ApplyUtility rel try{}: pawn = " + pawn.Name);
+                                            Log.Message("CRF ApplyUtility rel try{}: relationshipToAdd = " + r);
+                                            Log.Message("CRF ApplyUtility rel try{}: relationshipOperationTarget = " + jobRitual.PawnWithRole(t).Name);
+                                            foreach (PawnRelationDef relation in pawn.GetRelations(jobRitual.PawnWithRole(t)))
+                                            {
+                                                if (relation == null)
+                                                {
+                                                    Log.Warning("CRF ApplyUtility rel try{}: No relation to remove from " + pawn.Name);
+                                                }
+                                                else
+                                                {
+                                                    Log.Message("CRF ApplyUtility rel try{}: Removing pre-existing relation " + relation + " from " + pawn.Name);
+                                                    pawn.relations.RemoveDirectRelation(relation, jobRitual.PawnWithRole(t));
+                                                }
+                                            }
+                                            pawn.relations.AddDirectRelation(DefDatabase<PawnRelationDef>.GetNamed(r), jobRitual.PawnWithRole(t));
+                                        }
+                                        catch
+                                        {
+                                            Log.Error("CRF ApplyUtility rel catch {}: FAILED pawn.relations.AddDirectRelation(" + r + ", jobRitual.PawnWithRole(" + t + ")");
+                                        }
+                                        finally
+                                        {
+                                            Log.Message("CRF ApplyUtility rel finally {}: SUCCESS pawn.relations.AddDirectRelation(" + r + ", jobRitual.PawnWithRole(" + t + ") SUCCESS");
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if (thisRelationshipsToRemove.Count > 0)
+                {
+                    foreach (string r in thisRelationshipsToRemove)
+                    {
+                        if (!String.IsNullOrEmpty(r))
+                        {
+                            if (thisRelationshipOperationTargets.Count > 0)
+                            {
+                                foreach (string t in thisRelationshipOperationTargets)
+                                {
+                                    if (!String.IsNullOrEmpty(t))
+                                    {
+                                        try
+                                        {
+                                            Log.Message("CRF ApplyUtility rel try{}: pawn = " + pawn.Name);
+                                            Log.Message("CRF ApplyUtility rel try{}: relationshipToRemove = " + r);
+                                            Log.Message("CRF ApplyUtility rel try{}: relationshipOperationTarget = " + jobRitual.PawnWithRole(t).Name);
+                                            foreach (PawnRelationDef relation in pawn.GetRelations(jobRitual.PawnWithRole(t)))
+                                            {
+                                                if (relation == null)
+                                                {
+                                                    Log.Warning("CRF ApplyUtility rel try{}: No relation to remove from " + pawn.Name);
+                                                }
+                                                else if (relation.defName == r)
+                                                {
+                                                    Log.Message("CRF ApplyUtility rel try{}: Removing relation " + relation + " from " + pawn.Name);
+                                                    pawn.relations.RemoveDirectRelation(relation, jobRitual.PawnWithRole(t));
+                                                }
+                                            }
+                                        }
+                                        catch
+                                        {
+                                            Log.Error("CRF ApplyUtility rel catch {}: FAILED pawn.relations.RemoveDirectRelation(" + r + ", jobRitual.PawnWithRole(" + t + ")");
+                                        }
+                                        finally
+                                        {
+                                            Log.Message("CRF ApplyUtility rel finally {}: SUCCESS pawn.relations.RemoveDirectRelation(" + r + ", jobRitual.PawnWithRole(" + t + ") SUCCESS");
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // Log.Message("Pawn " + pawn.Name + " is actually in the list");
 
                 // now if they add a hediff it only gets added to pawns obeying the whole "appliesTo" thing
                 // I feel like this whole thing would be a lot shorter if I remembered LINQ better
 
-               // Log.Message("thisHediff is " + thisHediff + ". If you see a blank space then something's wrong");
+                // Log.Message("thisHediff is " + thisHediff + ". If you see a blank space then something's wrong");
                 if (thisHediff.Count > 0)
                 {
                     foreach (string h in thisHediff)
