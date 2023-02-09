@@ -1,0 +1,23 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build dll",
+            "type": "shell",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "command": ".vscode/build.sh",
+        },
+        {
+            "label": "launch game",
+            "type": "process",
+            "group": {
+                "kind": "none",
+                "isDefault": false
+            },
+            "command": "../../RimWorldLinux"
+        }
+    ]
+}

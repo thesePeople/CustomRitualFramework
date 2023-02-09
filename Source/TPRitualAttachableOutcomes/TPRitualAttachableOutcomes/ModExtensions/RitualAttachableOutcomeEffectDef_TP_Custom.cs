@@ -51,6 +51,10 @@ namespace TPRitualAttachableOutcomes
         public bool applyToInnerPawn = false;
         public bool resurrect = false;
 
+        public List<string> relationshipsToAdd;
+        public List<string> relationshipsToRemove;
+        public List<string> relationshipOperationTargets;
+
         public void ExposeData()
         {
             Scribe_Collections.Look(ref triggerPositivityIndex, "triggerPositivityIndex");
@@ -89,6 +93,9 @@ namespace TPRitualAttachableOutcomes
             Scribe_Values.Look(ref resurrect, "resurrect");
             Scribe_Values.Look(ref suppression, "suppression");
             Scribe_Values.Look(ref certainty, "certainty");
+            Scribe_Collections.Look(ref relationshipsToAdd, "relationshipsToAdd");
+            Scribe_Collections.Look(ref relationshipsToRemove, "relationshipsToRemove");
+            Scribe_Collections.Look(ref relationshipOperationTargets, "relationshipOperationTargets");
         }
     }
 
