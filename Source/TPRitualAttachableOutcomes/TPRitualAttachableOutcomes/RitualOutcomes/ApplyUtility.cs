@@ -70,7 +70,7 @@ namespace TPRitualAttachableOutcomes
             int thisBaseAmount = nodeToProcess.baseAmount.RandomInRange;
             int thisAmountPerPawn = nodeToProcess.amountPerPawn.RandomInRange;
             bool thisSpawnNearRitual = nodeToProcess.spawnNearRitual;
-            bool thisDropPod = nodeToProcess.dropPod;
+            bool thisInstaDrop = nodeToProcess.instaDrop;
             bool thisForbid = nodeToProcess.forbid;
             bool thisRoofPunch = nodeToProcess.roofPunch;
 
@@ -462,7 +462,7 @@ namespace TPRitualAttachableOutcomes
                 thisTargetLetter = true;
 
                 // actually drop the things
-                DropPodUtility.DropThingsNear(intVec, map, things, 110, canInstaDropDuringInit: thisDropPod, leaveSlag: false, canRoofPunch: thisRoofPunch, forbid: thisForbid);
+                DropPodUtility.DropThingsNear(intVec, map, things, 110, canInstaDropDuringInit: thisInstaDrop, leaveSlag: false, canRoofPunch: thisRoofPunch, forbid: thisForbid);
             }
 
             // weather?

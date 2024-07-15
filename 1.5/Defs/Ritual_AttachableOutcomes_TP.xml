@@ -201,7 +201,7 @@
 				<baseAmount>10</baseAmount>
 				<amountPerPawn>3</amountPerPawn>
 				<spawnNearRitual>true</spawnNearRitual>
-				<dropPod>true</dropPod>
+				<instaDrop>true</instaDrop>
 				<forbid>false</forbid>
 				<roofPunch>true</roofPunch>
 				<letterLabel>Items Spawned</letterLabel>
