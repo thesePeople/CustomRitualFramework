@@ -30,6 +30,7 @@ namespace TPRitualAttachableOutcomes
         public bool spawnNearRitual = false;
         public bool dropPod = true;
         public bool forbid = true;
+        public bool roofPunch = false;
         public string weather;
         public string abilityToAdd;
         public string trait;
