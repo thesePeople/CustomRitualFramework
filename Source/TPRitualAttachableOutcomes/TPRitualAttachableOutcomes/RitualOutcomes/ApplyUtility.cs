@@ -211,18 +211,18 @@ namespace TPRitualAttachableOutcomes
                                     {
                                         try
                                         {
-                                            Log.Message("CRF ApplyUtility rel try{}: pawn = " + pawn.Name);
-                                            Log.Message("CRF ApplyUtility rel try{}: relationshipToAdd = " + r);
-                                            Log.Message("CRF ApplyUtility rel try{}: relationshipOperationTarget = " + jobRitual.PawnWithRole(t).Name);
+                                            //Log.Message("CRF ApplyUtility rel try{}: pawn = " + pawn.Name);
+                                            //Log.Message("CRF ApplyUtility rel try{}: relationshipToAdd = " + r);
+                                            //Log.Message("CRF ApplyUtility rel try{}: relationshipOperationTarget = " + jobRitual.PawnWithRole(t).Name);
                                             foreach (PawnRelationDef relation in pawn.GetRelations(jobRitual.PawnWithRole(t)))
                                             {
                                                 if (relation == null)
                                                 {
-                                                    Log.Warning("CRF ApplyUtility rel try{}: No relation to remove from " + pawn.Name);
+                                                    //Log.Warning("CRF ApplyUtility rel try{}: No relation to remove from " + pawn.Name);
                                                 }
                                                 else
                                                 {
-                                                    Log.Message("CRF ApplyUtility rel try{}: Removing pre-existing relation " + relation + " from " + pawn.Name);
+                                                    //Log.Message("CRF ApplyUtility rel try{}: Removing pre-existing relation " + relation + " from " + pawn.Name);
                                                     pawn.relations.RemoveDirectRelation(relation, jobRitual.PawnWithRole(t));
                                                 }
                                             }
@@ -234,7 +234,7 @@ namespace TPRitualAttachableOutcomes
                                         }
                                         finally
                                         {
-                                            Log.Message("CRF ApplyUtility rel finally {}: SUCCESS pawn.relations.AddDirectRelation(" + r + ", jobRitual.PawnWithRole(" + t + ") SUCCESS");
+                                            //Log.Message("CRF ApplyUtility rel finally {}: SUCCESS pawn.relations.AddDirectRelation(" + r + ", jobRitual.PawnWithRole(" + t + ") SUCCESS");
                                         }
                                     }
                                 }
