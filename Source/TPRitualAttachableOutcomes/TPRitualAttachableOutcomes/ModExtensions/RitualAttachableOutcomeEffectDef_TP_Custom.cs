@@ -28,6 +28,8 @@ namespace TPRitualAttachableOutcomes
         public IntRange baseAmount;
         public IntRange amountPerPawn;
         public bool spawnNearRitual = false;
+        public bool dropPod = true;
+        public bool forbid = true;
         public string weather;
         public string abilityToAdd;
         public string trait;
@@ -74,6 +76,8 @@ namespace TPRitualAttachableOutcomes
             Scribe_Values.Look(ref baseAmount, "baseAmount");
             Scribe_Values.Look(ref amountPerPawn, "amountPerPawn");
             Scribe_Values.Look(ref spawnNearRitual, "spawnNearRitual");
+            Scribe_Values.Look(ref dropPod, "dropPod");
+            Scribe_Values.Look(ref forbid, "forbid");
             Scribe_Values.Look(ref weather, "weather");
             Scribe_Values.Look(ref abilityToAdd, "abilityToAdd");
             Scribe_Values.Look(ref trait, "trait");
