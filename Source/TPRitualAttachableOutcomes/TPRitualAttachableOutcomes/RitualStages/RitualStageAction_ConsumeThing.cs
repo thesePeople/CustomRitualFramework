@@ -33,7 +33,7 @@ namespace TPRitualAttachableOutcomes
             List<Thing> thingsToConsume = new List<Thing>();
             foreach (Thing item in thingsInArea)
             {
-                Log.Message("thing " + item.def.defName + " and we're looking for " + thingDefName);
+                //Log.Message("thing " + item.def.defName + " and we're looking for " + thingDefName);
                 if(item.def.defName == thingDefName)
                 {
                     amountPresent += item.stackCount;

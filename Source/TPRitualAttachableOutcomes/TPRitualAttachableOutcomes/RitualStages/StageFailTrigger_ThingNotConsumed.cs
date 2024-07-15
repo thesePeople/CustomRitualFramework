@@ -15,7 +15,7 @@ namespace TPRitualAttachableOutcomes
         // (you can have two consume actions in one stage if you have two of these fail triggers and separate stageId names, but it's not recommended)
         
         // you cannot reuse stageIds in the same ritual, even amount different stages. This is how it actually finds the right stage and action, since actions don't hold their parent stage
-        public string stageId = "";
+        public new string stageId = "";
 
         public RitualStageAction_ConsumeThing targetAction = null;
 
