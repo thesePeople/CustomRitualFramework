@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <PreceptDef>
+    
+	<defName>CureDisease</defName>
+	<label>cure disease ritual</label>
+    
+	<preceptInstanceCountCurve>
+		<points>
+			<li>(0.6, 0)</li>
+			<li>(1.0, 1)</li>
+      </points>
+	  </preceptInstanceCountCurve>
+	  
+	<description>A typically regularly scheduled service, perhaps a worship service or lecture series.</description>
+    <issue>Ritual</issue>
+    <impact>Medium</impact>
+    <iconPath>UI/Icons/Rituals/RitualFestival</iconPath>
+    <preceptClass>Precept_Ritual</preceptClass>
+    <ritualPatternBase>CureDisease</ritualPatternBase>
+    <allowDuplicates>true</allowDuplicates>
+    <countsTowardsPreceptLimit>true</countsTowardsPreceptLimit>
+    <ignoreLimitsInEditMode>true</ignoreLimitsInEditMode>
+    <receivesExpectationsQualityOffset>true</receivesExpectationsQualityOffset>
+  
+  </PreceptDef>
+  
+  	<RitualPatternDef>
+	
+		
+		<defName>CureDisease</defName>
+		<ritualFreeStartIntervalDaysRange>0.1</ritualFreeStartIntervalDaysRange>
+
+		<ritualBehavior>CureDiseaseBehavior</ritualBehavior>
+		<shortDescOverride>cure disease ritual</shortDescOverride>
+		<descOverride>A speaker speaks for a while, then the diseased lies on the altar and is commanded to be well</descOverride>
+
+		<ritualOutcomeEffect>CureDiseaseOutcome</ritualOutcomeEffect>
+		
+		<nameMaker>NamerRitualFestival</nameMaker>
+		<ritualExpectedDesc>Every year on {DATE}, {MEMBERS} celebrate {RITUAL_labelDef}.</ritualExpectedDesc>
+		<iconPathOverride>UI/Icons/Rituals/RitualFestival</iconPathOverride>
+		<canStartAnytime>true</canStartAnytime>
+		<ritualObligationTriggers>
+			<li Class="RitualObligationTrigger_DateProperties">
+				<mustBePlayerIdeo>true</mustBePlayerIdeo>
+			</li>
+		</ritualObligationTriggers>
+		<ritualObligationTargetFilter>GatheringSpotOrAltar</ritualObligationTargetFilter>
+		<tags>
+			<li>CureDisease</li>
+		</tags>
+		<patternGroupTag>CureDisease</patternGroupTag>
+		
+	</RitualPatternDef>
+	
+
+	 <RitualBehaviorDef>
+		<defName>CureDiseaseBehavior</defName>
+		<durationTicks>4500</durationTicks>
+		<spectatorsLabel>Participants</spectatorsLabel>
+		<spectatorGerund>participate</spectatorGerund>
+		
+		<roles>
+            <li Class="RitualRoleTag">
+				<label>moralist</label>
+				<id>moralist</id>
+				<tag>Moralist</tag>
+				<precept>IdeoRole_Moralist</precept>
+				<required>True</required>
+				<substitutable>false</substitutable>
+				<maxCount>1</maxCount>
+				<countsAsParticipant>False</countsAsParticipant>
+			</li>
+			<li Class="RitualRoleColonist">
+				<label>curee</label>
+				<id>curee</id>
+				<required>True</required>
+				<substitutable>true</substitutable>
+				<maxCount>1</maxCount>
+				<countsAsParticipant>False</countsAsParticipant>
+			</li>
+		</roles>
+		
+		<stages>
+			<li Class="RitualStage_InteractWithRole">
+				<defaultDuty>Spectate</defaultDuty>
+				<targetId>curee</targetId>
+				<endTriggers>
+				  <li Class="StageEndTrigger_PawnDeliveredOrNotValid"/>
+				</endTriggers>
+				<failTriggers>
+				  <li Class="StageFailTrigger_TargetPawnUnreachable">
+					<takerId>moralist</takerId>
+					<takeeId>curee</takeeId>
+					<desc>Afflicted is not reachable.</desc>
+				  </li>
+				</failTriggers>
+				<roleBehaviors>
+				  <li>
+					<roleId>moralist</roleId>
+					<dutyDef>DeliverPawnToAltar</dutyDef>
+				  </li>
+				  <li>
+					<roleId>curee</roleId>
+					<dutyDef>ArriveToCell</dutyDef>
+					<customPositions>
+					  <li Class="RitualPosition_InFrontThingCenter"/>
+					</customPositions>
+				  </li>
+				</roleBehaviors>
+			</li>
+
+			<li>
+				<defaultDuty>Spectate</defaultDuty>
+				<endTriggers>
+				  <li Class="StageEndTrigger_DurationPercentage">
+					<percentage>1</percentage>
+				  </li>
+				</endTriggers>
+				<roleBehaviors>
+				  <li>
+					<roleId>moralist</roleId>
+					<dutyDef>SpeakOnCellFacingSpectators</dutyDef>
+					<speakerInteraction>Speech_Conversion</speakerInteraction>
+					<customPositions>
+					  <li Class="RitualPosition_Lectern">
+						<maxDistanceToFocus>5</maxDistanceToFocus>
+					  </li>
+					  <li Class="RitualPosition_OnInteractionCell" />
+					</customPositions>
+				  </li>
+				  <li>
+					<roleId>curee</roleId>
+					<dutyDef>LayDownAwake</dutyDef>
+				  </li>
+				</roleBehaviors>
+			</li>
+		 </stages>
+	  </RitualBehaviorDef>
+  
+  
+  <RitualOutcomeEffectDef>
+    <defName>CureDiseaseOutcome</defName>
+    <description>Depending on ritual quality, participants will get between {MINMOOD} and {MAXMOOD} mood for {MOODDAYS} days.</description>
+
+	<!-- use this to specify using a custom outcome -->
+	<workerClass>TPRitualAttachableOutcomes.RitualOutcomeEffectWorker_FromQuality_TP_Custom</workerClass>
+
+    <allowAttachableOutcome>false</allowAttachableOutcome>
+    <comps>
+
+	<li Class="RitualOutcomeComp_BuildingOfDefUsed">
+        <def>Lectern</def>
+
+        <qualityOffset>0.2</qualityOffset>
+        <maxHorDistFromTarget>5</maxHorDistFromTarget>
+      </li>
+
+      <li Class="RitualOutcomeComp_RitualSeatPresent">
+        <qualityOffset>0.2</qualityOffset>
+      </li>
+      <li Class="RitualOutcomeComp_ParticipantCount">
+        <label>participant count</label>
+        <curve>
+          <points>
+            <li>(1,  0.0)</li>
+            <li>(5,  0.24)</li>
+            <li>(10, 0.35)</li>
+          </points>
+        </curve>
+      </li>
+      <li Class="RitualOutcomeComp_RitualTargetDefs">
+        <allowAltars>true</allowAltars>
+        <label>started at altar</label>
+        <expectedThingLabelTip>an altar</expectedThingLabelTip>
+        <qualityOffset>0.15</qualityOffset>
+      </li>
+    </comps>
+    <outcomeChances>
+      <li>
+        <label>Terrible</label>
+		
+		<chance>0.05</chance>
+        
+		<memory>TerribleCureDisease</memory>
+		
+		<description>The {0} was terrible! The afflicted may have gotten sicker</description>
+        
+		<positivityIndex>-2</positivityIndex>
+      </li>
+      <li>
+        <label>Boring</label>
+        <chance>0.15</chance>
+        <memory>BoringCureDisease</memory>
+        <description>The {0} was boring. There was little passion, like the speaker didn't care about the afflicted</description>
+        <positivityIndex>-1</positivityIndex>
+      </li>
+      <li>
+        <label>Satisfying</label>
+        <chance>0.7</chance>
+        <memory>SatisfyingCureDisease</memory>
+        <description>The {0} was satisfying. Although we couldn't cure the afflicted outright, everyone left feeling supportive of them</description>
+        <positivityIndex>1</positivityIndex>
+      </li>
+      <li>
+        <label>Spectacular</label>
+        <chance>0.1</chance>
+        <memory>SpectacularCureDiseasee</memory>
+        <description>The {0} was spectacular! We miraculously removed the afflicted's diseases!</description>
+        <positivityIndex>2</positivityIndex>
+      </li>
+    </outcomeChances>
+	
+	<!-- rather than extending the extraoutcome stuff, I just attached this to any outcome, since extraoutcome typically expects a positive. You can use the same class, which is now misnamed -->
+	
+	<modExtensions>
+		    <li Class="TPRitualAttachableOutcomes.RitualAttachableOutcomeEffectDef_TP_Custom">
+				<triggerPositivityIndex>
+					<li>2</li>
+				</triggerPositivityIndex>
+				<node Class="TPRitualAttachableOutcomes.RitualAttachableOutcomeEffectDef_TP_Custom_Node">
+					<li>
+						<appliesTo>
+							<li>curee</li>
+						</appliesTo>
+						<hediffToRemove>
+							<li>Flu</li>
+							<li>Plague</li>
+							<li>Animal_flu</li>
+							<li>Animal_plague</li>
+						</hediffToRemove>
+					</li>
+				</node>
+			</li>
+	</modExtensions>
+	
+  </RitualOutcomeEffectDef>
+  
+
+  
+    <ThoughtDef>
+    <defName>TerribleCureDisease</defName>
+    <thoughtClass>Thought_AttendedRitual</thoughtClass>
+    <durationDays>6</durationDays>
+    <stackLimit>3</stackLimit>
+    <stages>
+      <li>
+        <label>terrible cure disease</label>
+        <description>I feel so bad for the afflicted...</description>
+        <baseMoodEffect>-2</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>BoringCureDisease</defName>
+    <thoughtClass>Thought_AttendedRitual</thoughtClass>
+    <durationDays>6</durationDays>
+    <stackLimit>3</stackLimit>
+    <stages>
+      <li>
+        <label>boring cure disease</label>
+        <description>It was like people didn't really care</description>
+        <baseMoodEffect>-1</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>SatisfyingCureDisease</defName>
+    <thoughtClass>Thought_AttendedRitual</thoughtClass>
+    <durationDays>6</durationDays>
+    <stackLimit>3</stackLimit>
+    <stages>
+      <li>
+        <label>satisfying cure disease</label>
+        <description>The whole community is behind the afflicted</description>
+        <baseMoodEffect>1</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>SpectacularCureDiseasee</defName>
+    <thoughtClass>Thought_AttendedRitual</thoughtClass>
+    <durationDays>6</durationDays>
+    <stackLimit>3</stackLimit>
+    <stages>
+      <li>
+        <label>spectacular cure disease</label>
+        <description>We channeled vast unfathomable power and cured the afflicted!</description>
+        <baseMoodEffect>3</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  
+</Defs>
