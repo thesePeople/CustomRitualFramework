@@ -86,7 +86,11 @@ namespace TPRitualAttachableOutcomes
             bool thisApplyToInnerPawn = nodeToProcess.applyToInnerPawn;
             bool thisResurrect = nodeToProcess.resurrect;
 
-            List<RitualAttachableOutcomeEffectDef_TP_Custom_Node> subNodes = nodeToProcess.node;
+            List<string> thisRelationshipsToAdd = nodeToProcess.relationshipsToAdd ?? new List<string>();
+            List<string> thisRelationshipsToRemove = nodeToProcess.relationshipsToRemove ?? new List<string>();
+            List<string> thisRelationshipOperationTargets = nodeToProcess.relationshipOperationTargets ?? new List<string>();
+            
+            List < RitualAttachableOutcomeEffectDef_TP_Custom_Node> subNodes = nodeToProcess.node;
 
             Log.Message("Finished loading in the outcome effect data");
 
@@ -287,7 +291,7 @@ namespace TPRitualAttachableOutcomes
                 // now if they add a hediff it only gets added to pawns obeying the whole "appliesTo" thing
                 // I feel like this whole thing would be a lot shorter if I remembered LINQ better
 
-               // Log.Message("thisHediff is " + thisHediff + ". If you see a blank space then something's wrong");
+                // Log.Message("thisHediff is " + thisHediff + ". If you see a blank space then something's wrong");
                 if (thisHediff.Count > 0)
                 {
                     foreach (string h in thisHediff)
