@@ -70,8 +70,8 @@ namespace TPRitualAttachableOutcomes
             int thisBaseAmount = nodeToProcess.baseAmount.RandomInRange;
             int thisAmountPerPawn = nodeToProcess.amountPerPawn.RandomInRange;
             bool thisSpawnNearRitual = nodeToProcess.spawnNearRitual;
-            bool thisDropPod = nodeToProcess.dropPod ?? true
-            bool thisForbid = nodeToProcess.forbid ?? true;
+            bool thisDropPod = nodeToProcess.dropPod;
+            bool thisForbid = nodeToProcess.forbid;
 
             string thisWeather = nodeToProcess.weather ?? "";
 
