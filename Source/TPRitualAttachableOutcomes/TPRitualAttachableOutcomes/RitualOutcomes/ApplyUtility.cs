@@ -92,7 +92,13 @@ namespace TPRitualAttachableOutcomes
             List<string> thisRelationshipsToAdd = nodeToProcess.relationshipsToAdd ?? new List<string>();
             List<string> thisRelationshipsToRemove = nodeToProcess.relationshipsToRemove ?? new List<string>();
             List<string> thisRelationshipOperationTargets = nodeToProcess.relationshipOperationTargets ?? new List<string>();
-            
+
+            string thisDefaultXenotypeToSet = nodeToProcess.defaultXenotypeToSet ?? "";
+            bool thisClearEndogenes = nodeToProcess.clearEndogenes;
+            bool thisGenesInheritable = nodeToProcess.genesInheritable;
+            List<string> thisGenesToAdd = nodeToProcess.genesToAdd ?? new List<string>();
+            List<string> thisGenesToRemove = nodeToProcess.genesToRemove ?? new List<string>();
+
             List < RitualAttachableOutcomeEffectDef_TP_Custom_Node> subNodes = nodeToProcess.node;
 
             Log.Message("Finished loading in the outcome effect data");
@@ -428,6 +434,53 @@ namespace TPRitualAttachableOutcomes
                         pawn.ideo.OffsetCertainty(-1f * thisCertainty);
                     }
                 }
+
+                if (thisClearEndogenes)
+                {   
+                    foreach (Gene gene in pawn.genes.Endogenes)
+                    {
+                        pawn.genes.RemoveGene(gene);
+                    }
+                }
+
+                if (!String.IsNullOrEmpty(thisDefaultXenotypeToSet))
+                {
+                    XenotypeDef xenotypeDef = DefDatabase<XenotypeDef>.GetNamed(thisDefaultXenotypeToSet);
+                    bool xenotypeInheritable = xenotypeDef.inheritable;
+                    if (thisGenesInheritable)
+                    {
+                        xenotypeDef.inheritable = true;
+                    }
+                    pawn.genes.SetXenotype(xenotypeDef);
+                    pawn.genes.xenotypeName = xenotypeDef.label;
+                    xenotypeDef.inheritable = xenotypeInheritable;
+                }
+
+                if (thisGenesToRemove.Count > 0)
+                {
+                    foreach (string geneName in thisGenesToRemove)
+                    {
+                        GeneDef geneDef = DefDatabase<GeneDef>.GetNamed(geneName);
+                        if (pawn.genes.HasActiveGene(geneDef))
+                        {
+                            Gene gene = pawn.genes.GetGene(geneDef);
+                            pawn.genes.RemoveGene(gene);
+                        }
+                    }
+                }
+
+                if (thisGenesToAdd.Count > 0)
+                {
+                    foreach (string geneName in thisGenesToAdd)
+                    {
+                        GeneDef geneDef = DefDatabase<GeneDef>.GetNamed(geneName);
+                        if (!pawn.genes.HasActiveGene(geneDef))
+                        {
+                            pawn.genes.AddGene(geneDef, !thisGenesInheritable);
+                        }
+                    }
+                }
+
 
             }
 

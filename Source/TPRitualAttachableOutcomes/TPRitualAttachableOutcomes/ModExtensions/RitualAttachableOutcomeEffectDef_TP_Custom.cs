@@ -58,6 +58,12 @@ namespace TPRitualAttachableOutcomes
         public List<string> relationshipsToRemove;
         public List<string> relationshipOperationTargets;
 
+        public string defaultXenotypeToSet;
+        public bool clearEndogenes;
+        public bool genesInheritable;
+        public List<string> genesToAdd;
+        public List<string> genesToRemove;
+
         public void ExposeData()
         {
             Scribe_Collections.Look(ref triggerPositivityIndex, "triggerPositivityIndex");
@@ -101,6 +107,12 @@ namespace TPRitualAttachableOutcomes
             Scribe_Collections.Look(ref relationshipsToAdd, "relationshipsToAdd");
             Scribe_Collections.Look(ref relationshipsToRemove, "relationshipsToRemove");
             Scribe_Collections.Look(ref relationshipOperationTargets, "relationshipOperationTargets");
+            Scribe_Values.Look(ref defaultXenotypeToSet, "defaultXenotypeToSet");
+            Scribe_Values.Look(ref clearEndogenes, "clearEndogenes");
+            Scribe_Values.Look(ref genesInheritable, "genesInheritable");
+            Scribe_Collections.Look(ref genesToAdd, "genesToAdd");
+            Scribe_Collections.Look(ref genesToRemove, "genesToRemove");
+
         }
     }
 
