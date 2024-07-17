@@ -98,6 +98,8 @@ namespace TPRitualAttachableOutcomes
             bool thisGenesInheritable = nodeToProcess.genesInheritable;
             List<string> thisGenesToAdd = nodeToProcess.genesToAdd ?? new List<string>();
             List<string> thisGenesToRemove = nodeToProcess.genesToRemove ?? new List<string>();
+            string thisResearchProject = nodeToProcess.researchProject ?? "";
+            int thisResearchProjectProgressPercentage = nodeToProcess.researchProjectProgressPercentage;
 
             List < RitualAttachableOutcomeEffectDef_TP_Custom_Node> subNodes = nodeToProcess.node;
 
@@ -515,7 +517,37 @@ namespace TPRitualAttachableOutcomes
                 thisTargetLetter = true;
 
                 // actually drop the things
-                DropPodUtility.DropThingsNear(intVec, map, things, 110, canInstaDropDuringInit: thisInstaDrop, leaveSlag: false, canRoofPunch: thisRoofPunch, forbid: thisForbid);
+                DropPodUtility.DropThingsNear(intVec, map, things, 110, canInstaDropDuringInit: thisInstaDrop,
+                    leaveSlag: false, canRoofPunch: thisRoofPunch, forbid: thisForbid);
+            }
+
+            //research ?
+            if (!String.IsNullOrEmpty(thisResearchProject))
+            {
+                ResearchProjectDef researchProjectDef;
+                if (thisResearchProject.Equals("current"))
+                {
+                    researchProjectDef = Find.ResearchManager.GetProject();
+                }
+                else if (thisResearchProject.Equals("random"))
+                {
+                    researchProjectDef = DefDatabase<ResearchProjectDef>.AllDefsListForReading.Where((ResearchProjectDef x) 
+                        => x.baseCost > 0f && x.CanStartNow).RandomElement();
+                }
+                else
+                {
+                    researchProjectDef = DefDatabase<ResearchProjectDef>.GetNamed(thisResearchProject);
+                }
+
+                if (thisResearchProjectProgressPercentage > 0)
+                {
+                    float amount = (float)researchProjectDef.baseCost * (float)thisResearchProjectProgressPercentage / 100f;
+                    Find.ResearchManager.AddProgress(researchProjectDef, amount);
+                }
+                else
+                {
+                    Find.ResearchManager.FinishProject(researchProjectDef, doCompletionDialog: true);
+                }
             }
 
             // weather?

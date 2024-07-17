@@ -63,6 +63,8 @@ namespace TPRitualAttachableOutcomes
         public bool genesInheritable;
         public List<string> genesToAdd;
         public List<string> genesToRemove;
+        public string researchProject;
+        public int researchProjectProgressPercentage;
 
         public void ExposeData()
         {
@@ -112,7 +114,8 @@ namespace TPRitualAttachableOutcomes
             Scribe_Values.Look(ref genesInheritable, "genesInheritable");
             Scribe_Collections.Look(ref genesToAdd, "genesToAdd");
             Scribe_Collections.Look(ref genesToRemove, "genesToRemove");
-
+            Scribe_Values.Look(ref researchProject, "researchProject");
+            Scribe_Values.Look(ref researchProjectProgressPercentage, "researchProjectProgressPercentage",-1);
         }
     }
 
