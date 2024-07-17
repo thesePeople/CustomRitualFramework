@@ -98,8 +98,10 @@ namespace TPRitualAttachableOutcomes
             bool thisGenesInheritable = nodeToProcess.genesInheritable;
             List<string> thisGenesToAdd = nodeToProcess.genesToAdd ?? new List<string>();
             List<string> thisGenesToRemove = nodeToProcess.genesToRemove ?? new List<string>();
+            Dictionary<string, string> thisXenotypesTransformationTable = nodeToProcess.xenotypesTransformationTable ?? new Dictionary<string, string>();
             string thisResearchProject = nodeToProcess.researchProject ?? "";
             int thisResearchProjectProgressPercentage = nodeToProcess.researchProjectProgressPercentage;
+            Dictionary<string, int> thisSkillsToAdd = nodeToProcess.skillsToAdd ?? new Dictionary<string, int>();
 
             List < RitualAttachableOutcomeEffectDef_TP_Custom_Node> subNodes = nodeToProcess.node;
 
@@ -444,8 +446,30 @@ namespace TPRitualAttachableOutcomes
                         pawn.genes.RemoveGene(gene);
                     }
                 }
+                
+                bool applyDefaultXenotype = true;
+                if (thisXenotypesTransformationTable.Count > 0)
+                {
+                    foreach (KeyValuePair<string, string> kvp in thisXenotypesTransformationTable)
+                    {
+                        if (pawn.genes.Xenotype.defName == kvp.Key)
+                        {
+                            XenotypeDef xenotypeDef = DefDatabase<XenotypeDef>.GetNamed(kvp.Value);
+                            bool xenotypeInheritable = xenotypeDef.inheritable;
+                            if (thisGenesInheritable)
+                            {
+                                xenotypeDef.inheritable = true;
+                            }
+                            pawn.genes.SetXenotype(xenotypeDef);
+                            pawn.genes.xenotypeName = xenotypeDef.label;
+                            xenotypeDef.inheritable = xenotypeInheritable;
+                            applyDefaultXenotype = false;
+                            break;
+                        }
+                    }
+                }
 
-                if (!String.IsNullOrEmpty(thisDefaultXenotypeToSet))
+                if (!String.IsNullOrEmpty(thisDefaultXenotypeToSet) && applyDefaultXenotype)
                 {
                     XenotypeDef xenotypeDef = DefDatabase<XenotypeDef>.GetNamed(thisDefaultXenotypeToSet);
                     bool xenotypeInheritable = xenotypeDef.inheritable;
@@ -480,6 +504,15 @@ namespace TPRitualAttachableOutcomes
                         {
                             pawn.genes.AddGene(geneDef, !thisGenesInheritable);
                         }
+                    }
+                }
+
+                if (thisSkillsToAdd.Count > 0)
+                {
+                    foreach (KeyValuePair<string, int> kvp in thisSkillsToAdd)
+                    {
+                        SkillDef skillDef = DefDatabase<SkillDef>.GetNamed(kvp.Key);
+                        pawn.skills.GetSkill(skillDef).Level += kvp.Value;
                     }
                 }
 

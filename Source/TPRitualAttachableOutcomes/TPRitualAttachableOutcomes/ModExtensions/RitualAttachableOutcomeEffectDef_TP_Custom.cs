@@ -63,8 +63,10 @@ namespace TPRitualAttachableOutcomes
         public bool genesInheritable;
         public List<string> genesToAdd;
         public List<string> genesToRemove;
+        public Dictionary<string, string> xenotypesTransformationTable;
         public string researchProject;
         public int researchProjectProgressPercentage;
+        public Dictionary<string, int> skillsToAdd;
 
         public void ExposeData()
         {
@@ -114,8 +116,10 @@ namespace TPRitualAttachableOutcomes
             Scribe_Values.Look(ref genesInheritable, "genesInheritable");
             Scribe_Collections.Look(ref genesToAdd, "genesToAdd");
             Scribe_Collections.Look(ref genesToRemove, "genesToRemove");
+            Scribe_Collections.Look(ref xenotypesTransformationTable, "xenotypesTransformationTable", LookMode.Value, LookMode.Value);
             Scribe_Values.Look(ref researchProject, "researchProject");
             Scribe_Values.Look(ref researchProjectProgressPercentage, "researchProjectProgressPercentage",-1);
+            Scribe_Collections.Look(ref skillsToAdd, "skillsToAdd", LookMode.Value, LookMode.Value);
         }
     }
 
