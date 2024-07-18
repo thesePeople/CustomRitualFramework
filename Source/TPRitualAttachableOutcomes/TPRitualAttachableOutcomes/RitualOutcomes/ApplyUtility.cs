@@ -448,25 +448,19 @@ namespace TPRitualAttachableOutcomes
                 }
                 
                 bool applyDefaultXenotype = true;
-                if (thisXenotypesTransformationTable.Count > 0)
-                {
-                    foreach (KeyValuePair<string, string> kvp in thisXenotypesTransformationTable)
+                if (thisXenotypesTransformationTable.ContainsKey(pawn.genes.Xenotype.defName))
+                { 
+                    XenotypeDef xenotypeDef = DefDatabase<XenotypeDef>.
+                        GetNamed(thisXenotypesTransformationTable[pawn.genes.Xenotype.defName]);
+                    bool xenotypeInheritable = xenotypeDef.inheritable;
+                    if (thisGenesInheritable)
                     {
-                        if (pawn.genes.Xenotype.defName == kvp.Key)
-                        {
-                            XenotypeDef xenotypeDef = DefDatabase<XenotypeDef>.GetNamed(kvp.Value);
-                            bool xenotypeInheritable = xenotypeDef.inheritable;
-                            if (thisGenesInheritable)
-                            {
-                                xenotypeDef.inheritable = true;
-                            }
-                            pawn.genes.SetXenotype(xenotypeDef);
-                            pawn.genes.xenotypeName = xenotypeDef.label;
-                            xenotypeDef.inheritable = xenotypeInheritable;
-                            applyDefaultXenotype = false;
-                            break;
-                        }
+                        xenotypeDef.inheritable = true;
                     }
+                    pawn.genes.SetXenotype(xenotypeDef);
+                    pawn.genes.xenotypeName = xenotypeDef.label;
+                    xenotypeDef.inheritable = xenotypeInheritable;
+                    applyDefaultXenotype = false;
                 }
 
                 if (!String.IsNullOrEmpty(thisDefaultXenotypeToSet) && applyDefaultXenotype)
