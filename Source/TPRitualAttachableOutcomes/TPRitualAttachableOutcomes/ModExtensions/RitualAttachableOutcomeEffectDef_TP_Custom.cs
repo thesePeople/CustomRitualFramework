@@ -27,7 +27,7 @@ namespace TPRitualAttachableOutcomes
         public string item;
         public IntRange baseAmount;
         public IntRange amountPerPawn;
-        public bool spawnNearRitual = false;
+        public bool spawnNearRitual = true;
         public bool instaDrop = false;
         public bool forbid = true;
         public bool roofPunch = false;

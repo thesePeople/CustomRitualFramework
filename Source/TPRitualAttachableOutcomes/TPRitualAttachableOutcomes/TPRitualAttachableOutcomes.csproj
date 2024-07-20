@@ -36,6 +36,7 @@
     <Compile Include="RitualObligations\RitualObligationTargetWorker_CustomGrave.cs" />
     <Compile Include="RitualObligations\RitualObligationTargetWorker_GraveWithCorpse.cs" />
     <Compile Include="RitualOutcomes\ApplyUtility.cs" />
+    <Compile Include="RitualRoles\RitualRoleCustom.cs" />
     <Compile Include="RitualRoles\RitualRoleNonSlaveColonist.cs" />
     <Compile Include="RitualStages\JobDriver_IngestThing.cs" />
     <Compile Include="RitualStages\JobGiver_IngestThing.cs" />

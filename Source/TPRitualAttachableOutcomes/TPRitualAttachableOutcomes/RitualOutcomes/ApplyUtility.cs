@@ -113,7 +113,7 @@ namespace TPRitualAttachableOutcomes
             IntVec3 intVec = DropCellFinder.RandomDropSpot(map);
             if(thisSpawnNearRitual)
             {
-                intVec = jobRitual.selectedTarget.Cell;
+                intVec = jobRitual.Spot;
             }
             if (pawnsToApplyTo == null)
             {
@@ -441,7 +441,12 @@ namespace TPRitualAttachableOutcomes
 
                 if (thisClearEndogenes)
                 {   
+                    List<Gene> endogenesToRemove = new List<Gene>();
                     foreach (Gene gene in pawn.genes.Endogenes)
+                    {
+                        endogenesToRemove.Add(gene);
+                    }
+                    foreach (Gene gene in endogenesToRemove)
                     {
                         pawn.genes.RemoveGene(gene);
                     }
@@ -544,8 +549,20 @@ namespace TPRitualAttachableOutcomes
                 thisTargetLetter = true;
 
                 // actually drop the things
-                DropPodUtility.DropThingsNear(intVec, map, things, 110, canInstaDropDuringInit: thisInstaDrop,
+                if (thisInstaDrop && thisSpawnNearRitual)
+                {
+                    IntVec3 cellDrop = CellFinder.FindNoWipeSpawnLocNear(intVec, map, things.First().def, Rot4.North, 2, 
+                        (IntVec3 x) => x.Walkable(map) && x.GetFirstItem(map) == null);
+                    for (int i = 0; i < things.Count; i++)
+                    {
+                        GenPlace.TryPlaceThing(things[i], cellDrop, map, ThingPlaceMode.Near);
+                    }
+                }
+                else
+                {
+                    DropPodUtility.DropThingsNear(intVec, map, things, 110, canInstaDropDuringInit: thisInstaDrop,
                     leaveSlag: false, canRoofPunch: thisRoofPunch, forbid: thisForbid);
+                }
             }
 
             //research ?
