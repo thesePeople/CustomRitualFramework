@@ -253,6 +253,38 @@ namespace TPRitualAttachableOutcomes
         }
     }
 
+    [HarmonyPatch(typeof(ResearchManager))]
+    [HarmonyPatch("FinishProject")] //FinishProject(proj, doCompletionDialog: true, source);
+    public class Patch_ResearchManager_FinishProject
+    {
+        public static void Postfix(ResearchProjectDef proj, ResearchManager __instance)
+        {
+            int num3 = 0;
+            foreach (Ideo ideo in Find.FactionManager.OfPlayer.ideos.AllIdeos)
+            {
+                num3++;
+                int num2 = 0;
+                foreach (Precept p in ideo.PreceptsListForReading)
+                {
+                    num2++;
+                    if (p is Precept_Ritual ritual)
+                    {
+                        foreach (RitualObligationTrigger rots in ritual.obligationTriggers)
+                        {
+                            int num = 0;
+                            if (rots is RitualObligationTrigger_Research rotResearch)
+                            {
+                                Log.Message("Research being passed to trigger " + num + " of ritual " + ritual.def.LabelCap + ": " + ritual.Description + " ( ritual number " + num2 + " and " + num3 + " times we've seen this Ideology, named " + ideo.name + " which should be 1)");
+                                num++;
+                                rotResearch.Notify_Research(proj);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     [HarmonyPatch(typeof(RitualOutcomeEffectWorker))]
     [HarmonyPatch("MakeMemory")]
     public class Patch_RitualOutcomeEffectWorker_MakeMemory

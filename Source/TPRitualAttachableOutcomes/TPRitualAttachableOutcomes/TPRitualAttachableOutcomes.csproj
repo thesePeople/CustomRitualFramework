@@ -35,6 +35,8 @@
     <Compile Include="RitualObligations\RitualObligationTargetWorker_Custom.cs" />
     <Compile Include="RitualObligations\RitualObligationTargetWorker_CustomGrave.cs" />
     <Compile Include="RitualObligations\RitualObligationTargetWorker_GraveWithCorpse.cs" />
+    <Compile Include="RitualObligations\RitualObligationTrigger_Research.cs" />
+    <Compile Include="RitualObligations\RitualObligationTrigger_ResearchProperties.cs" />
     <Compile Include="RitualOutcomes\ApplyUtility.cs" />
     <Compile Include="RitualRoles\RitualRoleCustom.cs" />
     <Compile Include="RitualRoles\RitualRoleNonSlaveColonist.cs" />

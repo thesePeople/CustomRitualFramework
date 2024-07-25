@@ -8,24 +8,25 @@ using Verse;
 
 namespace TPRitualAttachableOutcomes
 {
-    internal class RitualRoleCustom : RitualRole
+    internal class RitualRoleCustom : RitualRoleTag
     {
         public int minCount = 1;
         private int psylinkLevel = 0;
-        private List<XenotypeDef> requiredXenotype = new List<XenotypeDef>();
+        private List<XenotypeDef> allowedXenotypes = new List<XenotypeDef>();
         private List<GeneDef> requiredGenes = new List<GeneDef>();
+        private List<HediffDef> requiredHediffs = new List<HediffDef>();
         private List<TraitDef> requiredTrait = new List<TraitDef>();
-        private List<HediffDef> requiredHediff = new List<HediffDef>();
-        private Dictionary<SkillDef, int> requiredSkills = new Dictionary<SkillDef, int>();
-        private List<RoyalTitleDef> requiredTitle = new List<RoyalTitleDef>();
+        private Dictionary<SkillDef, int> requiredSkillsMin = new Dictionary<SkillDef, int>();
+        private RoyalTitleDef minTitle;
+        private WorkTypeDef requiredWorkType;
 
-        private bool psylinkLevelBelow = false;
-        private bool excludeXenotype = false;
-        private bool excludeGenes = false;
-        private bool excludeTrait = false;
-        private bool excludeHediff = false;
-        private bool skillsBelow = false;
-        private bool excludeTitle = false;
+        private bool psylinkLevelMaxMode = false;
+        private bool excludeXenotypeMode = false;
+        private bool excludeGenesMode = false;
+        private bool excludeTraitMode = false;
+        private bool excludeHediffMode = false;
+        private bool skillsMaxMode = false;
+        private bool titleMaxMode = false;
 
         private bool acceptColonist = true;
         private bool acceptSlave = true;
@@ -46,7 +47,8 @@ namespace TPRitualAttachableOutcomes
             {
                 if (!skipReason)
                 {
-                    reason = "MessageRitualRoleMustNotBeColonist".Translate(base.Label);
+                    reason = "MessageRitualRoleMustNotBeColonist".Translate(base.Label); 
+                        //"This role is not for colonists";
                 }
                 return false;
             }
@@ -55,6 +57,7 @@ namespace TPRitualAttachableOutcomes
                 if (!skipReason)
                 {
                     reason = "MessageRitualRoleMustNotBeSlave".Translate(base.Label);
+                    //"This role is not for slaves";
                 }
                 return false;
             }
@@ -63,39 +66,44 @@ namespace TPRitualAttachableOutcomes
                 if (!skipReason)
                 {
                     reason = "MessageRitualRoleMustNotBePrisoner".Translate(base.Label);
+                        //"This role is not for prisoners";
                 }
                 return false;
             }
             //Pyslink level check
-            if (p.GetPsylinkLevel() < psylinkLevel ^ psylinkLevelBelow)
+            if (p.GetPsylinkLevel() < psylinkLevel ^ psylinkLevelMaxMode)
             {
                 if (!skipReason)
                 {
-                    if (psylinkLevelBelow)
+                    if (psylinkLevelMaxMode)
                     {
-                        reason = "MessageRitualRoleMustBePsylinkLevelBelow".Translate(base.Label, psylinkLevel);
+                        reason = "MessageRitualRoleMustBeBelowPsylinkLevel".Translate(base.Label, psylinkLevel); 
+                            //"The pawn must have a psylink level below " + psylinkLevel;
                     }
                     else
                     {
-                        reason = "MessageRitualRoleMustBePsylinkLevelAbove".Translate(base.Label, psylinkLevel);
+                        reason = "MessageRitualRoleMustHavePsylinkLevel".Translate(base.Label, psylinkLevel);
+                            //"The pawn must have a psylink level of " + psylinkLevel;
                     }
                 }
                 return false;
             }
 
             //Xenotype check
-            if (requiredXenotype.Count > 0 && 
-               (!requiredXenotype.Contains(p.genes.Xenotype) ^ excludeXenotype))
+            if (allowedXenotypes.Count > 0 && 
+               (!allowedXenotypes.Contains(p.genes.Xenotype) ^ excludeXenotypeMode))
             {
                 if (!skipReason)
                 {
-                    if (excludeXenotype)
+                    if (excludeXenotypeMode)
                     {
-                        reason = "MessageRitualRoleMustNotBeXenotype".Translate(base.Label);
+                        reason = "MessageRitualRoleMustNotBeXenotype".Translate(base.Label, p.genes.Xenotype.LabelCap);
+                        //"The pawn must not be a " + p.genes.Xenotype.label;
                     }
                     else
                     {
                         reason = "MessageRitualRoleMustBeXenotype".Translate(base.Label);
+                        //"The pawn don't have the required xenotype";
                     }
                 }
                 return false;
@@ -103,17 +111,39 @@ namespace TPRitualAttachableOutcomes
 
             //Genes check
             if (requiredGenes.Count > 0 &&
-               (!requiredGenes.All(g => p.genes.HasActiveGene(g) ^ excludeGenes)))
+               (!requiredGenes.All(g => p.genes.HasActiveGene(g) ^ excludeGenesMode)))
             {
                 if (!skipReason)
                 {
-                    if (excludeGenes)
+                    if (excludeGenesMode)
                     {
                         reason = "MessageRitualRoleMustNotHaveGenes".Translate(base.Label);
+                            //"The pawn has a gene that is not allowed";
                     }
                     else
                     {
-                        reason = "MessageRitualRoleMustHaveGenes".Translate(base.Label);
+                        reason = "MessageRitualRoleMustHaveGenes".Translate(base.Label); 
+                            //"The pawn does not have the required genes";
+                    }
+                }
+                return false;
+            }
+
+            //Hediff check
+            if (requiredHediffs.Count > 0 &&
+               (!requiredHediffs.All(h => p.health.hediffSet.HasHediff(h) ^ excludeHediffMode)))
+            {
+                if (!skipReason)
+                {
+                    if (excludeHediffMode)
+                    {
+                        reason = "MessageRitualRoleMustNotHaveHediffs".Translate(base.Label); 
+                            //"The pawn has a hediff that is not allowed";
+                    }
+                    else
+                    {
+                        reason = "MessageRitualRoleMustHaveHediffs".Translate(base.Label);
+                            //"The pawn does not have the required hediffs";
                     }
                 }
                 return false;
@@ -121,111 +151,121 @@ namespace TPRitualAttachableOutcomes
 
             //Trait check
             if (requiredTrait.Count > 0 &&
-               (!requiredTrait.All(t => p.story.traits.HasTrait(t) ^ excludeTrait)))
+               (!requiredTrait.All(t => p.story.traits.HasTrait(t) ^ excludeTraitMode)))
             {
                 if (!skipReason)
                 {
-                    if (excludeTrait)
+                    if (excludeTraitMode)
                     {
-                        reason = "MessageRitualRoleMustNotHaveTrait".Translate(base.Label);
+                        reason = "MessageRitualRoleMustNotHaveTraits".Translate(base.Label);
+                            //"The pawn has a trait that is not allowed";
                     }
                     else
                     {
-                        reason = "MessageRitualRoleMustHaveTrait".Translate(base.Label);
-                    }
-                }
-                return false;
-            }
-
-            //Hediff check
-            if (requiredHediff.Count > 0 &&
-               (!requiredHediff.All(h => p.health.hediffSet.HasHediff(h) ^ excludeHediff)))
-            {
-                if (!skipReason)
-                {
-                    if (excludeHediff)
-                    {
-                        reason = "MessageRitualRoleMustNotHaveHediff".Translate(base.Label);
-                    }
-                    else
-                    {
-                        reason = "MessageRitualRoleMustHaveHediff".Translate(base.Label);
+                        reason = "MessageRitualRoleMustHaveTraits".Translate(base.Label);
+                            //"The pawn does not have the required traits";
                     }
                 }
                 return false;
             }
 
             //Skills check
-            if (requiredSkills.Count > 0 &&
-               (!requiredSkills.All(s => p.skills.GetSkill(s.Key).Level >= s.Value ^ skillsBelow)))
+            if (requiredSkillsMin.Count > 0 && (skillsMaxMode ?
+                !requiredSkillsMin.All(s => p.skills.GetSkill(s.Key).Level < s.Value) :
+                !requiredSkillsMin.All(s => p.skills.GetSkill(s.Key).Level >= s.Value)))
             {
                 if (!skipReason)
                 {
-                    if (skillsBelow)
+                    if (skillsMaxMode)
                     {
-                        reason = "MessageRitualRoleMustHaveSkillsBelow".Translate(base.Label);
+                        reason = "MessageRitualRoleMustBeSkilledBelow".Translate(base.Label);
+                        //"The pawn is too skilled for this role";
                     }
                     else
                     {
-                        reason = "MessageRitualRoleMustHaveSkillsAbove".Translate(base.Label);
+                        reason = "MessageRitualRoleMustBeSkilledAbove".Translate(base.Label);
+                            //"The pawn is not skilled enough for this role";
                     }
                 }
                 return false;
             }
 
             //Title check
-            if (requiredTitle.Count > 0 &&
-               (!requiredTitle.All(t => p.royalty.HasTitle(t) ^ excludeTitle)))
+            if (minTitle != null &&
+                ((p.royalty?.MainTitle()?.seniority ?? 0) < minTitle.seniority ^ titleMaxMode))
             {
                 if (!skipReason)
                 {
-                    if (excludeTitle)
+                    if (titleMaxMode)
                     {
-                        reason = "MessageRitualRoleMustNotHaveTitle".Translate(base.Label);
+                        reason = "MessageRitualRoleMustBeBelowTitle".Translate(base.Label, minTitle.LabelCap); 
+                            //"The pawn must have a title below " + minTitle.label;
                     }
                     else
                     {
-                        reason = "MessageRitualRoleMustHaveTitle".Translate(base.Label);
+                        reason = "MessageRitualRoleMustHaveTitleAbove".Translate(base.Label, minTitle.LabelCap);
+                            //"The pawn must have a title of " + minTitle.label + " or higher";
                     }
                 }
                 return false;
             }
 
+            //Work check
+            if (requiredWorkType != null && p.WorkTypeIsDisabled(requiredWorkType))
+            {
+                if (!skipReason)
+                {
+                    reason = "MessageRitualRoleMustBeCapableOfGeneric".Translate(base.LabelCap, this.requiredWorkType.gerundLabel);
+                }
+                return false;
+            }
+
+            //child check
+            if (!AppliesIfChild(p, out reason, skipReason))
+            {
+                return false;
+            }
+
+            //additional check
+            if (!additionalFilter(p, out reason, skipReason))
+            {
+                return false;
+            }
+
+            return tag == null || AppliesToRole(p.Ideo?.GetRole(p), out reason, ritual?.Ritual ?? assignments?.Ritual ?? precept, p, skipReason);
+        }
+
+        protected virtual bool additionalFilter(Pawn p, out string reason, bool skipReason = false)
+        {
+            reason = null;
             return true;
         }
 
-
-        public override bool AppliesToRole(Precept_Role role, out string reason, Precept_Ritual ritual = null, Pawn p = null, bool skipReason = false)
-        {
-            reason = null;
-            return false;
-        }
         public override void ExposeData()
         {
             base.ExposeData();
             Scribe_Values.Look<int>(ref this.minCount, "minCount");
             Scribe_Values.Look<int>(ref this.psylinkLevel, "minPsylinkLevel");
 
-            Scribe_Collections.Look<XenotypeDef>(ref this.requiredXenotype, "requiredXenotype", LookMode.Def);
+            Scribe_Collections.Look<XenotypeDef>(ref this.allowedXenotypes, "allowedXenotypes", LookMode.Def);
             Scribe_Collections.Look<GeneDef>(ref this.requiredGenes, "requiredGenes", LookMode.Def);
+            Scribe_Collections.Look<HediffDef>(ref this.requiredHediffs, "requiredHediffs", LookMode.Def);
             Scribe_Collections.Look<TraitDef>(ref this.requiredTrait, "requiredTrait", LookMode.Def);
-            Scribe_Collections.Look<HediffDef>(ref this.requiredHediff, "requiredHediff", LookMode.Def);
-            Scribe_Collections.Look<SkillDef, int>(ref this.requiredSkills, "requiredSkills", LookMode.Def, LookMode.Value);
-            Scribe_Collections.Look<RoyalTitleDef>(ref this.requiredTitle, "requiredTitle", LookMode.Def);
+            Scribe_Collections.Look<SkillDef, int>(ref this.requiredSkillsMin, "requiredSkillsMin", LookMode.Def, LookMode.Value);
+            Scribe_Defs.Look<RoyalTitleDef>(ref this.minTitle, "minTitle");
+            Scribe_Defs.Look<WorkTypeDef>(ref this.requiredWorkType, "requiredWorkType");
 
-            Scribe_Values.Look<bool>(ref this.psylinkLevelBelow, "psylinkLevelBelow");
-            Scribe_Values.Look<bool>(ref this.excludeXenotype, "excludeXenotype");
-            Scribe_Values.Look<bool>(ref this.excludeGenes, "excludeGenes");
-            Scribe_Values.Look<bool>(ref this.excludeTrait, "excludeTrait");
-            Scribe_Values.Look<bool>(ref this.excludeHediff, "excludeHediff");
-            Scribe_Values.Look<bool>(ref this.skillsBelow, "skillsBelow");
-            Scribe_Values.Look<bool>(ref this.excludeTitle, "excludeTitle");
+            Scribe_Values.Look<bool>(ref this.psylinkLevelMaxMode, "psylinkLevelMaxMode");
+            Scribe_Values.Look<bool>(ref this.excludeXenotypeMode, "excludeXenotypeMode");
+            Scribe_Values.Look<bool>(ref this.excludeGenesMode, "excludeGenesMode");
+            Scribe_Values.Look<bool>(ref this.excludeTraitMode, "excludeTraitMode");
+            Scribe_Values.Look<bool>(ref this.excludeHediffMode, "excludeHediffMode");
+            Scribe_Values.Look<bool>(ref this.skillsMaxMode, "skillsMaxMode");
+            Scribe_Values.Look<bool>(ref this.titleMaxMode, "titleMaxMode");
 
             Scribe_Values.Look<bool>(ref this.acceptColonist, "acceptColonist");
             Scribe_Values.Look<bool>(ref this.acceptSlave, "acceptSlave");
             Scribe_Values.Look<bool>(ref this.acceptPrisoner, "acceptPrisoner");
         }
-
-
     }
 }
