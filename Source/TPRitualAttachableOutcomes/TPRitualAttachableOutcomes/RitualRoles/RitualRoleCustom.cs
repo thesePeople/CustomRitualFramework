@@ -28,10 +28,12 @@ namespace TPRitualAttachableOutcomes
         private bool skillsMaxMode = false;
         private bool titleMaxMode = false;
 
-        private bool acceptColonist = true;
-        private bool acceptSlave = true;
-        private bool acceptPrisoner = true;
-        
+        private bool allowColonist = true;
+        private bool allowSlave = true;
+        private bool allowPrisoner = true;
+        private bool allowAdult = true;
+        private bool allowNewborn = true;
+
         public override bool AppliesToPawn(Pawn p, out string reason, TargetInfo selectedTarget, LordJob_Ritual ritual = null, RitualRoleAssignments assignments = null, Precept_Ritual precept = null, bool skipReason = false)
         {
             reason = null;
@@ -43,7 +45,7 @@ namespace TPRitualAttachableOutcomes
                 }
                 return false;
             }
-            if (p.IsFreeNonSlaveColonist && !acceptColonist)
+            if (p.IsFreeNonSlaveColonist && !allowColonist)
             {
                 if (!skipReason)
                 {
@@ -52,7 +54,7 @@ namespace TPRitualAttachableOutcomes
                 }
                 return false;
             }
-            if (p.IsSlaveOfColony && !acceptSlave)
+            if (p.IsSlaveOfColony && !allowSlave)
             {
                 if (!skipReason)
                 {
@@ -61,7 +63,7 @@ namespace TPRitualAttachableOutcomes
                 }
                 return false;
             }
-            if (p.IsPrisonerOfColony && !acceptPrisoner)
+            if (p.IsPrisonerOfColony && !allowPrisoner)
             {
                 if (!skipReason)
                 {
@@ -70,6 +72,45 @@ namespace TPRitualAttachableOutcomes
                 }
                 return false;
             }
+
+            //adult check
+            if (!allowAdult && p.DevelopmentalStage.Adult())
+            {
+                if (!skipReason)
+                {
+                    reason = "MessageRitualRoleCannotBeAdult".Translate(base.Label);
+                    //"This role is not for adults";
+                }
+                return false;
+            }
+
+            //child check
+            if (!AppliesIfChild(p, out reason, skipReason))
+            {
+                return false;
+            }
+
+            //baby check
+            if (!allowBaby && p.DevelopmentalStage.Baby())
+            {
+                if (!skipReason)
+                {
+                    reason = "MessageRitualRoleCannotBeABaby".Translate(base.Label);
+                }
+                return false;
+            }
+
+            //newborn check
+            if (!allowNewborn && p.DevelopmentalStage.Newborn())
+            {
+                if (!skipReason)
+                {
+                    reason = "MessageRitualRoleCannotBeANewborn".Translate(base.Label);
+                    //"This role is not for newborns";
+                }
+                return false;
+            }
+
             //Pyslink level check
             if (p.GetPsylinkLevel() < psylinkLevel ^ psylinkLevelMaxMode)
             {
@@ -220,12 +261,6 @@ namespace TPRitualAttachableOutcomes
                 return false;
             }
 
-            //child check
-            if (!AppliesIfChild(p, out reason, skipReason))
-            {
-                return false;
-            }
-
             //additional check
             if (!additionalFilter(p, out reason, skipReason))
             {
@@ -263,9 +298,11 @@ namespace TPRitualAttachableOutcomes
             Scribe_Values.Look<bool>(ref this.skillsMaxMode, "skillsMaxMode");
             Scribe_Values.Look<bool>(ref this.titleMaxMode, "titleMaxMode");
 
-            Scribe_Values.Look<bool>(ref this.acceptColonist, "acceptColonist");
-            Scribe_Values.Look<bool>(ref this.acceptSlave, "acceptSlave");
-            Scribe_Values.Look<bool>(ref this.acceptPrisoner, "acceptPrisoner");
+            Scribe_Values.Look<bool>(ref this.allowColonist, "allowColonist");
+            Scribe_Values.Look<bool>(ref this.allowSlave, "allowSlave");
+            Scribe_Values.Look<bool>(ref this.allowPrisoner, "allowPrisoner");
+            Scribe_Values.Look<bool>(ref this.allowAdult, "allowAdult");
+            Scribe_Values.Look<bool>(ref this.allowNewborn, "allowNewborn");
         }
     }
 }

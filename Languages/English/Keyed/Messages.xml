@@ -21,4 +21,6 @@
     <MessageRitualRoleMustBeSkilledAbove>The pawn is not skilled enough for this role</MessageRitualRoleMustBeSkilledAbove>
     <MessageRitualRoleMustBeBelowTitle>The pawn must have a title below {1}</MessageRitualRoleMustBeBelowTitle>
     <MessageRitualRoleMustHaveTitleAbove>The pawn must have a title of {1} or higher</MessageRitualRoleMustHaveTitleAbove>
+	<MessageRitualRoleCannotBeAdult>This role is not for adults</MessageRitualRoleCannotBeAdult>
+	<MessageRitualRoleCannotBeANewborn> This role is not for newborns </MessageRitualRoleCannotBeANewborn>
 </LanguageData>
