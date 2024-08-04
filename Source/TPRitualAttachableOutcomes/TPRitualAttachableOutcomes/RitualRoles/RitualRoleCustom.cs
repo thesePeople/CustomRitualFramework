@@ -8,7 +8,7 @@ using Verse;
 
 namespace TPRitualAttachableOutcomes
 {
-    internal class RitualRoleCustom : RitualRoleTag
+    public class RitualRoleCustom : RitualRoleTag
     {
         public int minCount = 1;
         private int psylinkLevel = 0;
@@ -261,19 +261,7 @@ namespace TPRitualAttachableOutcomes
                 return false;
             }
 
-            //additional check
-            if (!additionalFilter(p, out reason, skipReason))
-            {
-                return false;
-            }
-
             return tag == null || AppliesToRole(p.Ideo?.GetRole(p), out reason, ritual?.Ritual ?? assignments?.Ritual ?? precept, p, skipReason);
-        }
-
-        protected virtual bool additionalFilter(Pawn p, out string reason, bool skipReason = false)
-        {
-            reason = null;
-            return true;
         }
 
         public override void ExposeData()

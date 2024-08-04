@@ -555,7 +555,7 @@ namespace TPRitualAttachableOutcomes
                         (IntVec3 x) => x.Walkable(map) && x.GetFirstItem(map) == null);
                     for (int i = 0; i < things.Count; i++)
                     {
-                        GenPlace.TryPlaceThing(things[i], cellDrop, map, ThingPlaceMode.Near);
+                        GenSpawn.Spawn(things[i], cellDrop, map);
                     }
                 }
                 else

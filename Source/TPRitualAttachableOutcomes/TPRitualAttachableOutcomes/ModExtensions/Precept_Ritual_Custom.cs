@@ -11,6 +11,7 @@ namespace TPRitualAttachableOutcomes
     class Precept_Ritual_Custom : DefModExtension
     {
         public int coolDownDays = 20;
+        public bool canStartRitualBeforeCooldown = true;
         public string building = "";
         public bool useRoom = true;
         public int maxDistance = 18;
@@ -18,6 +19,7 @@ namespace TPRitualAttachableOutcomes
         public void ExposeData()
         {
             Scribe_Values.Look(ref coolDownDays, "coolDownDays");
+            Scribe_Values.Look(ref canStartRitualBeforeCooldown, "canStartRitualBeforeCooldown");
             Scribe_Values.Look(ref building, "building");
             Scribe_Values.Look(ref useRoom, "useRoom");
             Scribe_Values.Look(ref maxDistance, "maxDistance");

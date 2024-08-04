@@ -73,8 +73,9 @@ namespace TPRitualAttachableOutcomes
 				TargetFilter_ModExtension modExtension = def.GetModExtension<TargetFilter_ModExtension>();
 				foreach (string s in modExtension.extraCandidates)
 				{
-					yield return s;
-				}
+                    string s2 = DefDatabase<ThingDef>.GetNamed(s).label;
+                    yield return s2;
+                }
 			}
 			else
             {

@@ -28,6 +28,14 @@ namespace TPRitualAttachableOutcomes
                 ritual.AddObligation(ro);
             }
         }
+        public override void Notify_GameStarted()
+        {
+            ResearchProjectDef research = DefDatabase<ResearchProjectDef>.GetNamed(researchDefName);
+            if (research.IsFinished)
+            {
+                Notify_Research(research);
+            }
+        }
         public override void ExposeData()
         {
             Scribe_Values.Look(ref researchDefName, "researchDefName");

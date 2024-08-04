@@ -38,12 +38,15 @@
     <Compile Include="RitualObligations\RitualObligationTrigger_Research.cs" />
     <Compile Include="RitualObligations\RitualObligationTrigger_ResearchProperties.cs" />
     <Compile Include="RitualOutcomes\ApplyUtility.cs" />
+    <Compile Include="RitualRoles\RitualBehaviorWorker_MinMaxCooldown.cs" />
     <Compile Include="RitualRoles\RitualRoleCustom.cs" />
     <Compile Include="RitualRoles\RitualRoleNonSlaveColonist.cs" />
+    <Compile Include="RitualRoles\RitualSpectatorFilter_Custom.cs" />
     <Compile Include="RitualStages\JobDriver_IngestThing.cs" />
     <Compile Include="RitualStages\JobGiver_IngestThing.cs" />
     <Compile Include="RitualStages\JobDriver_HaulToRitualSpot.cs" />
     <Compile Include="RitualStages\JobGiver_HaulToRitualSpot.cs" />
+    <Compile Include="RitualStages\RitualPosition_InCircleThingRotation.cs" />
     <Compile Include="RitualStages\StageFailTrigger_Checkable.cs" />
     <Compile Include="RitualStages\StageEndTrigger_NoFailures.cs" />
     <Compile Include="RitualStages\StageEndTrigger_ActionsComplete.cs" />

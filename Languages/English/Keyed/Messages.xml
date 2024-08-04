@@ -23,4 +23,8 @@
     <MessageRitualRoleMustHaveTitleAbove>The pawn must have a title of {1} or higher</MessageRitualRoleMustHaveTitleAbove>
 	<MessageRitualRoleCannotBeAdult>This role is not for adults</MessageRitualRoleCannotBeAdult>
 	<MessageRitualRoleCannotBeANewborn> This role is not for newborns </MessageRitualRoleCannotBeANewborn>
+	<CantStartRitualNotEnoughTimePassed>Not enough time has passed since the last ritual</CantStartRitualNotEnoughTimePassed>
+    <CantStartRitualNotEnoughPawnForRole>Not enough {0} for the ritual ({2}/{1})</CantStartRitualNotEnoughPawnForRole>
+    <CantStartRitualNotEnoughSpectators>Not enough spectators for the ritual ({0}/{1})</CantStartRitualNotEnoughSpectators>
+    <CantStartRitualTooManySpectators>Too many spectators for the ritual ({0}/{1})</CantStartRitualTooManySpectators>
 </LanguageData>
