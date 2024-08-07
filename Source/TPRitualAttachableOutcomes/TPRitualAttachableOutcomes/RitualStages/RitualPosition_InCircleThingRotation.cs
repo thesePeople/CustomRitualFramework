@@ -11,16 +11,17 @@ namespace TPRitualAttachableOutcomes
             if (preferredRotation.HasValue)
             {
                 Thing thing = spot.GetThingList(p.Map).FirstOrDefault((Thing t) => t == ritual.selectedTarget.Thing);
+                Rot4 rotation = preferredRotation.Value;
                 if (thing != null)
                 {
-                    preferredRotation = GetRelativeRotationThing(thing.Rotation, preferredRotation.Value);
+                    rotation = GetRelativeRotationThing(thing.Rotation, preferredRotation.Value);
                 }
-                for (int num = distRange.max; num >= distRange.min; num--)
+                for (int num = distRange.min; num <= distRange.max; num++)
                 {
-                    IntVec3 intVec = spot + preferredRotation.Value.FacingCell * num;
+                    IntVec3 intVec = spot + rotation.FacingCell * num;
                     if (intVec.InBounds(p.Map) && intVec.Standable(p.Map) && GenSight.LineOfSight(spot, intVec, ritual.Map, skipFirstCell: true) && WanderUtility.InSameRoom(intVec, spot, ritual.Map))
                     {
-                        return new PawnStagePosition(intVec, null, preferredRotation.Value.Opposite, highlight);
+                        return new PawnStagePosition(intVec, null, rotation.Opposite, highlight);
                     }
                 }
             }
