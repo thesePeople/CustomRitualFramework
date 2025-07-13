@@ -27,7 +27,7 @@ namespace TPRitualAttachableOutcomes
     [HarmonyPatch("ApplyAttachableOutcome")]
     public static class Patch_RitualOutcomeEffectWorker_FromQuality
     {
-        public static void Prefix(Dictionary<Pawn, int> totalPresence, LordJob_Ritual jobRitual, OutcomeChance outcomeChance,  string extraLetterText, ref LookTargets letterLookTargets)
+        public static void Prefix(Dictionary<Pawn, int> totalPresence, LordJob_Ritual jobRitual, RitualOutcomePossibility outcomeChance,  string extraLetterText, ref LookTargets letterLookTargets)
         {
             if(jobRitual == null || jobRitual.Ritual == null || jobRitual.Ritual.attachableOutcomeEffect == null || jobRitual.Ritual.attachableOutcomeEffect.GetModExtension<RitualAttachableOutcomeEffectDef_TP_Custom>() == null)
             {
@@ -302,7 +302,7 @@ namespace TPRitualAttachableOutcomes
                 badTex = BaseContent.BadTex;
             }
             rect.position += new Vector2(instance.iconOffset.x * rect.size.x, instance.iconOffset.y * rect.size.y);
-            if (!instance.disabled || parms.lowLight)
+            if (!instance.Disabled || parms.lowLight)
             {
                 GUI.color = instance.IconDrawColor;
             }

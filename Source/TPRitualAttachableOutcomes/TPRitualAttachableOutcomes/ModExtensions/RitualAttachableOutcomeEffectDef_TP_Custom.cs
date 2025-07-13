@@ -11,7 +11,7 @@ namespace TPRitualAttachableOutcomes
     [StaticConstructorOnStartup]
     class RitualAttachableOutcomeEffectDef_TP_Custom : DefModExtension
     {
-        public List<int> triggerPositivityIndex =  new List<int>();
+        public List<int> triggerPositivityIndex = new List<int>();
         public int cooldownDays = 20;
         public List<string> hediffToAdd;
         public float hediffSeverity = 0f;
@@ -46,7 +46,7 @@ namespace TPRitualAttachableOutcomes
         public float resistanceReduction = 0f;
         public float certainty = 0f;
         public IncidentParmsCustom incidentParms = new IncidentParmsCustom();
-        public List<RitualAttachableOutcomeEffectDef_TP_Custom_Node> node;
+        public List<RitualAttachableOutcomeEffectDef_TP_Custom_Node> node = new List<RitualAttachableOutcomeEffectDef_TP_Custom_Node>();
         public bool addInnerPawn = false;
         public bool applyToInnerPawn = false;
         public bool resurrect = false;
@@ -58,7 +58,7 @@ namespace TPRitualAttachableOutcomes
         public void ExposeData()
         {
             Scribe_Collections.Look(ref triggerPositivityIndex, "triggerPositivityIndex");
-            Scribe_Values.Look(ref  cooldownDays, "cooldownDays");
+            Scribe_Values.Look(ref cooldownDays, "cooldownDays");
             Scribe_Collections.Look(ref hediffToAdd, "hediffToAdd");
             Scribe_Values.Look(ref hediffSeverity, "hediffSeverity");
             Scribe_Values.Look(ref bodyPart, "bodyPart");
@@ -79,7 +79,7 @@ namespace TPRitualAttachableOutcomes
             Scribe_Values.Look(ref trait, "trait");
             Scribe_Values.Look(ref traitDegree, "traitDegree");
             Scribe_Values.Look(ref traitForced, "traitForced");
-            Scribe_Values.Look(ref traitForced, "psylinkLevel");
+            Scribe_Values.Look(ref psylinkLevel, "psylinkLevel");
             Scribe_Values.Look(ref letterLabel, "letterLabel");
             Scribe_Values.Look(ref letterText, "letterText");
             Scribe_Values.Look(ref letterType, "letterType");

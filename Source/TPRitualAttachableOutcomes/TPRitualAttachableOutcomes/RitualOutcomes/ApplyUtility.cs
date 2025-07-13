@@ -10,7 +10,7 @@ namespace TPRitualAttachableOutcomes
 {
     static class ApplyUtility
     {
-        public static void ApplyNode(RitualAttachableOutcomeEffectDef_TP_Custom nodeToProcess, Dictionary<Pawn, int> totalPresence, LordJob_Ritual jobRitual, OutcomeChance outcome, ref LookTargets letterLookTargets, List<Pawn> pawnsToApplyTo = null)
+        public static void ApplyNode(RitualAttachableOutcomeEffectDef_TP_Custom nodeToProcess, Dictionary<Pawn, int> totalPresence, LordJob_Ritual jobRitual, RitualOutcomePossibility outcome, ref LookTargets letterLookTargets, List<Pawn> pawnsToApplyTo = null)
         {
            // wowee jeez I feel like this needs a refactor
 
@@ -168,7 +168,7 @@ namespace TPRitualAttachableOutcomes
                         if (thisResurrect && innerPawn != null)
                         {
                             Log.Message("Attempting to resurrect pawn");
-                            ResurrectionUtility.Resurrect(innerPawn);
+                            ResurrectionUtility.TryResurrect(innerPawn);
                         }
 
                         if (thisApplyToInnerPawn)
