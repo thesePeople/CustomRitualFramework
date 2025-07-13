@@ -39,6 +39,7 @@ namespace TPRitualAttachableOutcomes
                 // check the things but only once
                 if (checkThings)
                 {
+                    //Log.Message("original ticks: " + originalTicks);
                     int amountPresent = 0;
                     List<Thing> thingsInArea = GenRadial.RadialDistinctThingsAround(ritual.selectedTarget.Cell, ritual.Map, lookDistance, true).ToList();
                     List<Thing> thingsToConsume = new List<Thing>();
@@ -57,7 +58,7 @@ namespace TPRitualAttachableOutcomes
                 // end if all the things have been delivered
                 if (curAmount >= amount)
                 {
-                    //Log.Message("enough things delivered");
+                   // Log.Message("enough things delivered");
                     ticksRemaining = originalTicks;
                     return true;
                 }

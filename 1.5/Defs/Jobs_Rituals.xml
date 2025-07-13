@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <JobDef>
+    <defName>HaulToRitualSpot</defName>
+    <driverClass>TPRitualAttachableOutcomes.JobDriver_HaulToRitualSpot</driverClass>
+    <reportString>hauling TargetA to TargetB.</reportString>
+  </JobDef>
+  
+</Defs>

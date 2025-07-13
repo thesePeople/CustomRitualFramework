@@ -294,27 +294,28 @@ namespace TPRitualAttachableOutcomes
     [HarmonyPatch("DrawIcon")]
     public class Patch_Command_Ritual_DrawIcon
     {
-        private static void DrawIcon(Rect rect, Material buttonMat, GizmoRenderParms parms, Command_Ritual instance)
+        private static void DrawIcon(Rect rect, Material buttonMat, GizmoRenderParms parms, Command_Ritual __instance)
         {
-            Texture badTex = instance.icon;
+            bool isDisabled = (bool)Traverse.Create(__instance).Field("disabled").GetValue();
+            Texture badTex = __instance.icon;
             if (badTex == null)
             {
                 badTex = BaseContent.BadTex;
             }
-            rect.position += new Vector2(instance.iconOffset.x * rect.size.x, instance.iconOffset.y * rect.size.y);
-            if (!instance.Disabled || parms.lowLight)
+            rect.position += new Vector2(__instance.iconOffset.x * rect.size.x, __instance.iconOffset.y * rect.size.y);
+            if (!__instance.Disabled || parms.lowLight)
             {
-                GUI.color = instance.IconDrawColor;
+                GUI.color = __instance.IconDrawColor;
             }
             else
             {
-                GUI.color = instance.IconDrawColor.SaturationChanged(0f);
+                GUI.color = __instance.IconDrawColor.SaturationChanged(0f);
             }
             if (parms.lowLight)
             {
                 GUI.color = GUI.color.ToTransparent(0.6f);
             }
-            Widgets.DrawTextureFitted(rect, badTex, instance.iconDrawScale * 0.85f, instance.iconProportions, instance.iconTexCoords, instance.iconAngle, buttonMat);
+            Widgets.DrawTextureFitted(rect, badTex, __instance.iconDrawScale * 0.85f, __instance.iconProportions, __instance.iconTexCoords, __instance.iconAngle, buttonMat);
             GUI.color = Color.white;
         }
         public static bool Prefix(Command_Ritual __instance, Rect rect, Material buttonMat, GizmoRenderParms parms, Precept_Ritual ___ritual, Texture2D ___CooldownBarTex, IntVec2 ___PenaltyIconSize)
@@ -340,6 +341,7 @@ namespace TPRitualAttachableOutcomes
             // some day this may be cleaned up but more likely 20 years from now after I've been killed in a freak skydiving accident, some young modder will come across it and say 'wtf'
             Texture2D ___PenaltyArrowTex = ContentFinder<Texture2D>.Get("UI/Icons/Rituals/QualityPenalty");
             float cooldownTicks = 60000f * coolDownDays;
+            //__instance.base.DrawIcon(rect, buttonMat, parms);
 
             Patch_Command_Ritual_DrawIcon.DrawIcon(rect, buttonMat, parms, __instance);
             if (___ritual.RepeatPenaltyActive)

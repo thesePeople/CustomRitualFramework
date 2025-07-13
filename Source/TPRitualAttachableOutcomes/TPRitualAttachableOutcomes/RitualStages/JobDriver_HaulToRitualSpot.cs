@@ -18,7 +18,7 @@ namespace TPRitualAttachableOutcomes
 
 		public override bool TryMakePreToilReservations(bool errorOnFailed)
 		{
-		//	Log.Message("making pretoil reservations");
+			//Log.Message("making pretoil reservations");
 
 			if (!pawn.Reserve(job.GetTarget(TargetIndex.A), job, 1, -1, null, errorOnFailed))
 			{
@@ -73,16 +73,16 @@ namespace TPRitualAttachableOutcomes
 			Toil startCarryingThing = new Toil(); // Toils_Haul.StartCarryThing(TargetIndex.A, putRemainderInQueue: false, subtractNumTakenFromJobCount: true, failIfStackCountLessThanJobCount: false);
 			startCarryingThing.initAction = delegate
 			{
-			//	Log.Message("initAction for carrying thing");
+				//Log.Message("initAction for carrying thing");
 				Pawn actor = startCarryingThing.actor;
 				Job curJob = actor.jobs.curJob;
 				Thing thing = curJob.GetTarget(TargetIndex.A).Thing;
 				if (!ErrorCheckForCarry(actor, thing))
 				{
-					Log.Message("well we're here");
+					//Log.Message("well we're here");
 					if (curJob.count == 0)
 					{
-						Log.Message("StartCarryThing job had count = " + curJob.count + ". Job: " + curJob);
+						//Log.Message("StartCarryThing job had count = " + curJob.count + ". Job: " + curJob);
 						throw new Exception("StartCarryThing job had count = " + curJob.count + ". Job: " + curJob);
 					}
 					int num = actor.carryTracker.AvailableStackSpace(thing.def);
@@ -98,9 +98,9 @@ namespace TPRitualAttachableOutcomes
 							throw new Exception("StartCarryThing desiredNumToTake = " + num2);
 						}
 					int stackCount = thing.stackCount;
-				//	Log.Message("Actually picking thing up");
+					//Log.Message("Actually picking thing up");
 						int num3 = actor.carryTracker.TryStartCarry(thing, num2);
-					Log.Message("num3 = " + num3);
+					//Log.Message("num3 = " + num3);
 					if (num3 == 0)
 						{
 							//Log.Message("ending job");

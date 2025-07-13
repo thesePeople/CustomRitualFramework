@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<PreceptDef>
+
+		<defName>Adoption</defName>
+		<label>Adoption ritual</label>
+
+		<preceptInstanceCountCurve>
+			<points>
+				<li>(0.6, 0)</li>
+				<li>(1.0, 1)</li>
+			</points>
+		</preceptInstanceCountCurve>
+
+		<description>A very special service, to celebrate the union of a new family.</description>
+		<issue>Ritual</issue>
+		<impact>High</impact>
+		<iconPath>UI/Icons/Rituals/Adoption</iconPath>
+		<preceptClass>Precept_Ritual</preceptClass>
+		<ritualPatternBase>Adoption</ritualPatternBase>
+		<allowDuplicates>true</allowDuplicates>
+		<countsTowardsPreceptLimit>false</countsTowardsPreceptLimit>
+		<receivesExpectationsQualityOffset>true</receivesExpectationsQualityOffset>
+
+		<modExtensions>
+			<li Class="TPRitualAttachableOutcomes.Precept_Ritual_Custom">
+				<coolDownDays>0</coolDownDays>
+			</li>
+		</modExtensions>
+
+	</PreceptDef>
+
+	<RitualPatternDef>
+
+
+		<defName>Adoption</defName>
+		<ritualFreeStartIntervalDaysRange>0</ritualFreeStartIntervalDaysRange>
+
+		<ritualBehavior>Adopt</ritualBehavior>
+		<shortDescOverride>adoption ritual</shortDescOverride>
+		<descOverride>A speaker speaks for a while, then the adoptee lies on the altar and is officially adopted by the parent</descOverride>
+
+		<ritualOutcomeEffect>AdoptionOutcome</ritualOutcomeEffect>
+
+		<nameMaker>NamerRitualFestival</nameMaker>
+		<iconPathOverride>UI/Icons/Rituals/Adoption</iconPathOverride>
+		<canStartAnytime>true</canStartAnytime>
+		<ritualObligationTriggers>
+			<li Class="RitualObligationTrigger_DateProperties">
+				<mustBePlayerIdeo>true</mustBePlayerIdeo>
+			</li>
+		</ritualObligationTriggers>
+		<ritualObligationTargetFilter>GatheringSpotOrAltar</ritualObligationTargetFilter>
+		<tags>
+			<li>Adopt</li>
+		</tags>
+		<patternGroupTag>Adopt</patternGroupTag>
+
+	</RitualPatternDef>
+
+
+	<RitualBehaviorDef>
+		<defName>Adopt</defName>
+		<durationTicks>4500</durationTicks>
+		<spectatorsLabel>Participants</spectatorsLabel>
+		<spectatorGerund>participate</spectatorGerund>
+
+		<roles>
+			<li Class="RitualRoleTag">
+				<label>moralist</label>
+				<id>moralist</id>
+				<tag>Moralist</tag>
+				<precept>IdeoRole_Moralist</precept>
+				<required>True</required>
+				<substitutable>false</substitutable>
+				<maxCount>1</maxCount>
+				<countsAsParticipant>True</countsAsParticipant>
+			</li>
+			<li Class="RitualRoleColonist">
+				<label>Adoptive Parent</label>
+				<id>adoptiveparent1</id>
+				<required>True</required>
+				<substitutable>false</substitutable>
+				<maxCount>1</maxCount>
+				<countsAsParticipant>True</countsAsParticipant>
+			</li>
+			<!--<li Class="RitualRoleColonist">
+				<label>Adoptive Parent</label>
+				<id>adoptiveparent2</id>
+				<required>false</required>
+				<substitutable>false</substitutable>
+				<maxCount>1</maxCount>
+				<countsAsParticipant>False</countsAsParticipant>
+			</li>-->
+			<li Class="RitualRoleColonist">
+				<label>Adoptee</label>
+				<id>adoptee</id>
+				<required>True</required>
+				<substitutable>false</substitutable>
+				<maxCount>1</maxCount>
+				<countsAsParticipant>True</countsAsParticipant>
+			</li>
+		</roles>
+
+		<stages>
+			<li Class="RitualStage_InteractWithRole">
+				<defaultDuty>Spectate</defaultDuty>
+				<targetId>adoptee</targetId>
+				<endTriggers>
+					<li Class="StageEndTrigger_PawnDeliveredOrNotValid"/>
+				</endTriggers>
+				<failTriggers>
+					<li Class="StageFailTrigger_TargetPawnUnreachable">
+						<takerId>moralist</takerId>
+						<takeeId>adoptee</takeeId>
+						<desc>Adoptee is not reachable.</desc>
+					</li>
+				</failTriggers>
+				<roleBehaviors>
+					<li>
+						<roleId>moralist</roleId>
+						<dutyDef>DeliverPawnToAltar</dutyDef>
+					</li>
+					<li>
+						<roleId>adoptee</roleId>
+						<dutyDef>ArriveToCell</dutyDef>
+						<customPositions>
+							<li Class="RitualPosition_InFrontThingCenter"/>
+						</customPositions>
+					</li>
+				</roleBehaviors>
+			</li>
+
+			<li>
+				<defaultDuty>Spectate</defaultDuty>
+				<endTriggers>
+					<li Class="StageEndTrigger_DurationPercentage">
+						<percentage>1</percentage>
+					</li>
+				</endTriggers>
+				<roleBehaviors>
+					<li>
+						<roleId>moralist</roleId>
+						<dutyDef>SpeakOnCellFacingSpectators</dutyDef>
+						<speakerInteraction>Speech_Conversion</speakerInteraction>
+						<customPositions>
+							<li Class="RitualPosition_Lectern">
+								<maxDistanceToFocus>5</maxDistanceToFocus>
+							</li>
+							<li Class="RitualPosition_OnInteractionCell" />
+						</customPositions>
+					</li>
+					<li>
+						<roleId>adoptee</roleId>
+						<dutyDef>LayDownAwake</dutyDef>
+					</li>
+				</roleBehaviors>
+			</li>
+		</stages>
+	</RitualBehaviorDef>
+
+
+	<RitualOutcomeEffectDef>
+		<defName>AdoptionOutcome</defName>
+		<description>Depending on ritual quality, participants will get between {MINMOOD} and {MAXMOOD} mood for {MOODDAYS} days.</description>
+
+		<!-- use this to specify using a custom outcome -->
+		<workerClass>TPRitualAttachableOutcomes.RitualOutcomeEffectWorker_FromQuality_TP_Custom</workerClass>
+
+		<allowAttachableOutcome>false</allowAttachableOutcome>
+		<comps>
+
+			<li Class="RitualOutcomeComp_BuildingOfDefUsed">
+				<def>Lectern</def>
+
+				<qualityOffset>0.2</qualityOffset>
+				<maxHorDistFromTarget>5</maxHorDistFromTarget>
+			</li>
+
+			<li Class="RitualOutcomeComp_RitualSeatPresent">
+				<qualityOffset>0.2</qualityOffset>
+			</li>
+			<li Class="RitualOutcomeComp_ParticipantCount">
+				<label>participant count</label>
+				<curve>
+					<points>
+						<li>(1,  0.0)</li>
+						<li>(5,  0.24)</li>
+						<li>(10, 0.35)</li>
+					</points>
+				</curve>
+			</li>
+			<li Class="RitualOutcomeComp_RitualTargetDefs">
+				<allowAltars>true</allowAltars>
+				<label>started at altar</label>
+				<expectedThingLabelTip>an altar</expectedThingLabelTip>
+				<qualityOffset>0.15</qualityOffset>
+			</li>
+		</comps>
+		<outcomeChances>
+			<li>
+				<label>Terrible</label>
+				<chance>0.05</chance>
+				<memory>TerribleAdoption</memory>
+				<description>The {0} was awful! What even was that...?! I feel terrible for this child...</description>
+				<positivityIndex>-2</positivityIndex>
+			</li>
+			<li>
+				<label>Boring</label>
+				<chance>0.15</chance>
+				<memory>BoringAdoption</memory>
+				<description>The {0} was boring. There was little passion, like the speaker didn't care about the ceremony...</description>
+				<positivityIndex>-1</positivityIndex>
+			</li>
+			<li>
+				<label>Satisfying</label>
+				<chance>0.7</chance>
+				<memory>SatisfyingAdoption</memory>
+				<description>The {0} was satisfying. The whole community is hopeful for this child</description>
+				<positivityIndex>1</positivityIndex>
+			</li>
+			<li>
+				<label>Spectacular</label>
+				<chance>0.1</chance>
+				<memory>SpectacularAdoption</memory>
+				<description>The {0} was spectacular! This child is our future!</description>
+				<positivityIndex>2</positivityIndex>
+			</li>
+		</outcomeChances>
+
+		<!-- rather than extending the extraoutcome stuff, I just attached this to any outcome, since extraoutcome typically expects a positive. You can use the same class, which is now misnamed -->
+
+		<modExtensions>
+			<li Class="TPRitualAttachableOutcomes.RitualAttachableOutcomeEffectDef_TP_Custom">
+				<onlyPositiveOutcomes>false</onlyPositiveOutcomes>
+				<node Class="TPRitualAttachableOutcomes.RitualAttachableOutcomeEffectDef_TP_Custom_Node">
+					<li>
+						<triggerPositivityIndex>
+							<li>-1</li>
+							<li>1</li>
+							<li>2</li>
+						</triggerPositivityIndex>
+						<appliesTo>
+							<li>adoptee</li>
+						</appliesTo>
+						<relationshipsToAdd>
+							<li>Parent</li>
+						</relationshipsToAdd>
+						<relationshipOperationTargets>
+							<li>adoptiveparent1</li>
+							<!--<li>adoptiveparent2</li>-->
+						</relationshipOperationTargets>
+					</li>
+				</node>
+			</li>
+		</modExtensions>
+
+	</RitualOutcomeEffectDef>
+
+	<ThoughtDef>
+		<defName>TerribleAdoption</defName>
+		<thoughtClass>Thought_AttendedRitual</thoughtClass>
+		<durationDays>6</durationDays>
+		<stackLimit>3</stackLimit>
+		<stages>
+			<li>
+				<label>terrible adoption</label>
+				<description>I feel terrible for this child...</description>
+				<baseMoodEffect>-2</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+
+	<ThoughtDef>
+		<defName>BoringAdoption</defName>
+		<thoughtClass>Thought_AttendedRitual</thoughtClass>
+		<durationDays>6</durationDays>
+		<stackLimit>3</stackLimit>
+		<stages>
+			<li>
+				<label>boring adoption</label>
+				<description>It was like people didn't really care</description>
+				<baseMoodEffect>-1</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+
+	<ThoughtDef>
+		<defName>SatisfyingAdoption</defName>
+		<thoughtClass>Thought_AttendedRitual</thoughtClass>
+		<durationDays>6</durationDays>
+		<stackLimit>3</stackLimit>
+		<stages>
+			<li>
+				<label>satisfying adoption</label>
+				<description>The whole community is hopeful for this child</description>
+				<baseMoodEffect>1</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+
+	<ThoughtDef>
+		<defName>SpectacularAdoption</defName>
+		<thoughtClass>Thought_AttendedRitual</thoughtClass>
+		<durationDays>6</durationDays>
+		<stackLimit>3</stackLimit>
+		<stages>
+			<li>
+				<label>spectacular adoption</label>
+				<description>This child is the future of our colony!</description>
+				<baseMoodEffect>3</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+
+</Defs>

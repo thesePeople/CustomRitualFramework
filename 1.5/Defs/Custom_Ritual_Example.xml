@@ -1,0 +1,442 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+<!-- Normally different defs have their own files, but there isn't a technical reason for this, just an organization one. -->
+<!-- For educational purposes I'll define an entire ritual in this file. -->
+
+<!-- the order here doesn't matter too much, but let's start at the top with the PreceptDef for the ritual -->
+
+<!-- I have however had more luck defining rituals without a base, or defining my own base, particularly if I want to use the modExtensions  -->
+<!-- the ritual's parent will drive a few inherited fields, including the Icon to use. For reference, here's the definition of the FestivalBase:
+
+<PreceptDef Name="FestivalBase" Abstract="True">
+    <description>A celebratory gathering for your colonists to have fun. A leader will give an encouraging speech, then everyone will socialize for a while.</description>
+    <issue>Ritual</issue>
+    <impact>Medium</impact>
+    <iconPath>UI/Icons/Rituals/RitualFestival</iconPath>
+    <preceptClass>Precept_Ritual</preceptClass>
+    <ritualPatternBase>CelebrationPartyChat</ritualPatternBase>
+    <allowDuplicates>true</allowDuplicates>
+    <countsTowardsPreceptLimit>false</countsTowardsPreceptLimit>
+    <ignoreLimitsInEditMode>true</ignoreLimitsInEditMode>
+    <receivesExpectationsQualityOffset>true</receivesExpectationsQualityOffset>
+  </PreceptDef>
+-->
+  <PreceptDef>
+    
+	<!-- defName and label should be pretty familiar. Here I'm creating a really generic ritual that could represent a church/worship service, lecture, or even comedy routine -->
+	<defName>IdeoService</defName>
+	<label>ideoligious service</label>
+    
+	<!-- admittedly I'm not sure what this does, but I think it has to do with the chance that it appears in the randomly generated rituals -->
+	<preceptInstanceCountCurve>
+		<points>
+			<li>(0.6, 0)</li>
+			<li>(1.0, 1)</li>
+      </points>
+	</preceptInstanceCountCurve>
+	
+	<!-- this is stuff that was normally inherited from the parent, but that seems to mess up behaviors and especially the mod extensions down the line -->
+	<description>A typically regularly scheduled service, perhaps a worship service or lecture series.</description>
+    <issue>Ritual</issue>
+    <impact>Medium</impact>
+    <iconPath>UI/Icons/Rituals/RitualFestival</iconPath>
+    <preceptClass>Precept_Ritual</preceptClass>
+    <ritualPatternBase>IdeoService</ritualPatternBase>
+    <allowDuplicates>true</allowDuplicates>
+    <countsTowardsPreceptLimit>true</countsTowardsPreceptLimit>
+    <ignoreLimitsInEditMode>true</ignoreLimitsInEditMode>
+    <receivesExpectationsQualityOffset>true</receivesExpectationsQualityOffset>
+	
+	<!-- now with modExtensions! Override the base cooldown -->  
+	<modExtensions>
+			<li Class="TPRitualAttachableOutcomes.Precept_Ritual_Custom">
+				<coolDownDays>7</coolDownDays>
+			</li>
+	</modExtensions>
+	
+  </PreceptDef>
+  
+  <!-- next is the RitualPatternDef. Once again it has a parent. Here's CelebrationPartyChat's definition:
+  
+  <RitualPatternDef Name="CelebrationPartyChat">
+    <defName>CelebrationPartyChat</defName> 
+    <nameMaker>NamerRitualFestival</nameMaker>
+    <ritualExpectedDesc>Every year on {DATE}, {MEMBERS} celebrate {RITUAL_labelDef}.</ritualExpectedDesc>
+    <ritualExpectedPostfix>{0} {1} want to hold the celebration as soon as possible.</ritualExpectedPostfix>
+    <iconPathOverride>UI/Icons/Rituals/RitualFestival</iconPathOverride>
+    <canStartAnytime>true</canStartAnytime>
+    <ritualObligationTriggers>
+      <li Class="RitualObligationTrigger_DateProperties">
+        <mustBePlayerIdeo>true</mustBePlayerIdeo>
+      </li>
+    </ritualObligationTriggers>
+    <ritualObligationTargetFilter>GatheringSpotOrAltar</ritualObligationTargetFilter>
+    <ritualBehavior>DateRitual</ritualBehavior>
+    <ritualOutcomeEffect>CelebratedDate</ritualOutcomeEffect>
+    <tags>
+      <li>CelebratedDate</li>
+    </tags>
+    <patternGroupTag>CelebratedDate</patternGroupTag>
+  </RitualPatternDef>
+  
+  Despite its definition this doesn't have to be a ritual on a specific date, but if it is this is the data that is used. Also, you are free to create your own bases, or just not use the base class. Just make sure to provide all the fields the base does!
+  -->
+
+    <!-- <RitualTargetFilterDef>
+    <defName>IdeoBuildingCustom</defName>
+    <workerClass>TPRitualAttachableOutcomes.RitualTargetFilter_IdeoBuilding_Extra</workerClass>
+	<modExtensions>
+		<li Class="TPRitualAttachableOutcomes.TargetFilter_ModExtension">
+			<extraCandidates>
+				<li>AncientWarspiderRemains</li>
+			</extraCandidates>
+		</li>
+	</modExtensions>
+  </RitualTargetFilterDef>
+  
+  <RitualObligationTargetFilterDef>
+    <defName>IdeoBuildingCustomO</defName>
+        <workerClass>TPRitualAttachableOutcomes.RitualObligationTargetWorker_AnyRitualSpotOrAltar_Extra</workerClass>
+	<modExtensions>
+		<li Class="TPRitualAttachableOutcomes.TargetFilter_ModExtension">
+			<extraCandidates>
+				<li>AncientWarspiderRemains</li>
+			</extraCandidates>
+		</li>
+	</modExtensions>
+  </RitualObligationTargetFilterDef> -->
+  
+
+  
+  	<RitualPatternDef>
+	
+		
+		<defName>IdeoService</defName>
+		<ritualFreeStartIntervalDaysRange>0.1</ritualFreeStartIntervalDaysRange>
+		<!-- ritual behavior is defined in another def. We'll get to that in a bit -->
+		<ritualBehavior>IdeoServiceBehavior</ritualBehavior>
+		<shortDescOverride>ideoligious service</shortDescOverride>
+		<descOverride>A speaker speaks for a while, there's a period of quiet contemplation for the spectators, then the speaker makes some closing remarks</descOverride>
+		<!-- the outcome is also defined in another def, which we'll also get to -->
+		<ritualOutcomeEffect>IdeoServiceOutcome</ritualOutcomeEffect>
+		
+		<nameMaker>NamerRitualFestival</nameMaker>
+		<ritualExpectedDesc>Every year on {DATE}, {MEMBERS} celebrate {RITUAL_labelDef}.</ritualExpectedDesc>
+		<iconPathOverride>UI/Icons/Rituals/RitualFestival</iconPathOverride>
+		<canStartAnytime>true</canStartAnytime>
+		<ritualTargetFilter>IdeoBuildingOrRitualSpot</ritualTargetFilter>
+		<ritualObligationTriggers>
+			<li Class="RitualObligationTrigger_DateProperties">
+				<mustBePlayerIdeo>true</mustBePlayerIdeo>
+			</li>
+		</ritualObligationTriggers>
+		<ritualObligationTargetFilter>AnyIdeoBuildingOrRitualSpot</ritualObligationTargetFilter>
+		<tags>
+			<li>IdeoService</li>
+		</tags>
+		<patternGroupTag>IdeoService</patternGroupTag>
+		
+	</RitualPatternDef>
+	
+	<DutyDef>
+		<defName>PlayMusic</defName>
+		<socialModeMax>Off</socialModeMax>
+		<thinkNode Class="ThinkNode_Priority">
+		  <subNodes>
+			<li Class="TPRitualAttachableOutcomes.JobGiver_MusicianPlayInstrument">
+				<thingDefNames>
+					<li>Harp</li>
+					<li>Harpsichord</li>
+					<li>Piano</li>
+				</thingDefNames>	
+				<maxDistance>8</maxDistance>
+			</li>
+		  </subNodes>
+		</thinkNode>
+	</DutyDef>
+
+	
+<!-- RitualBehavior - this is where you define what the pawns do during the ritual.-->
+
+	 <RitualBehaviorDef>
+		<defName>IdeoServiceBehavior</defName>
+		<durationTicks>6000</durationTicks>
+		<spectatorsLabel>Participants</spectatorsLabel>
+		<spectatorGerund>participate</spectatorGerund>
+		
+		<!-- here we can override the roles needed for the ritual. In this case, we just need a moralist (other than the spectators, of course) -->
+		<roles>
+            <li Class="RitualRoleTag">
+				<label>speaker</label>
+				<id>speaker</id>
+				<tag>Moralist</tag>
+				<precept>IdeoRole_Moralist</precept>
+				<required>True</required>
+				<substitutable>false</substitutable>
+				<maxCount>1</maxCount>
+				<countsAsParticipant>False</countsAsParticipant>
+			</li>
+			
+			<!-- anyone can be the musician. May later make a quality based on if a musician was present and their Artistic skill -->
+			<li Class="RitualRoleColonist">
+				<label>musician</label>
+				<id>musician</id>
+				<required>False</required>
+				<substitutable>true</substitutable>
+				<maxCount>1</maxCount>
+				<countsAsParticipant>True</countsAsParticipant>
+			</li>
+			
+			<!-- if we wanted to define more roles involved we would add another li tag like the above -->
+		</roles>
+		
+		<stages>
+			
+			<!-- wait for arrival -->
+			
+			
+			<!-- opening hymns, optional if musical instrument is available -->
+			<li>
+				<defaultDuty>Spectate</defaultDuty>
+				<essential>False</essential>
+				<endTriggers>
+					  <li Class="StageEndTrigger_DurationPercentage">
+						<percentage>0.05</percentage>
+					  </li>
+					 <li Class="TPRitualAttachableOutcomes.StageEndTrigger_ThingNotPresent">
+					 	<thingDefNames>
+							<li>Harp</li>
+							<li>Harpsichord</li>
+							<li>Piano</li>
+						</thingDefNames>
+						<maxDistance>8</maxDistance>
+					  </li>
+				</endTriggers>
+				<!--<failTriggers>
+					<li Class="TPRitualAttachableOutcomes.StageFailTrigger_ThingNotPresentInArea">
+						<thingDefNames>
+							<li>Harp</li>
+							<li>Harpsichord</li>
+							<li>Piano</li>
+						</thingDefNames>
+						<maxDistance>8</maxDistance>
+						<desc>No instrument found</desc>
+					  </li>
+				</failTriggers>-->
+				 <roleBehaviors>
+					<li>
+						<roleId>musician</roleId>
+						<dutyDef>PlayMusic</dutyDef>
+					</li>
+				</roleBehaviors>
+				
+			</li>
+			
+			<!-- speaker speaks -->
+			<!-- each of these outermost li tags is one stage of the ritual -->
+			<li>
+				<!-- the default duty is what everyone who doesn't have a roleBehavior assigned will do -->
+				<defaultDuty>Spectate</defaultDuty>
+				<essential>False</essential>
+				<!-- different things can end the stage, but the most common is time based.  The duration percentages are the duration of the total time each step should take, so they should add to 1 --> 
+				<endTriggers>
+				  <li Class="StageEndTrigger_DurationPercentage">
+					<percentage>0.7</percentage>
+				  </li>
+				</endTriggers>
+				<!-- this just sends a message to the top bar thing -->
+				<postAction Class="RitualStageAction_Message">
+					<text>{0}: The speech is over, and people sit in quiet contemplation...</text>
+					<messageTypeDef>NeutralEvent</messageTypeDef>
+				</postAction>
+				<!-- here's where you can define behaviors for each of the ritual's roles. Note that it's the role they take in the ritual, not necessarily the Ideoligion --> 
+				<roleBehaviors>
+				  <li>
+					<roleId>speaker</roleId>
+					<dutyDef>SpeakOnCellFacingSpectators</dutyDef>
+					<speakerInteraction>Speech_DateRitual</speakerInteraction>
+					<customPositions>
+					  <li Class="RitualPosition_Lectern">
+						<maxDistanceToFocus>5</maxDistanceToFocus>
+					  </li>
+					  <li Class="RitualPosition_BesideThing" />
+					</customPositions>
+				  </li>
+				</roleBehaviors>
+			</li>
+		  <!-- quiet contemplation -->
+		  <li>
+			<defaultDuty>Spectate</defaultDuty>
+			<endTriggers>
+			  <li Class="StageEndTrigger_DurationPercentage">
+				<percentage>0.2</percentage>
+			  </li>
+			</endTriggers>
+		  </li>
+		  <!-- closing remarks -->
+		  <li>
+				<defaultDuty>Spectate</defaultDuty>
+				<essential>False</essential>
+				<endTriggers>
+				  <li Class="StageEndTrigger_DurationPercentage">
+					<percentage>0.1</percentage>
+				  </li>
+				</endTriggers>
+				<postAction Class="RitualStageAction_Message">
+					<text>{0}: The service is over, go forth and do whatever it is our Ideoligion says is right and just</text>
+					<messageTypeDef>NeutralEvent</messageTypeDef>
+				</postAction>
+				<roleBehaviors>
+				  <li>
+					<roleId>speaker</roleId>
+					<dutyDef>SpeakOnCellFacingSpectators</dutyDef>
+					<speakerInteraction>Speech_DateRitual</speakerInteraction>
+					<customPositions>
+					  <li Class="RitualPosition_Lectern">
+						<maxDistanceToFocus>5</maxDistanceToFocus>
+					  </li>
+					  <li Class="RitualPosition_BesideThing" />
+					</customPositions>
+				  </li>
+				</roleBehaviors>
+			</li>
+		</stages>
+	  </RitualBehaviorDef>
+  
+  <!-- RitualOucomeEffect defines what effects the quality, as well as the outcome (worst/bad/good/best) -->
+  
+  <RitualOutcomeEffectDef>
+    <defName>IdeoServiceOutcome</defName>
+    <description>Depending on ritual quality, participants will get between {MINMOOD} and {MAXMOOD} mood for {MOODDAYS} days.</description>
+    <!-- the workerclass can actually do things on the outcome, but more or less the 'default' is RitualOutcomeEffectWorker_FromQuality for a ritual affected by quality -->
+	<!-- the mod framework has a TPRitualAttachableOutcomes.RitualOutcomeEffectWorker_FromQuality_TP_Custom which allows <modExtensions> in this definition that otherwise works exactly like the RitualAttachableOutcomeEffects -->
+	<workerClass>RitualOutcomeEffectWorker_FromQuality</workerClass>
+    <!-- whether this ritual should allow attachable outcomes. Defaults to true if not supplied -->
+    <allowAttachableOutcome>false</allowAttachableOutcome>
+    <comps>
+	  <!-- these comps define what affects the quality of the ritual and by how much --> 	
+      <li Class="RitualOutcomeComp_BuildingOfDefUsed">
+        <def>Lectern</def>
+		<!-- for a speech it's cool if they have a lectern -->
+        <qualityOffset>0.2</qualityOffset>
+        <maxHorDistFromTarget>5</maxHorDistFromTarget>
+      </li>
+	  <!-- and of course the participants need a seat -->
+      <li Class="RitualOutcomeComp_RitualSeatPresent">
+        <qualityOffset>0.3</qualityOffset>
+      </li>
+      <li Class="RitualOutcomeComp_ParticipantCount">
+        <label>participant count</label>
+        <curve>
+          <points>
+            <li>(1,  0.0)</li>
+            <li>(5,  0.16)</li>
+            <li>(10, 0.25)</li>
+          </points>
+        </curve>
+      </li>
+      <li Class="RitualOutcomeComp_RitualTargetDefs">
+        <allowAltars>true</allowAltars>
+        <label>started at altar</label>
+        <expectedThingLabelTip>an altar</expectedThingLabelTip>
+        <qualityOffset>0.15</qualityOffset>
+      </li>
+    </comps>
+    <outcomeChances>
+      <li>
+        <label>Terrible</label>
+		<!-- these chances should add up to 1 -->
+		<chance>0.03</chance>
+        <!-- memories will be defined later -->
+		<memory>TerribleService</memory>
+		<!-- this is just a bit of flavor text, but that's really important for a role-play heavy DLC :) -->
+        <description>The {0} was terrible! The speaker droned on and couldn't engage the crowd. The speech said nothing new or interesting, and people just wanted it to end to get back to football watching</description>
+        <!-- in theory you could create your own set of outcomes, more than 4, and have more than -2/-1/+1/+2 as positivityIndices. But mostly I'd leave this alone -->
+		<positivityIndex>-2</positivityIndex>
+      </li>
+      <li>
+        <label>Boring</label>
+        <chance>0.17</chance>
+        <memory>BoringService</memory>
+        <description>The {0} was boring. The speech was filled with shallow platitudes but the speaker tried too hard to engage the crowd and not enough to discuss the topic</description>
+        <positivityIndex>-1</positivityIndex>
+      </li>
+      <li>
+        <label>Satisfying</label>
+        <chance>0.7</chance>
+        <memory>SatisfyingService</memory>
+        <description>The {0} was satisfying. The speech felt meaningful and gave everyone something to think about</description>
+        <positivityIndex>1</positivityIndex>
+      </li>
+      <li>
+        <label>Spectacular</label>
+        <chance>0.1</chance>
+        <memory>SpectacularService</memory>
+        <description>The {0} was spectacular! The speaker really hit on some deep issues but presented it in a manner everyone could understand. People left feeling enlightened!</description>
+        <positivityIndex>2</positivityIndex>
+      </li>
+    </outcomeChances>
+  </RitualOutcomeEffectDef>
+  
+  <!-- ThoughtDefs for the outcomes! This is the last step for now -->
+  
+    <ThoughtDef>
+    <defName>TerribleService</defName>
+    <thoughtClass>Thought_AttendedRitual</thoughtClass>
+    <durationDays>6</durationDays>
+    <stackLimit>3</stackLimit>
+    <stages>
+      <li>
+        <label>terrible service</label>
+        <description>The speech was awful and people started falling asleep during the time for quiet contemplation.</description>
+        <baseMoodEffect>-2</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>BoringService</defName>
+    <thoughtClass>Thought_AttendedRitual</thoughtClass>
+    <durationDays>6</durationDays>
+    <stackLimit>3</stackLimit>
+    <stages>
+      <li>
+        <label>boring service</label>
+        <description>The speech lacked something and people were fidgety</description>
+        <baseMoodEffect>-1</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>SatisfyingService</defName>
+    <thoughtClass>Thought_AttendedRitual</thoughtClass>
+    <durationDays>6</durationDays>
+    <stackLimit>3</stackLimit>
+    <stages>
+      <li>
+        <label>satisfying service</label>
+        <description>That was a lovely service and left me feeling reassured.</description>
+        <baseMoodEffect>1</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>SpectacularService</defName>
+    <thoughtClass>Thought_AttendedRitual</thoughtClass>
+    <durationDays>6</durationDays>
+    <stackLimit>3</stackLimit>
+    <stages>
+      <li>
+        <label>spectacular service</label>
+        <description>The service was amazing! The speaker really blew our minds and gave us a lot to think about.</description>
+        <baseMoodEffect>3</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+  
+  <!-- this of course isn't all you can do, even just with XML definitions. You can define new duties and interactions, change a lot of the fields in the bases that I've inherited from for this example -->
+  
+</Defs>

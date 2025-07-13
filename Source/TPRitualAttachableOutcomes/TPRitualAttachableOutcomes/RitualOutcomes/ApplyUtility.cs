@@ -70,6 +70,9 @@ namespace TPRitualAttachableOutcomes
             int thisBaseAmount = nodeToProcess.baseAmount.RandomInRange;
             int thisAmountPerPawn = nodeToProcess.amountPerPawn.RandomInRange;
             bool thisSpawnNearRitual = nodeToProcess.spawnNearRitual;
+            bool thisInstaDrop = nodeToProcess.instaDrop;
+            bool thisForbid = nodeToProcess.forbid;
+            bool thisRoofPunch = nodeToProcess.roofPunch;
 
             string thisWeather = nodeToProcess.weather ?? "";
 
@@ -209,18 +212,18 @@ namespace TPRitualAttachableOutcomes
                                     {
                                         try
                                         {
-                                            Log.Message("CRF ApplyUtility rel try{}: pawn = " + pawn.Name);
-                                            Log.Message("CRF ApplyUtility rel try{}: relationshipToAdd = " + r);
-                                            Log.Message("CRF ApplyUtility rel try{}: relationshipOperationTarget = " + jobRitual.PawnWithRole(t).Name);
+                                            //Log.Message("CRF ApplyUtility rel try{}: pawn = " + pawn.Name);
+                                            //Log.Message("CRF ApplyUtility rel try{}: relationshipToAdd = " + r);
+                                            //Log.Message("CRF ApplyUtility rel try{}: relationshipOperationTarget = " + jobRitual.PawnWithRole(t).Name);
                                             foreach (PawnRelationDef relation in pawn.GetRelations(jobRitual.PawnWithRole(t)))
                                             {
                                                 if (relation == null)
                                                 {
-                                                    Log.Warning("CRF ApplyUtility rel try{}: No relation to remove from " + pawn.Name);
+                                                    //Log.Warning("CRF ApplyUtility rel try{}: No relation to remove from " + pawn.Name);
                                                 }
                                                 else
                                                 {
-                                                    Log.Message("CRF ApplyUtility rel try{}: Removing pre-existing relation " + relation + " from " + pawn.Name);
+                                                    //Log.Message("CRF ApplyUtility rel try{}: Removing pre-existing relation " + relation + " from " + pawn.Name);
                                                     pawn.relations.RemoveDirectRelation(relation, jobRitual.PawnWithRole(t));
                                                 }
                                             }
@@ -232,7 +235,7 @@ namespace TPRitualAttachableOutcomes
                                         }
                                         finally
                                         {
-                                            Log.Message("CRF ApplyUtility rel finally {}: SUCCESS pawn.relations.AddDirectRelation(" + r + ", jobRitual.PawnWithRole(" + t + ") SUCCESS");
+                                            //Log.Message("CRF ApplyUtility rel finally {}: SUCCESS pawn.relations.AddDirectRelation(" + r + ", jobRitual.PawnWithRole(" + t + ") SUCCESS");
                                         }
                                     }
                                 }
@@ -459,7 +462,7 @@ namespace TPRitualAttachableOutcomes
                 thisTargetLetter = true;
 
                 // actually drop the things
-                DropPodUtility.DropThingsNear(intVec, map, things, 110, canInstaDropDuringInit: false, leaveSlag: false, canRoofPunch: false);
+                DropPodUtility.DropThingsNear(intVec, map, things, 110, canInstaDropDuringInit: thisInstaDrop, leaveSlag: false, canRoofPunch: thisRoofPunch, forbid: thisForbid);
             }
 
             // weather?
